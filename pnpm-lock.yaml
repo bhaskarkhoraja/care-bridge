@@ -114,6 +114,9 @@ importers:
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
+      sqlx-ts:
+        specifier: ^0.9.3
+        version: 0.9.3
       supertest:
         specifier: ^6.3.3
         version: 6.3.3
@@ -6602,6 +6605,13 @@ packages:
 
   /sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
+    dev: true
+
+  /sqlx-ts@0.9.3:
+    resolution: {integrity: sha512-QSnx/zu0yM4wdPian7RI187jVSe8wyf5YtEh/Wmf+l6AEYtQGSSVU02f5TLjsO0+4sRKM81mfBCPoS0CN3DLrQ==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
     dev: true
 
   /stack-utils@2.0.6:
