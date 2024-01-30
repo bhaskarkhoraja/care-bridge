@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS document (
   identity_type TEXT CHECK (identity_type IN ('passport', 'citizenship', 'driving license')),
   identity_url TEXT NOT NULL,
   police_report_url TEXT NOT NULL,
-  verified BOOLEAN,
+  verified BOOLEAN DEFAULT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
