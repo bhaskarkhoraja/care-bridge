@@ -14,7 +14,6 @@
     "paths": {
       "@server/*": ["./apps/server/src/*"],
       "@web/*": ["./apps/web/*"]
-    },
-    "exclude": ["node_modules"]
+    }
   }
 }
