@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-import "./src/env.mjs"
+import "./src/lib/env.mjs"
 
 const nextConfig = {
   compiler: {
