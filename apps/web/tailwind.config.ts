@@ -12,34 +12,54 @@ const config: Config = {
       container: () => {
         return {
           center: true,
-          padding: "1rem",
+          padding: "2rem",
           screens: {
-            "2xl": "1240px",
+            "2xl": "1400px",
           },
         }
       },
       fontFamily: {
         poppins: ["var(--font-poppins)"],
       },
-      fontSize: {
-        // Display
-        "display-large": ["60px", { lineHeight: "72px" }],
-        "display-medium": ["48px", { lineHeight: "56px" }],
-        "display-small": ["36px", { lineHeight: "44px" }],
-        // Heading
-        "heading-large": ["30px", { lineHeight: "40px" }],
-        "heading-medium": ["24px", { lineHeight: "36px" }],
-        "heading-small": ["20px", { lineHeight: "22px" }],
-        // Body
-        "body-large": ["20px", { lineHeight: "30px" }],
-        "body-medium": ["18px", { lineHeight: "28px" }],
-        "body-small": ["16px", { lineHeight: "24px" }],
-        "body-extra-small": ["14px", { lineHeight: "21px" }],
-
-        // Meta
-        "meta-large": ["14px", { lineHeight: "14px" }],
-        "meta-medium": ["12px", { lineHeight: "12px" }],
-        "meta-small": ["12px", { lineHeight: "15px" }],
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         shimmer: {
@@ -47,9 +67,22 @@ const config: Config = {
             transform: "translateX(100%)",
           },
         },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [],
-}
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
+
 export default config
