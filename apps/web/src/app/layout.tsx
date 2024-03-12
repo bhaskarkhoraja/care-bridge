@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { GeistSans } from "geist/font/sans"
 
-import "./globals.css"
+import "@web/src/styles/globals.css"
 
 import { siteConfig } from "../config/site"
 import { cn } from "../lib/utils"
