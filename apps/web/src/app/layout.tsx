@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans"
 
 import "@web/src/styles/globals.css"
 
+import { TailwindIndicator } from "../components/tailwind-indicator"
 import { siteConfig } from "../config/site"
 import { cn } from "../lib/utils"
 
@@ -86,6 +87,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        <TailwindIndicator />
       </body>
     </html>
   )
