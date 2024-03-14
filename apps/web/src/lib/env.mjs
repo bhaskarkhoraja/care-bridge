@@ -3,7 +3,13 @@ import { z } from "zod"
 
 export const webEnv = createEnv({
   server: {
-    WEB_URL: z.string().url(),
     SERVER_URL: z.string().url(),
+  },
+  client: {
+    NEXT_PUBLIC_WEB_URL: z.string().url(),
+  },
+  runtimeEnv: {
+    SERVER_URL: process.env.SERVER_URL,
+    NEXT_PUBLIC_WEB_URL: process.env.NEXT_PUBLIC_WEB_URL,
   },
 })
