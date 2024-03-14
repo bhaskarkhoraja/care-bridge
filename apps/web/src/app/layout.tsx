@@ -2,8 +2,12 @@ import type { Metadata, Viewport } from "next"
 import { GeistSans } from "geist/font/sans"
 
 import "@web/src/styles/globals.css"
+import "@web/src/styles/themes.css"
 
 import { TailwindIndicator } from "../components/tailwind-indicator"
+import ThemeProvider from "../components/theme/theme-provider"
+import ThemeSwitcher from "../components/theme/theme-switcher"
+import ThemeWrapper from "../components/theme/theme-wrapper"
 import { siteConfig } from "../config/site"
 import { cn } from "../lib/utils"
 
@@ -86,7 +90,15 @@ export default function RootLayout({
           fontSans.className
         )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ThemeSwitcher />
+          <ThemeWrapper>{children}</ThemeWrapper>
+        </ThemeProvider>
         <TailwindIndicator />
       </body>
     </html>
