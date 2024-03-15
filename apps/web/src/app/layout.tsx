@@ -3,14 +3,14 @@ import type { Metadata, Viewport } from "next"
 import "@web/src/styles/globals.css"
 import "@web/src/styles/themes.css"
 
+import { TailwindIndicator } from "@web/src/components/tailwind-indicator"
+import ThemeProvider from "@web/src/components/theme/theme-provider"
+import ThemeSwitcher from "@web/src/components/theme/theme-switcher"
+import ThemeWrapper from "@web/src/components/theme/theme-wrapper"
+import { Toaster } from "@web/src/components/ui/sonner"
+import { siteConfig } from "@web/src/config/site"
 import { fontSans } from "@web/src/lib/font"
-
-import { TailwindIndicator } from "../components/tailwind-indicator"
-import ThemeProvider from "../components/theme/theme-provider"
-import ThemeSwitcher from "../components/theme/theme-switcher"
-import ThemeWrapper from "../components/theme/theme-wrapper"
-import { siteConfig } from "../config/site"
-import { cn } from "../lib/utils"
+import { cn } from "@web/src/lib/utils"
 
 export const metadata: Metadata = {
   title: {
