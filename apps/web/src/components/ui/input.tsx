@@ -16,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           id={associationTag}
           type={type}
           className={cn(
-            "border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring peer flex h-10 w-full rounded-md border p-2 pt-5 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring peer flex h-10 w-full rounded-md border p-2 pt-5 text-sm ring-offset-pink-50 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           placeholder=""
@@ -25,7 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         <Label
           htmlFor={associationTag}
-          className="text-muted-foreground peer-focus:text-muted-foreground peer-focus-within:text-muted-foreground peer-focus-visible:text-muted-foreground peer-placeholder-shown:text-primary absolute start-2 top-3.5 z-10 origin-[0] -translate-y-[13px] scale-75 text-sm duration-300 peer-placeholder-shown:-translate-y-[5px] peer-placeholder-shown:scale-100 peer-focus:-translate-y-[13px] peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+          className="text-muted-foreground peer-focus:text-muted-foreground peer-focus-within:text-muted-foreground peer-focus-visible:text-muted-foreground peer-placeholder-shown:text-muted-foreground absolute start-2 top-3.5 z-10 origin-[0] -translate-y-[13px] scale-75 text-sm duration-100 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-[13px] peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
         >
           {label}
         </Label>
