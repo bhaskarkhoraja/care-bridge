@@ -30,7 +30,7 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
             >
               Vercel
             </Link>
-            . Hosted on{" "}
+            . Component by{" "}
             <Link
               href={new URL("https://ui.shadcn.com/")}
               target="_blank"
