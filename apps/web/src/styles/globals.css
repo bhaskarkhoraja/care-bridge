@@ -66,3 +66,7 @@
     @apply px-4;
   }
 }
+
+.toaster {
+  font-family: var(--font-geist-sans) !important;
+}
