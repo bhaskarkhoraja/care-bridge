@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next"
-import { GeistSans } from "geist/font/sans"
 
 import "@web/src/styles/globals.css"
 import "@web/src/styles/themes.css"
+
+import { fontSans } from "@web/src/lib/font"
 
 import { TailwindIndicator } from "../components/tailwind-indicator"
 import ThemeProvider from "../components/theme/theme-provider"
@@ -10,8 +11,6 @@ import ThemeSwitcher from "../components/theme/theme-switcher"
 import ThemeWrapper from "../components/theme/theme-wrapper"
 import { siteConfig } from "../config/site"
 import { cn } from "../lib/utils"
-
-const fontSans = GeistSans
 
 export const metadata: Metadata = {
   title: {
