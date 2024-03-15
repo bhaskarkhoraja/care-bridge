@@ -96,9 +96,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ThemeSwitcher />
-          <ThemeWrapper>{children}</ThemeWrapper>
+          <ThemeWrapper>
+            <div vaul-drawer-wrapper="">
+              <div className="bg-background relative flex min-h-screen flex-col">
+                {children}
+              </div>
+            </div>
+          </ThemeWrapper>
+          <TailwindIndicator />
+          <Toaster />
         </ThemeProvider>
-        <TailwindIndicator />
       </body>
     </html>
   )
