@@ -14,7 +14,7 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
           <p className="text-center text-sm leading-loose md:text-left">
             Built by{" "}
             <Link
-              href={new URL(siteConfig.links.twitter)}
+              href={siteConfig.links.twitter}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
@@ -23,7 +23,7 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
             </Link>
             . Hosted on{" "}
             <Link
-              href={new URL("https://vercel.com")}
+              href={"https://vercel.com"}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
@@ -32,7 +32,7 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
             </Link>
             . Component by{" "}
             <Link
-              href={new URL("https://ui.shadcn.com/")}
+              href={"https://ui.shadcn.com/"}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
@@ -41,7 +41,7 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
             </Link>
             . The source code is available on{" "}
             <Link
-              href={new URL(siteConfig.links.github)}
+              href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"

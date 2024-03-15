@@ -10,6 +10,6 @@ export const siteConfig = {
     twitter: "https://twitter.com/bhaskarkhoraja",
     github: "https://github.com/bhaskarkhoraja/care-bridge",
   },
-}
+} as const
 
 export type SiteConfig = typeof siteConfig
