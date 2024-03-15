@@ -16,6 +16,7 @@ module.exports = {
         "test", // adding or updating tests for the codebase.
         "revert", // reverting a previous commit.
         "perf", // improve the performance of the code.
+        "merge", // used when merging branches
       ],
     ],
   },
