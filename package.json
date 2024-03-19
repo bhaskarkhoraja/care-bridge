@@ -22,6 +22,12 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.12"
+    "prettier-plugin-tailwindcss": "^0.5.12",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "next-auth": "^4.24.7",
+    "zod": "^3.22.4"
   }
 }
