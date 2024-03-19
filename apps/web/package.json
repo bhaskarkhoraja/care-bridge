@@ -1,6 +1,8 @@
 {
   "name": "web",
   "version": "0.1.0",
+  "description": "Web for carebridge",
+  "author": "Bhaskar Khoraaja <bkhoraja@gmail.com>",
   "private": true,
   "type": "module",
   "scripts": {

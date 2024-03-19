@@ -1,8 +1,8 @@
 {
   "name": "server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Server for carebridge",
+  "author": "Bhaskar Khoraaja <bkhoraja@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

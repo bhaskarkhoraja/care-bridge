@@ -1,14 +1,25 @@
 {
   "name": "CareBridge",
   "version": "1.0.0",
-  "description": "",
+  "description": "A place where hire trusted Baby Sitters for your children and Family Care services",
   "main": "index.js",
   "scripts": {
     "dev": "pnpm run --filter server start:dev & pnpm run --filter web dev",
     "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Trusted babysitters",
+    "Family care services",
+    "Childcare solutions",
+    "Professional caregivers",
+    "Reliable nanny services",
+    "Experienced childminders",
+    "In-home care providers",
+    "Quality babysitting services",
+    "Personalized caregiver matching",
+    "Safe and secure childcare options"
+  ],
+  "author": "Bhaskar Khoraaja<bkhoraja@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^18.6.1",
