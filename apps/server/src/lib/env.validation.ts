@@ -4,12 +4,14 @@ export const serverEnvSchema = z.object({
   DATABASE_URL: z.string(),
   NEXT_PUBLIC_WEB_URL: z.string().url(),
   SERVER_URL: z.string().url(),
+  NEXTAUTH_SECRET: z.string(),
 })
 
 export let serverEnv: z.infer<typeof serverEnvSchema> = {
   DATABASE_URL: '',
   NEXT_PUBLIC_WEB_URL: '',
   SERVER_URL: '',
+  NEXTAUTH_SECRET: '',
 }
 
 export function createEnv(config: Record<string, any>) {
@@ -17,6 +19,7 @@ export function createEnv(config: Record<string, any>) {
     DATABASE_URL: config.DATABASE_URL,
     NEXT_PUBLIC_WEB_URL: config.NEXT_PUBLIC_WEB_URL,
     SERVER_URL: config.SERVER_URL,
+    NEXTAUTH_SECRET: config.NEXTAUTH_SECRET,
   }
 
   const validatedConfig = serverEnvSchema.safeParse(env)
