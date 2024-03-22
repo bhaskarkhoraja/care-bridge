@@ -37,8 +37,11 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "date-fns": "^3.6.0",
+    "dotenv-cli": "^7.4.1",
     "next-auth": "^4.24.7",
+    "nodemailer": "^6.9.12",
     "zod": "^3.22.4"
   }
 }
