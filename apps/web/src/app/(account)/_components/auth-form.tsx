@@ -31,6 +31,22 @@ const AuthForm = () => {
     googleLoading: false,
   })
 
+  const searchParams = useSearchParams()
+  const error: SignInPageErrorParam | null = searchParams.get(
+    "error"
+  ) as SignInPageErrorParam | null
+
+  React.useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        toast.dismiss()
+        toast.error("Authentication Failed!", {
+          description: signinErrors[error],
+        })
+      }, 200)
+    }
+  }, [])
+
   const form = useForm<z.infer<typeof authSchema>>({
     resolver: zodResolver(authSchema),
     defaultValues: {
