@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Icons } from "@web/src/components/icons"
 import { Button } from "@web/src/components/ui/button"
@@ -12,6 +13,7 @@ import {
   FormMessage,
 } from "@web/src/components/ui/form"
 import { Input } from "@web/src/components/ui/input"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -40,10 +42,30 @@ const AuthForm = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof authSchema>) {
-    toast("Check your email", {
-      description: "We sent you a login link. Be sure to check your spam too.",
-    })
+  async function onSubmit(data: z.infer<typeof authSchema>) {
+    setAuthLoading({ ...authLoading, emailLoading: true })
+
+    try {
+      const signInResult = await signIn("email", {
+        email: data.email.toLowerCase(),
+        callbackUrl: "/",
+        redirect: false,
+      })
+
+      if (!signInResult?.ok) {
+        return toast.success("check your email", {
+          description:
+            "we sent you a login link. be sure to check your spam too.",
+        })
+      }
+      throw new Error()
+    } catch {
+      return toast.error("Something went wrong", {
+        description: "Your sign in request failed. Please try again.",
+      })
+    } finally {
+      setAuthLoading({ ...authLoading, emailLoading: false })
+    }
   }
 
   return (
@@ -62,7 +84,14 @@ const AuthForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={authLoading.emailLoading}
+          >
+            {authLoading.emailLoading && (
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
+            )}
             Sign In with Email
           </Button>
         </form>
@@ -84,6 +113,9 @@ const AuthForm = () => {
           className="w-full"
           onClick={() => {
             setAuthLoading({ ...authLoading, githubLoading: true })
+            signIn("github", {
+              callbackUrl: "/",
+            })
           }}
           disabled={
             authLoading.emailLoading ||
@@ -104,6 +136,9 @@ const AuthForm = () => {
           className="w-full"
           onClick={() => {
             setAuthLoading({ ...authLoading, googleLoading: true })
+            signIn("google", {
+              callbackUrl: "/",
+            })
           }}
           disabled={
             authLoading.emailLoading ||
