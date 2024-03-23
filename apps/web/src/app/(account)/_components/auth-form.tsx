@@ -13,20 +13,16 @@ import {
   FormMessage,
 } from "@web/src/components/ui/form"
 import { Input } from "@web/src/components/ui/input"
+import {
+  AuthLoadingState,
+  authSchema,
+  signinErrors,
+  SignInPageErrorParam,
+} from "@web/src/types/auth"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-
-const authSchema = z.object({
-  email: z.string().email(),
-})
-
-interface AuthLoadingState {
-  emailLoading: boolean
-  githubLoading: boolean
-  googleLoading: boolean
-}
 
 const AuthForm = () => {
   const [authLoading, setAuthLoading] = React.useState<AuthLoadingState>({
