@@ -10,6 +10,8 @@ export const webEnv = createEnv({
     GITHUB_CLIENT_SECRET: z.string().min(1),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
+    NODEMAILER_EMAIL: z.string().min(1),
+    NODEMAILER_PW: z.string(),
   },
   client: {
     NEXT_PUBLIC_WEB_URL: z.string().url(),
@@ -23,6 +25,8 @@ export const webEnv = createEnv({
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL,
+    NODEMAILER_PW: process.env.NODEMAILER_PW,
   },
   emptyStringAsUndefined: true,
 })
