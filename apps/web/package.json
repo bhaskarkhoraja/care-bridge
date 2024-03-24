@@ -32,6 +32,7 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@react-email/render": "^0.0.12",
     "@t3-oss/env-nextjs": "^0.9.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -41,6 +42,7 @@
     "lucide-react": "^0.356.0",
     "next": "14.1.0",
     "next-themes": "^0.2.1",
+    "nodemailer": "^6.9.12",
     "react": "^18.2.0",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0",
@@ -52,6 +54,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.28",
+    "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "autoprefixer": "^10.4.18",
