@@ -36,6 +36,12 @@ export class AuthService {
     return result.rowCount !== 0 ? result.rows[0] : null
   }
 
+  async getVerifiedUserByEmail(email: string) {
+    const sql = `select * from users where email = $1 and "emailVerified" is not null`
+    const result = await this.pg.query(sql, [email])
+    return result.rowCount !== 0 ? result.rows[0] : null
+  }
+
   async getUserByAccount(
     providerAccountId: string,
     provider: string,

@@ -30,6 +30,11 @@ export class AuthController {
     return await this.authService.getUserByEmail(email)
   }
 
+  @Get('/verified-user')
+  async getVerifiedUserByEmail(@Query('email') email: string) {
+    return await this.authService.getVerifiedUserByEmail(email)
+  }
+
   @Get('account/:provider/:id')
   async getUserByAccount(
     @Param('id') id: string,
