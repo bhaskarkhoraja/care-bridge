@@ -9,8 +9,8 @@ CREATE TABLE verification_token
 
 CREATE TABLE accounts
 (
-  id SERIAL,
-  "userId" INTEGER NOT NULL,
+  id UUID DEFAULT GEN_RANDOM_UUID(),
+  "userId" UUID NOT NULL,
   type VARCHAR(255) NOT NULL,
   provider VARCHAR(255) NOT NULL,
   "providerAccountId" VARCHAR(255) NOT NULL,
@@ -27,8 +27,8 @@ CREATE TABLE accounts
 
 CREATE TABLE sessions
 (
-  id SERIAL,
-  "userId" INTEGER NOT NULL,
+  id UUID DEFAULT GEN_RANDOM_UUID(),
+  "userId" UUID NOT NULL,
   expires TIMESTAMPTZ NOT NULL,
   "sessionToken" VARCHAR(255) NOT NULL,
 
@@ -39,11 +39,12 @@ CREATE TYPE user_role AS ENUM ('admin', 'user');
 
 CREATE TABLE users
 (
-  id SERIAL,
+  id UUID DEFAULT GEN_RANDOM_UUID(),
   name VARCHAR(255),
   email VARCHAR(255),
   "emailVerified" TIMESTAMPTZ,
   image TEXT,
+  role user_role,
 
   PRIMARY KEY (id)
 );
