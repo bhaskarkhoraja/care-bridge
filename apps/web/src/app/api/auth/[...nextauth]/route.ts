@@ -1,8 +1,14 @@
+import { render } from "@react-email/render"
+import { siteConfig } from "@web/src/config/site"
+import Login from "@web/src/emails/login"
+import Signup from "@web/src/emails/signup"
 import { webEnv } from "@web/src/lib/env.mjs"
+import axios from "axios"
 import NextAuth from "next-auth"
 import EmailProvider from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import { createTransport } from "nodemailer"
 
 import { NestAdapter } from "./nest-adapter"
 
@@ -24,8 +30,43 @@ const handler = NextAuth({
       clientSecret: webEnv.GOOGLE_CLIENT_SECRET,
     }),
     EmailProvider({
-      sendVerificationRequest: async ({ identifier, url, provider }) => {
-        /* TODO: send email  */
+      sendVerificationRequest: async ({ identifier, url }) => {
+        // Check is user already has an account and has verified before
+        const response = await axios.get(
+          `${webEnv.SERVER_URL}/auth/verified-user`,
+          {
+            params: { email: identifier },
+            headers: {
+              "Content-Type": "application/json",
+              "x-auth-secret": webEnv.NEXTAUTH_SECRET,
+            },
+          }
+        )
+
+        const user = response.data
+
+        const transporter = createTransport({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: webEnv.NODEMAILER_EMAIL,
+            pass: webEnv.NODEMAILER_PW,
+          },
+        })
+
+        await transporter.sendMail({
+          from: `Care Bridge <${webEnv.NODEMAILER_EMAIL}>`,
+          to: identifier,
+          subject: user
+            ? `Sign-in link for ${siteConfig.name}`
+            : "Activate your account",
+          html: render(user ? Login({ link: url }) : Signup({ link: url })),
+          text: url,
+          // Set this to prevent Gmail from threading emails.
+          // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
+          headers: { "X-Entity-Ref-ID": new Date().getTime() + "" },
+        })
       },
     }),
   ],
