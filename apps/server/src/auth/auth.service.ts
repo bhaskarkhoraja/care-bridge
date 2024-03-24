@@ -16,17 +16,27 @@ export function mapExpiresAt(account: any): any {
   }
 }
 
+interface ExtendedAdapterUser extends Omit<AdapterUser, 'id'> {
+  role?: string
+}
+
 @Injectable()
 export class AuthService {
   constructor(@InjectClient() private readonly pg: Client) {}
 
-  async createUser(user: Omit<AdapterUser, 'id'>) {
-    const { name, email, emailVerified, image } = user
+  async createUser(user: Omit<ExtendedAdapterUser, 'id'>) {
+    const { name, email, emailVerified, image, role } = user
     const sql = `
-        INSERT INTO users (name, email, "emailVerified", image)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO users (name, email, "emailVerified", image, role)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING id, name, email, "emailVerified", image`
-    const result = await this.pg.query(sql, [name, email, emailVerified, image])
+    const result = await this.pg.query(sql, [
+      name,
+      email,
+      emailVerified,
+      image,
+      role ?? 'user',
+    ])
     return result.rows[0]
   }
 

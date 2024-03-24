@@ -35,6 +35,8 @@ CREATE TABLE sessions
   PRIMARY KEY (id)
 );
 
+CREATE TYPE user_role AS ENUM ('admin', 'user');
+
 CREATE TABLE users
 (
   id SERIAL,
