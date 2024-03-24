@@ -64,10 +64,10 @@ const AuthForm = () => {
         redirect: false,
       })
 
-      if (!signInResult?.ok) {
-        return toast.success("check your email", {
+      if (signInResult?.ok) {
+        return toast.success("Check your email", {
           description:
-            "we sent you a login link. be sure to check your spam too.",
+            "We sent you a login link. be sure to check your spam too.",
         })
       }
       throw new Error()
