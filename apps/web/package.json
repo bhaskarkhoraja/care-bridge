@@ -6,7 +6,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "with-env": "dotenv -e ../../.env",
+    "with-env": "dotenv -e ../../.env --",
     "dev": "pnpm with-env next dev",
     "build": "pnpm with-env next build",
     "start": "next start",

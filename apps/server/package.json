@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "with-env": "dotenv -e ../../.env",
+    "with-env": "dotenv -e ../../.env --",
     "build": "pnpm with-env nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
