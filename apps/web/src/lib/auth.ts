@@ -83,7 +83,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
-      session.user = user
+      session.user.role = user.role
       return session
     },
   },
