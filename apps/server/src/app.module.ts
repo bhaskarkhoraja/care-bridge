@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { PostgresModule } from 'nest-postgres'
 import { AuthMiddleware } from './middlewares/auth.middleware'
+import { UserMiddleware } from './middlewares/user.middleware'
+import { AdminMiddleware } from './middlewares/admin.middleware'
 
 @Module({
   imports: [
@@ -21,5 +23,7 @@ import { AuthMiddleware } from './middlewares/auth.middleware'
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes('auth')
+    consumer.apply(UserMiddleware).forRoutes('user')
+    consumer.apply(AdminMiddleware).forRoutes('admin')
   }
 }
