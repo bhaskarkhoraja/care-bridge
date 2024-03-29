@@ -16,15 +16,11 @@ export function mapExpiresAt(account: any): any {
   }
 }
 
-interface ExtendedAdapterUser extends Omit<AdapterUser, 'id'> {
-  role?: string
-}
-
 @Injectable()
 export class AuthService {
   constructor(@InjectClient() private readonly pg: Client) {}
 
-  async createUser(user: Omit<ExtendedAdapterUser, 'id'>) {
+  async createUser(user: Omit<AdapterUser, 'id'>) {
     const { name, email, emailVerified, image, role } = user
     const sql = `
         INSERT INTO users (name, email, "emailVerified", image, role)
