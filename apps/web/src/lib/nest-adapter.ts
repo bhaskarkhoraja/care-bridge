@@ -1,4 +1,4 @@
-import { webEnv } from "@web/src/lib/env.mjs"
+import { webEnv } from "@web/src/lib/env"
 import axios from "axios"
 import {
   Adapter,

@@ -1,4 +1,4 @@
-import { webEnv } from "@web/src/lib/env.mjs"
+import { webEnv } from "@web/src/lib/env"
 
 export const siteConfig = {
   name: "Care Bridge",
