@@ -12,8 +12,6 @@ import { siteConfig } from "@web/src/config/site"
 import { fontSans } from "@web/src/lib/font"
 import { cn } from "@web/src/lib/utils"
 
-import "../../../../types/lib/next-auth"
-
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
