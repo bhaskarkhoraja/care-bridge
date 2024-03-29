@@ -6,6 +6,9 @@ import {
 import { serverEnv } from '@server/lib/env.validation'
 import { NextFunction, Request, Response } from 'express'
 
+/**
+ * Only accept the request if headers match x-auth-secret
+ **/
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   async use(req: Request, _res: Response, next: NextFunction) {
