@@ -18,7 +18,7 @@ import {
   authSchema,
   signinErrors,
   SignInPageErrorParam,
-} from "@web/src/types/auth"
+} from "@web/src/types/next-auth-error"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
