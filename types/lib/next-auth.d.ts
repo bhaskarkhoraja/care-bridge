@@ -5,11 +5,11 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string
-      role: string
+      role: "admin" | "user"
     } & DefaultSession
   }
 
   interface User extends DefaultUser {
-    role: string
+    role: "admin" | "user"
   }
 }
