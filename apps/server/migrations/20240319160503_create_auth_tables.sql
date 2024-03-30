@@ -45,6 +45,7 @@ CREATE TABLE users
   "emailVerified" TIMESTAMPTZ,
   image TEXT,
   role user_role,
+  completed_profile BOOLEAN DEFAULT FALSE,
 
   PRIMARY KEY (id)
 );
