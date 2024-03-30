@@ -27,6 +27,8 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: webEnv.GOOGLE_CLIENT_ID,
       clientSecret: webEnv.GOOGLE_CLIENT_SECRET,
+      // For refresh token
+      authorization: { params: { access_type: "offline", prompt: "consent" } },
       profile(profile) {
         // Determine if the user is admin or not
         let role = "user"
