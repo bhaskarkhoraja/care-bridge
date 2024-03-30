@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Icons } from "@web/src/components/icons"
+import ModeToggle from "@web/src/components/theme/mode-toggle"
 import { buttonVariants } from "@web/src/components/ui/button"
 import { cn } from "@web/src/lib/utils"
 import { ChevronLeft } from "lucide-react"
@@ -22,12 +23,15 @@ export default function RegisterPage() {
           <ChevronLeft className="mr-2 size-4" />
           Home
         </Link>
-        <Link
-          href="/auth/login"
-          className={cn(buttonVariants({ variant: "default", size: "sm" }))}
-        >
-          Login
-        </Link>
+        <div className="flex items-center gap-5">
+          <ModeToggle type="button" />
+          <Link
+            href="/auth/login"
+            className={cn(buttonVariants({ variant: "default", size: "sm" }))}
+          >
+            Login
+          </Link>
+        </div>
       </div>
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
