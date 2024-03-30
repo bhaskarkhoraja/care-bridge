@@ -38,6 +38,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...profile,
           id: profile.sub, // profile.sub is the provider id
+          image: profile.picture,
           role,
         }
       },
