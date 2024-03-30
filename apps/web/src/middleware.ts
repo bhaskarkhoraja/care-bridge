@@ -43,6 +43,24 @@ export default withAuth(
         return NextResponse.redirect(new URL(`/user`, req.url))
       }
     }
+
+    // check if profile is completed
+    if (!session.user.completed_profile) {
+      return NextResponse.redirect(
+        new URL("/user/profile/complete-profile", req.url)
+      )
+    }
+
+    // check if user is in complete-profile page and redirect to user if has already completed-profile
+    const isCompleteProfilePage =
+      req.nextUrl.pathname === "/user/profile/complete-profile"
+    if (isCompleteProfilePage) {
+      if (session.user.completed_profile) {
+        return NextResponse.redirect(new URL("/user", req.url))
+      }
+
+      return null
+    }
   },
   {
     callbacks: {
