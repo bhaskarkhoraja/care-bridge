@@ -18,7 +18,7 @@ export default withAuth(
     const isAuthPage = req.nextUrl.pathname.startsWith("/auth")
     if (isAuthPage) {
       if (session) {
-        return NextResponse.redirect(new URL("/user"))
+        return NextResponse.redirect(new URL("/user", req.url))
       }
 
       return null
