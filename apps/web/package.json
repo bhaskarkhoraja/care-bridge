@@ -10,7 +10,7 @@
     "dev": "concurrently \"contentlayer dev\" \"pnpm with-env next dev\"",
     "build": "contentlayer build && pnpm with-env next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "pnpm with-env next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
