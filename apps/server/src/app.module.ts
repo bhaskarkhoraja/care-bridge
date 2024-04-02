@@ -3,9 +3,9 @@ import { createEnv, serverEnv } from '@server/lib/env.validation'
 import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { PostgresModule } from 'nest-postgres'
-import { AuthMiddleware } from './middlewares/auth.middleware'
-import { UserMiddleware } from './middlewares/user.middleware'
-import { AdminMiddleware } from './middlewares/admin.middleware'
+import { AuthMiddleware } from '@server/lib/middlewares/auth.middleware'
+import { UserMiddleware } from '@server/lib/middlewares/user.middleware'
+import { AdminMiddleware } from '@server/lib/middlewares/admin.middleware'
 
 @Module({
   imports: [
