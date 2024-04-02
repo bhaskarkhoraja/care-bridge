@@ -1,4 +1,5 @@
 import { webEnv } from "@web/src/lib/env"
+import { format } from "@web/src/lib/utils"
 import axios from "axios"
 import {
   Adapter,
@@ -123,30 +124,3 @@ export function NestAdapter(): Adapter {
     },
   }
 }
-
-function format<T>(obj: Record<string, unknown>): T {
-  return Object.entries(obj).reduce(
-    (result, [key, value]) => {
-      const newResult = result
-
-      if (value === null) {
-        return newResult
-      }
-
-      if (isDate(value)) {
-        newResult[key] = new Date(value)
-      } else {
-        newResult[key] = value
-      }
-
-      return newResult
-    },
-    {} as Record<string, unknown>
-  ) as T
-}
-
-const isDate = (value: unknown): value is string =>
-  typeof value === "string"
-    ? new Date(value).toString() !== "Invalid Date" &&
-      !Number.isNaN(Date.parse(value))
-    : false
