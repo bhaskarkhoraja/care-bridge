@@ -45,7 +45,7 @@ const AuthForm = () => {
         })
       }, 200)
     }
-  }, [])
+  }, [error])
 
   const form = useForm<z.infer<typeof authSchema>>({
     resolver: zodResolver(authSchema),
