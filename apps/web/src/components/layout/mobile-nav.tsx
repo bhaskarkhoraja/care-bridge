@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { Icons } from "@web/src/components/icons"
 import { Button } from "@web/src/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@web/src/components/ui/sheet"
-import { siteConfig } from "@web/src/config/site"
 import { cn } from "@web/src/lib/utils"
 
 const MobileNav = () => {
