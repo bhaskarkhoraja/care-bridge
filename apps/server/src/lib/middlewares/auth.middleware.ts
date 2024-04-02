@@ -3,7 +3,7 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common'
-import { serverEnv } from '@server/lib/env.validation'
+import { serverEnv } from '@server/src/lib/env.validation'
 import { NextFunction, Request, Response } from 'express'
 
 /**
