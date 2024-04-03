@@ -16,6 +16,8 @@ import {
 import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 
+import { Button } from "./ui/button"
+
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">
 }
@@ -41,11 +43,16 @@ function getShortName(name: string): string {
 export const UserAccountNav = ({ user }: UserAccountNavProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar>
-          <AvatarImage src={user.image as string} alt={"hello"} />
-          <AvatarFallback>{getShortName(user.name as string)}</AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger asChild>
+        <Button variant={"ghost"} className="h-fit rounded-full p-0">
+          <Avatar>
+            <AvatarImage
+              src={user.image as string}
+              alt={user.email as string}
+            />
+            <AvatarFallback>{getShortName(user.name as string)}</AvatarFallback>
+          </Avatar>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
