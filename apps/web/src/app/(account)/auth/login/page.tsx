@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Metadata } from "next"
 import Link from "next/link"
 import { Icons } from "@web/src/components/icons"
@@ -44,7 +45,9 @@ export default function LoginPage() {
             Enter your email to sign in to your account
           </p>
         </div>
-        <AuthForm />
+        <Suspense>
+          <AuthForm />
+        </Suspense>
         <p className="text-muted-foreground px-8 text-center text-sm">
           <Link
             href="/auth/signup"

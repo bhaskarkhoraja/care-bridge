@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import Link from "next/link"
 import { Icons } from "@web/src/components/icons"
 import ModeToggle from "@web/src/components/theme/mode-toggle"
@@ -44,7 +45,9 @@ export default function RegisterPage() {
               Enter your email below to create your account
             </p>
           </div>
-          <AuthForm />
+          <Suspense>
+            <AuthForm />
+          </Suspense>
           <p className="text-muted-foreground px-8 text-center text-sm">
             By clicking continue, you agree to our{" "}
             <Link
