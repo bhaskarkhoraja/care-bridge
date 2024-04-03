@@ -26,11 +26,11 @@
     "@nestjs/core": "^10.3.7",
     "@nestjs/mapped-types": "^2.0.5",
     "@nestjs/platform-express": "^10.3.7",
-    "@types/pg": "^8.11.4",
+    "@types/pg": "^8.11.2",
     "cookie-parser": "^1.4.6",
     "dotenv-cli": "^7.4.1",
     "nest-postgres": "^0.0.11",
-    "pg": "^8.11.4",
+    "pg": "^8.11.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
