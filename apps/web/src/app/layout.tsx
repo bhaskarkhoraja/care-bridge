@@ -11,6 +11,7 @@ import { Toaster } from "@web/src/components/ui/sonner"
 import { siteConfig } from "@web/src/config/site"
 import { fontSans } from "@web/src/lib/font"
 import { cn } from "@web/src/lib/utils"
+import NextTopLoader from "nextjs-toploader"
 
 export const metadata: Metadata = {
   title: {
@@ -95,6 +96,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <NextTopLoader showSpinner={false} />
           <ThemeSwitcher />
           <ThemeWrapper>
             <div vaul-drawer-wrapper="">
