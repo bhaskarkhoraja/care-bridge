@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Icons } from "@web/src/components/icons"
 import { siteConfig } from "@web/src/config/site"
 import { cn } from "@web/src/lib/utils"
-import { Copyright } from "lucide-react"
 
 const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   return (
@@ -49,12 +48,12 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
               GitHub
             </Link>
             .
-            <span className="flex items-center">
+            {/* <span className="flex items-center">
               Copyright&nbsp;
               <Copyright className="h-4 w-fit" />
               &nbsp;{new Date().getFullYear()} Bhaskar Khoraja. All rights
               reserved.{" "}
-            </span>
+            </span> */}
           </p>
         </div>
       </div>
