@@ -16,13 +16,7 @@ const SiteHeader = async () => {
         <MainNav />
         <MobileNav />
         {user ? (
-          <UserAccountNav
-            user={{
-              name: user.name,
-              image: user.image,
-              email: user.email,
-            }}
-          />
+          <UserAccountNav user={user} />
         ) : (
           <div className="flex items-center justify-between space-x-2 md:justify-end">
             <nav className="flex items-center gap-4">
