@@ -61,6 +61,7 @@ const AuthForm = () => {
       const signInResult = await signIn("email", {
         email: data.email.toLowerCase(),
         callbackUrl: "/user",
+        redirect: true,
       })
 
       if (signInResult?.ok) {
@@ -126,6 +127,7 @@ const AuthForm = () => {
             setAuthLoading({ ...authLoading, githubLoading: true })
             signIn("github", {
               callbackUrl: "/user",
+              redirect: true,
             })
           }}
           disabled={
@@ -149,6 +151,7 @@ const AuthForm = () => {
             setAuthLoading({ ...authLoading, googleLoading: true })
             signIn("google", {
               callbackUrl: "/user",
+              redirect: true,
             })
           }}
           disabled={
