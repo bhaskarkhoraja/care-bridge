@@ -1,10 +1,10 @@
 import { Suspense } from "react"
 import Link from "next/link"
 import { Icons } from "@web/src/components/icons"
+import BackButton from "@web/src/components/layout/back-button"
 import ModeToggle from "@web/src/components/theme/mode-toggle"
 import { buttonVariants } from "@web/src/components/ui/button"
 import { cn } from "@web/src/lib/utils"
-import { ChevronLeft } from "lucide-react"
 
 import AuthForm from "../../_components/auth-form"
 
@@ -17,13 +17,7 @@ export default function RegisterPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="container absolute top-8 flex w-full items-start justify-between">
-        <Link
-          href="/"
-          className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
-        >
-          <ChevronLeft className="mr-2 size-4" />
-          Home
-        </Link>
+        <BackButton />
         <div className="flex items-center gap-5">
           <ModeToggle type="button" />
           <Link
