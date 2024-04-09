@@ -12,6 +12,8 @@ export const webEnv = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().min(1),
     NODEMAILER_EMAIL: z.string().min(1),
     NODEMAILER_PW: z.string(),
+    UPLOADTHING_SECRET: z.string(),
+    UPLOADTHING_APP_ID: z.string(),
   },
   client: {
     NEXT_PUBLIC_WEB_URL: z.string().url(),
@@ -27,6 +29,8 @@ export const webEnv = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL,
     NODEMAILER_PW: process.env.NODEMAILER_PW,
+    UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
+    UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
   },
   emptyStringAsUndefined: true,
 })
