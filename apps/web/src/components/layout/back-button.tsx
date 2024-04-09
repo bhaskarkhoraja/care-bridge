@@ -13,7 +13,7 @@ const BackButton = () => {
 
   return (
     <Button onClick={() => router.back()} variant="outline" size="sm">
-      <ChevronLeft className="size-4" />
+      <ChevronLeft className="mr-0.5 size-4" />
     </Button>
   )
 }
