@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import "@web/src/styles/globals.css"
 import "@web/src/styles/themes.css"
 
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
 import { TailwindIndicator } from "@web/src/components/tailwind-indicator"
 import ThemeProvider from "@web/src/components/theme/theme-provider"
 import ThemeSwitcher from "@web/src/components/theme/theme-switcher"
@@ -12,6 +13,9 @@ import { siteConfig } from "@web/src/config/site"
 import { fontSans } from "@web/src/lib/font"
 import { cn } from "@web/src/lib/utils"
 import NextTopLoader from "nextjs-toploader"
+import { extractRouterConfig } from "uploadthing/server"
+
+import { ourFileRouter } from "../lib/uploadthing/core"
 
 export const metadata: Metadata = {
   title: {
@@ -97,6 +101,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NextTopLoader showSpinner={false} />
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <ThemeSwitcher />
           <ThemeWrapper>
             <div vaul-drawer-wrapper="">
