@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS address (
   city VARCHAR(255) NOT NULL,
   state VARCHAR(255) NOT NULL,
   postal_code VARCHAR(255) NOT NULL,
-  country VARCHAR(255) NOT NULL,
+  country_id UUID REFERENCES profile(id),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -19,6 +19,6 @@ COMMENT ON COLUMN address.street IS 'Street address';
 COMMENT ON COLUMN address.city IS 'City of the address';
 COMMENT ON COLUMN address.state IS 'State or region of the address';
 COMMENT ON COLUMN address.postal_code IS 'Postal code of the address';
-COMMENT ON COLUMN address.country IS 'Country of the address';
+COMMENT ON COLUMN address.country_id IS 'Country of the address';
 COMMENT ON COLUMN address.created_at IS 'Timestamp of when the address was created';
 COMMENT ON COLUMN address.updated_at IS 'Timestamp of the last update to the address';
