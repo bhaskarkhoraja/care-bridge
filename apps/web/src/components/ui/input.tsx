@@ -16,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           id={associationTag}
           type={type}
           className={cn(
-            "border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring peer flex h-10 w-full rounded-md border p-2 pt-5 text-sm ring-offset-pink-50 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring ring-offset-background peer flex h-10 w-full rounded-md border p-2 pt-5 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           placeholder=""
