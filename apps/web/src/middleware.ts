@@ -76,12 +76,9 @@ export default withAuth(
     }
 
     // check if profile is completed
-    const isCompleteProfilePage =
-      req.nextUrl.pathname === "/user/profile/complete-profile"
+    const isCompleteProfilePage = req.nextUrl.pathname === "/complete-profile"
     if (!user.completed_profile && !isCompleteProfilePage) {
-      return NextResponse.redirect(
-        new URL("/user/profile/complete-profile", req.url)
-      )
+      return NextResponse.redirect(new URL("/complete-profile", req.url))
     }
 
     // check if profile is completed but still in complete-profile page
