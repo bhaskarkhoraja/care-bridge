@@ -5,11 +5,10 @@ import { cn } from "@web/src/lib/utils"
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
-  associationTag: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, associationTag, ...props }, ref) => {
+  ({ className, type, label, ...props }, ref) => {
     return (
       <div className="relative w-full">
         <input
@@ -21,10 +20,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           placeholder=""
           ref={ref}
           {...props}
-          id={associationTag}
         />
         <Label
-          htmlFor={associationTag}
+          htmlFor={props.id}
           className="text-muted-foreground peer-focus:text-muted-foreground peer-focus-within:text-muted-foreground peer-focus-visible:text-muted-foreground peer-placeholder-shown:text-muted-foreground absolute start-2 top-3.5 z-10 origin-[0] translate-y-[-13px] scale-75 text-sm duration-100 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:translate-y-[-13px] peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
         >
           {label}
