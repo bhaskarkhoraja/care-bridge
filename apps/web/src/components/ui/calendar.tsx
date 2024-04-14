@@ -4,9 +4,54 @@ import * as React from "react"
 import { buttonVariants } from "@web/src/components/ui/button"
 import { cn } from "@web/src/lib/utils"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import { DayPicker, DropdownProps } from "react-day-picker"
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
+
+function CustomDropDown(props: DropdownProps) {
+  const { onChange, value, children } = props
+  const options = React.Children.toArray(children) as React.ReactElement<
+    React.HTMLProps<HTMLOptionElement>
+  >[]
+  const selected = options.find((child) => child.props.value === value)
+  const handleChange = (value: string) => {
+    const changeEvent = {
+      target: { value },
+    } as React.ChangeEvent<HTMLSelectElement>
+    onChange?.(changeEvent)
+  }
+  return (
+    <Select
+      value={value?.toString()}
+      onValueChange={(value) => {
+        handleChange(value)
+      }}
+    >
+      <SelectTrigger className="flex h-fit items-center justify-center gap-1 px-2 py-1 focus:ring-0">
+        <SelectValue>{selected?.props?.children}</SelectValue>
+      </SelectTrigger>
+      <SelectContent className="max-h-48 bg-white" align="center">
+        {options.map((option, id: number) => (
+          <SelectItem
+            key={`${option.props.value}-${id}`}
+            value={option.props.value?.toString() ?? ""}
+            className="w-full text-center"
+          >
+            {option.props.children}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
 
 function Calendar({
   className,
@@ -50,12 +95,21 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
+        dropdown:
+          "appearance-none absolute z-2 top-0 left-0 bottom-0 cursor-pointer bg-transparent w-full",
+        dropdown_icon: "ml-1.5",
+        dropdown_month: "relative inline-flex items-center",
+        dropdown_year: "relative inline-flex items-center",
+        caption_dropdowns: "flex items-center justify-between gap-2",
+        vhidden: "hidden",
         ...classNames,
       }}
       components={{
         IconLeft: () => <ChevronLeft className="size-4" />,
         IconRight: () => <ChevronRight className="size-4" />,
+        Dropdown: CustomDropDown,
       }}
+      captionLayout="dropdown-buttons"
       {...props}
     />
   )
