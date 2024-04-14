@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { Label } from "@web/src/components/ui/label"
 import { cn } from "@web/src/lib/utils"
 import clsx from "clsx"
 
@@ -22,7 +23,8 @@ const ButtonInput = React.forwardRef<HTMLButtonElement, ButtonInputProps>(
           type="button"
           {...props}
         />
-        <p
+        <Label
+          htmlFor={props.id}
           className={clsx(
             "absolute start-2 top-3.5 z-10 origin-[0] text-sm duration-100 text-muted-foreground -translate-y-1 scale-100 font-medium",
             {
@@ -31,7 +33,7 @@ const ButtonInput = React.forwardRef<HTMLButtonElement, ButtonInputProps>(
           )}
         >
           {label}
-        </p>
+        </Label>
         <p className="absolute left-2 top-4 text-sm">{value}</p>
       </div>
     )
