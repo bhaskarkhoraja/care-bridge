@@ -13,7 +13,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="relative w-full">
         <input
-          id={associationTag}
           type={type}
           className={cn(
             "border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring ring-offset-background peer flex h-10 w-full rounded-md border p-2 pt-5 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
@@ -22,6 +21,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           placeholder=""
           ref={ref}
           {...props}
+          id={associationTag}
         />
         <Label
           htmlFor={associationTag}
