@@ -90,7 +90,7 @@ const AuthForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="Email" associationTag="email" {...field} />
+                  <Input label="Email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
