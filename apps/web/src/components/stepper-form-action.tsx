@@ -14,7 +14,7 @@ export const StepperFormActions = () => {
   } = useStepper()
 
   return (
-    <div className="mt-4 flex w-full justify-end gap-2">
+    <div className="mt-4 flex w-full justify-end gap-2 px-1 sm:px-0">
       {hasCompletedAllSteps ? (
         <Button size="sm" onClick={resetSteps} type="button">
           Reset
