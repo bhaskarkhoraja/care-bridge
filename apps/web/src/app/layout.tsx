@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next"
 
+import "@uploadthing/react/styles.css"
 import "@web/src/styles/globals.css"
 import "@web/src/styles/themes.css"
 
