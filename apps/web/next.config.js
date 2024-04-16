@@ -7,6 +7,14 @@ jiti("./src/lib/env")
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+      },
+    ],
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
