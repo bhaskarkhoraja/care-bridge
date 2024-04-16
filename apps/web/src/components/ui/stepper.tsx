@@ -845,7 +845,7 @@ const StepIcon = React.forwardRef<HTMLDivElement, StepIconProps>(
         }
         return (
           <div key="check-icon">
-            <Check className={cn(iconVariants({ size }))} />
+            <Check className={cn(iconVariants({ size }), "text-background")} />
           </div>
         )
       }
