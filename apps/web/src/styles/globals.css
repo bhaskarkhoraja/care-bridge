@@ -70,3 +70,17 @@
 .toaster {
   font-family: var(--font-geist-sans) !important;
 }
+
+/* Hide the arrow up and down in input with type number */
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
