@@ -56,8 +56,10 @@ const PersonalInfoFormSchema = z.object({
     .regex(/^[a-zA-Z0-9_]+$/, {
       message: "Username can only contain letters, numbers, and underscores.",
     }),
-  dob: z.date(),
-  gender: z.enum(["male", "female", "others"]),
+  dob: z.date({ required_error: "Date of birth is required." }),
+  gender: z.enum(["male", "female", "others"], {
+    required_error: "Gender is required.",
+  }),
 })
 
 const PersonalFormInfo: React.FC<PersonalInfoFormProps> = () => {
