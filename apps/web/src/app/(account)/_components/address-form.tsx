@@ -42,8 +42,8 @@ const AddressContactSchema = z.object({
     .string({ required_error: "Postal code is required" })
     .length(5, { message: "Postal code must be 5 digits long." })
     .transform((v) => Number(v) || 0),
-  countryId: z.string({ required_error: "Country Name is required" }),
-  phoneCode: z.string(),
+  countryId: z.string().min(3, { message: "Country Name is required" }),
+  phoneCode: z.string().min(3, { message: "Code is required" }),
   phoneNumber: z
     .string({ required_error: "Phone Number is required" })
     .length(10, { message: "Phone Number must be 10 digits long." })
