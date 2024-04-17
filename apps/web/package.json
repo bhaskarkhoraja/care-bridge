@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "with-env": "dotenv -e ../../.env --",
-    "dev": "concurrently \"contentlayer dev\" \"pnpm with-env next dev\"",
+    "dev": "concurrently --names \"CTNT,NEXT\" -c \"auto,auto\" \"contentlayer dev\" \"pnpm with-env next dev\"",
     "build": "contentlayer build && pnpm with-env next build",
     "start": "pnpm with-env next start",
     "lint": "pnpm with-env next lint"
