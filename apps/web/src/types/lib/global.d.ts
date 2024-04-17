@@ -1,1 +1,1 @@
-import "@types/lib/next-auth"
+import "@app-type/lib/next-auth"
