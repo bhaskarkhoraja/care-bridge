@@ -14,7 +14,8 @@
     "paths": {
       "@server/*": ["./apps/server/*"],
       "@web/*": ["./apps/web/*"],
-      "@types/*": ["./types/*"]
+      "@app-type/*": ["./types/*"],
+      "@contract/*": ["./apps/contract/*"]
     }
   }
 }
