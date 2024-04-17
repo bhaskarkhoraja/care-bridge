@@ -14,7 +14,7 @@ import {
   AdapterUser,
   VerificationToken,
 } from 'next-auth/adapters'
-import { AuthService } from './auth.service'
+import { AuthService } from '@server/src/app/auth/auth.service'
 
 @Controller('auth')
 export class AuthController {

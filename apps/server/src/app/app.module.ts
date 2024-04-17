@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { createEnv, serverEnv } from '@server/src/lib/env.validation'
 import { ConfigModule } from '@nestjs/config'
-import { AuthModule } from './auth/auth.module'
+import { AuthModule } from '@server/src/app/auth/auth.module'
 import { PostgresModule } from 'nest-postgres'
 import { AuthMiddleware } from '@server/src/lib/middlewares/auth.middleware'
 import { UserMiddleware } from '@server/src/lib/middlewares/user.middleware'

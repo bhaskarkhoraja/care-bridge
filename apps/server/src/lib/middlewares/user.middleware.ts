@@ -3,7 +3,7 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common'
-import { AuthService } from '@server/src/auth/auth.service'
+import { AuthService } from '@server/src/app/auth/auth.service'
 import { NextFunction, Request, Response } from 'express'
 
 /**
