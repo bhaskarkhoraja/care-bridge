@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { cn } from "@web/src/lib/utils"
 import { cva } from "class-variance-authority"
 import { CheckIcon, Loader2, LucideIcon, X } from "lucide-react"
@@ -49,7 +50,24 @@ const StepperProvider = ({ value, children }: StepperContextProviderProps) => {
 
   const [activeStep, setActiveStep] = React.useState(value.initialStep)
 
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const createQueryString = React.useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [searchParams]
+  )
+
   const nextStep = () => {
+    router.push(
+      pathname + "?" + createQueryString("step", (activeStep + 2).toString())
+    )
     setActiveStep((prev) => prev + 1)
   }
 
