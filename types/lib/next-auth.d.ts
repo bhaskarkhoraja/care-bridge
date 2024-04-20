@@ -7,6 +7,7 @@ declare module "next-auth" {
       id: string
       role: "admin" | "user"
       completed_profile: boolean
+      profile_id: string | null
       // default types because
       name?: string | null
       email?: string | null
@@ -17,5 +18,6 @@ declare module "next-auth" {
   interface User extends DefaultUser {
     role: "admin" | "user"
     completed_profile: boolean
+    profile_id: string | null
   }
 }

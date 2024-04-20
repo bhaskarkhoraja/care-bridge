@@ -204,9 +204,10 @@ export class AuthService {
     }
     const session: AdapterSession = result1.rows[0]
 
-    const result2 = await this.pg.query('select * from users where id = $1', [
-      session.userId,
-    ])
+    const result2 = await this.pg.query(
+      `SELECT users.*, (SELECT id FROM profile WHERE profile.user_id = $1) AS profile_id FROM users WHERE users.id = $1`,
+      [session.userId],
+    )
     if (result2.rowCount === 0) {
       return null
     }
