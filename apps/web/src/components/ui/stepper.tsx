@@ -72,6 +72,9 @@ const StepperProvider = ({ value, children }: StepperContextProviderProps) => {
   }
 
   const prevStep = () => {
+    router.push(
+      pathname + "?" + createQueryString("step", activeStep.toString())
+    )
     setActiveStep((prev) => prev - 1)
   }
 
