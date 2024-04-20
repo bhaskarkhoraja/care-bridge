@@ -3,7 +3,15 @@
 import { Button } from "@web/src/components/ui/button"
 import { useStepper } from "@web/src/components/ui/stepper"
 
-export const StepperFormActions = () => {
+import { Icons } from "./icons"
+
+interface stepperFormActionProps {
+  loading: boolean
+}
+
+export const StepperFormActions: React.FC<stepperFormActionProps> = ({
+  loading,
+}) => {
   const {
     prevStep,
     resetSteps,
@@ -31,6 +39,9 @@ export const StepperFormActions = () => {
             Prev
           </Button>
           <Button size="sm">
+            {loading ? (
+              <Icons.spinner className="mr-2 size-4 animate-spin text-white" />
+            ) : null}
             {isLastStep ? "Finish" : isOptionalStep ? "Skip" : "Next"}
           </Button>
         </>
