@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS profile (
   active_status BOOLEAN NOT NULL,
   profile_url TEXT,
   balance_exhausted INT NOT NULL DEFAULT 0,
+  user_id UUID REFERENCES users(id) UNIQUE NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -28,5 +29,6 @@ COMMENT ON COLUMN profile.date_of_birth IS 'Date of birth of the user';
 COMMENT ON COLUMN profile.active_status IS 'Indicates if user is active';
 COMMENT ON COLUMN profile.profile_url IS 'URL pointing to the user''s profile image';
 COMMENT ON COLUMN profile.balance_exhausted IS 'Tracks the amount of balance exhausted';
+COMMENT ON COLUMN profile.user_id IS 'Foreign key referencing the user';
 COMMENT ON COLUMN profile.created_at IS 'Timestamp of when the profile was created';
 COMMENT ON COLUMN profile.updated_at IS 'Timestamp of the last update to the profile';

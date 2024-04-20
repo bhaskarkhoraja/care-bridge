@@ -1,10 +1,10 @@
 -- table to store contact
 CREATE TABLE IF NOT EXISTS contact (
   id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
-  number INT NOT NULL,
+  number BIGINT NOT NULL,
   prefix VARCHAR(5) NOT NULL,
   phone_verified_at TIMESTAMPTZ,
-  profile_id UUID REFERENCES profile(id),
+  profile_id UUID REFERENCES profile(id) UNIQUE NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
