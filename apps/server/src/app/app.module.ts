@@ -6,6 +6,8 @@ import { PostgresModule } from 'nest-postgres'
 import { AuthMiddleware } from '@server/src/lib/middlewares/auth.middleware'
 import { UserMiddleware } from '@server/src/lib/middlewares/user.middleware'
 import { AdminMiddleware } from '@server/src/lib/middlewares/admin.middleware'
+import { GeneralModule } from './general/general.module'
+import { UserModule } from './user/user.module'
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { AdminMiddleware } from '@server/src/lib/middlewares/admin.middleware'
       connectionString: serverEnv.DATABASE_URL,
     }),
     AuthModule,
+    GeneralModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
