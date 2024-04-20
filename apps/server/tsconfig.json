@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.json", // Extend the config options from the root
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "declaration": true,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
