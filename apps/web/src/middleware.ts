@@ -99,5 +99,10 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*", "/auth/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/user/:path*",
+    "/auth/:path*",
+    "/complete-profile",
+  ],
 }
