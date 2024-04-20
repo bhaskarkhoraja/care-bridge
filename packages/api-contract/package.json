@@ -1,0 +1,52 @@
+{
+  "name": "api-contract",
+  "version": "1.0.0",
+  "description": "Api contract for web and server",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "start:dev": "tsup src/* --format cjs,esm --dts --watch"
+  },
+  "keywords": [],
+  "author": "Bhaskar Khoraja <bkhoraja@gmail.com>",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "dist/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types/index.mjs",
+      "require": "./dist/types/index.js",
+      "types": "dist/types/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js",
+        "types": ".dist/index.d.ts"
+      },
+      "./types": {
+        "import": "./dist/types/index.mjs",
+        "require": "./dist/types/index.js",
+        "types": "dist/types/index.d.ts"
+      }
+    },
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": ".dist/index.d.ts"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  }
+}
