@@ -1,7 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { setDocumentInfo } from "@web/src/actions/user"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
 import { buttonVariants } from "@web/src/components/ui/button"
 import {
@@ -12,37 +15,49 @@ import {
   FormMessage,
 } from "@web/src/components/ui/form"
 import { Label } from "@web/src/components/ui/label"
-import { useStepper } from "@web/src/components/ui/stepper"
 import { UploadDropzone } from "@web/src/lib/uploadthing/uploadthing"
 import { cn } from "@web/src/lib/utils"
+import { DocumentFormSchema } from "api-contract/types"
 import { UploadCloud } from "lucide-react"
+import NProgress from "nprogress"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
 interface DocumentFormProps {
-  // Props
+  documentInfo: z.infer<typeof DocumentFormSchema> | undefined
 }
 
-const DocumentFormSchema = z.object({
-  profileUrl: z.string().url({ message: "Profile image is required." }),
-  documentUrl: z.string().url({ message: "Document image is required." }),
-})
-
 // Uploads the images to uploadthing and stores url
-const DocumentForm: React.FC<DocumentFormProps> = ({}) => {
-  const { nextStep } = useStepper()
+const DocumentForm: React.FC<DocumentFormProps> = ({ documentInfo }) => {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof DocumentFormSchema>>({
     resolver: zodResolver(DocumentFormSchema),
     defaultValues: {
-      profileUrl: "",
-      documentUrl: "",
+      profileUrl: documentInfo?.profileUrl ?? "",
+      documentUrl: documentInfo?.documentUrl ?? "",
+      policeReportUrl: documentInfo?.policeReportUrl ?? "",
     },
   })
 
-  const onSubmit = (data: z.infer<typeof DocumentFormSchema>) => {
-    /* nextStep() */
+  const onSubmit = async (data: z.infer<typeof DocumentFormSchema>) => {
+    try {
+      setLoading(true)
+      const response = await setDocumentInfo(data)
+
+      if (response.status === 422 || response.status === 500) {
+        toast.error("Something went wrong!")
+        return
+      }
+      NProgress.start()
+      router.push("/user")
+    } catch (error) {
+      toast.error("Something went wrong!")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -70,7 +85,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({}) => {
                         ),
                         button: cn(
                           buttonVariants({ variant: "default", size: "sm" }),
-                          "after:bg-primary data-[state=uploading]:bg-primary/70 disabled:opacity-100"
+                          "after:bg-primary data-[state=uploading]:bg-primary/70 focus-within:ring-ring disabled:opacity-100"
                         ),
                       }}
                       content={{
@@ -106,7 +121,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({}) => {
           />
           <FormField
             control={form.control}
-            name="profileUrl"
+            name="documentUrl"
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-col items-center justify-center">
@@ -127,7 +142,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({}) => {
                         ),
                         button: cn(
                           buttonVariants({ variant: "default", size: "sm" }),
-                          "after:bg-primary data-[state=uploading]:bg-primary/70 disabled:opacity-100"
+                          "after:bg-primary data-[state=uploading]:bg-primary/70 focus-within:ring-ring disabled:opacity-100"
                         ),
                       }}
                       content={{
@@ -139,7 +154,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({}) => {
                                 width={200}
                                 height={200}
                                 className="h-24 w-auto rounded-md"
-                                alt="Profile Image"
+                                alt="Passport / Citizenship / License"
                               />
                             )
                           }
@@ -160,9 +175,66 @@ const DocumentForm: React.FC<DocumentFormProps> = ({}) => {
                 <FormMessage className="text-center" />
               </FormItem>
             )}
-          />{" "}
+          />
+          <FormField
+            control={form.control}
+            name="policeReportUrl"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex flex-col items-center justify-center">
+                  <Label className="w-full text-center">
+                    Police Report Document
+                  </Label>
+                  <FormControl>
+                    <UploadDropzone
+                      appearance={{
+                        container: "cursor-pointer size-56",
+                        label: cn(
+                          "text-foreground hover:text-foreground",
+                          field.value && "hidden"
+                        ),
+                        allowedContent: cn(
+                          "text-foreground/70",
+                          field.value && "hidden"
+                        ),
+                        button: cn(
+                          buttonVariants({ variant: "default", size: "sm" }),
+                          "after:bg-primary data-[state=uploading]:bg-primary/70 focus-within:ring-ring disabled:opacity-100"
+                        ),
+                      }}
+                      content={{
+                        uploadIcon() {
+                          if (field.value) {
+                            return (
+                              <Image
+                                src={field.value}
+                                width={200}
+                                height={200}
+                                className="h-24 w-auto rounded-md"
+                                alt="Police Report Document"
+                              />
+                            )
+                          }
+                          return <UploadCloud className="size-12" />
+                        },
+                      }}
+                      endpoint="documentUploader"
+                      onClientUploadComplete={(res) => {
+                        field.onChange(res[0].url)
+                        toast.success("Police report uploaded successful")
+                      }}
+                      onUploadError={() => {
+                        toast.error("Police report upload failed!")
+                      }}
+                    />
+                  </FormControl>
+                </div>
+                <FormMessage className="text-center" />
+              </FormItem>
+            )}
+          />
         </div>
-        <StepperFormActions />
+        <StepperFormActions loading={loading} />
       </form>
     </Form>
   )

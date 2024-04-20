@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { setPersonalInfo } from "@web/src/actions/user"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
 import { ButtonInput } from "@web/src/components/ui/button-input"
 import { Calendar } from "@web/src/components/ui/calendar"
@@ -26,57 +28,50 @@ import {
   SelectTrigger,
 } from "@web/src/components/ui/select"
 import { useStepper } from "@web/src/components/ui/stepper"
+import { PersonalInfoFormSchema } from "api-contract/types"
 import { format, subYears } from "date-fns"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 interface PersonalInfoFormProps {
-  // Props
+  personalInfo: z.infer<typeof PersonalInfoFormSchema> | undefined
 }
 
-// Get Pernosal Information
-const PersonalInfoFormSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  middleName: z.union([
-    z.string().min(2, {
-      message: "Middle name must be at least 2 characters.",
-    }),
-    z.string().length(0),
-  ]),
-  lastName: z.string().min(2, {
-    message: "Last name must be at least 2 characters.",
-  }),
-  userName: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .regex(/^[a-zA-Z0-9_]+$/, {
-      message: "Username can only contain letters, numbers, and underscores.",
-    }),
-  dob: z.date({ required_error: "Date of birth is required." }),
-  gender: z.enum(["male", "female", "others"], {
-    required_error: "Gender is required.",
-  }),
-})
-
-const PersonalFormInfo: React.FC<PersonalInfoFormProps> = () => {
+const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
+  personalInfo,
+}) => {
+  const [loading, setLoading] = useState(false)
   const { nextStep } = useStepper()
 
   const form = useForm<z.infer<typeof PersonalInfoFormSchema>>({
     resolver: zodResolver(PersonalInfoFormSchema),
     defaultValues: {
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      userName: "",
+      firstName: personalInfo?.firstName ?? "",
+      middleName: personalInfo?.middleName ?? "",
+      lastName: personalInfo?.lastName ?? "",
+      userName: personalInfo?.userName ?? "",
+      dob: personalInfo?.dob ? new Date(personalInfo.dob) : undefined,
+      gender: personalInfo?.gender ?? undefined,
     },
   })
 
-  const onSubmit = (data: z.infer<typeof PersonalInfoFormSchema>) => {
-    nextStep()
+  const onSubmit = async (data: z.infer<typeof PersonalInfoFormSchema>) => {
+    try {
+      setLoading(true)
+      const response = await setPersonalInfo(data)
+
+      if (response.status === 422 || response.status === 500) {
+        toast.error("Something went wrong!")
+        return
+      }
+
+      nextStep()
+    } catch {
+      toast.error("Something went wrong!")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -208,7 +203,7 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = () => {
             )}
           />
         </div>
-        <StepperFormActions />
+        <StepperFormActions loading={loading} />
       </form>
     </Form>
   )

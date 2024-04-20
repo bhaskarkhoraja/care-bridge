@@ -1,8 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { setAddressContactInfo } from "@web/src/actions/user"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
-import { ButtonInput } from "@web/src/components/ui/button-input"
 import {
   Form,
   FormControl,
@@ -20,79 +21,58 @@ import {
   SelectTrigger,
 } from "@web/src/components/ui/select"
 import { useStepper } from "@web/src/components/ui/stepper"
+import { AddressContactFormSchema, CountriesSchema } from "api-contract/types"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 interface AddressContactProps {
-  // Props
+  countries: z.infer<typeof CountriesSchema>[]
+  addressContactInfo: z.infer<typeof AddressContactFormSchema> | undefined
 }
 
-// Get Address and Contacts of user
-const AddressContactSchema = z.object({
-  street: z.string().min(2, {
-    message: "Street must be at least 2 characters.",
-  }),
-  city: z.string().min(2, {
-    message: "City must be at least 2 characters.",
-  }),
-  state: z.string().min(2, {
-    message: "State must be at least 2 characters.",
-  }),
-  postalCode: z
-    .string({ required_error: "Postal code is required" })
-    .length(5, { message: "Postal code must be 5 digits long." })
-    .transform((v) => Number(v) || 0),
-  countryId: z.string().min(3, { message: "Country Name is required" }),
-  phoneCode: z.string().min(3, { message: "Code is required" }),
-  phoneNumber: z
-    .string({ required_error: "Phone Number is required" })
-    .length(10, { message: "Phone Number must be 10 digits long." })
-    .transform((v) => Number(v) || 0),
-})
-
-const countryList = [
-  {
-    id: 1,
-    name: "Afghanistan",
-    nationality: "Afghan",
-    short_name: "AF",
-    country_code: "93",
-  },
-  {
-    id: 2,
-    name: "Albania",
-    nationality: "Albanian",
-    short_name: "AL",
-    country_code: "355",
-  },
-  {
-    id: 3,
-    name: "Algeria",
-    nationality: "Algerian",
-    short_name: "DZ",
-    country_code: "213",
-  },
-]
-
-const AddressContact: React.FC<AddressContactProps> = ({}) => {
+const AddressContact: React.FC<AddressContactProps> = ({
+  countries,
+  addressContactInfo,
+}) => {
+  const [loading, setLoading] = useState(false)
   const { nextStep } = useStepper()
 
-  const onSubmit = (data: z.infer<typeof AddressContactSchema>) => {
-    nextStep()
-  }
-
-  const form = useForm<z.infer<typeof AddressContactSchema>>({
-    resolver: zodResolver(AddressContactSchema),
+  const form = useForm<z.infer<typeof AddressContactFormSchema>>({
+    resolver: zodResolver(AddressContactFormSchema),
     defaultValues: {
-      street: "",
-      city: "",
-      state: "",
-      postalCode: undefined,
-      countryId: "",
-      phoneCode: "",
-      phoneNumber: undefined,
+      street: addressContactInfo?.street ?? "",
+      city: addressContactInfo?.city ?? "",
+      state: addressContactInfo?.state ?? "",
+      postalCode: addressContactInfo?.postalCode ?? "",
+      countryId: addressContactInfo?.countryId
+        ? addressContactInfo.countryId +
+          "-" +
+          countries.find(
+            (country) => country.id.toString() === addressContactInfo.countryId
+          )?.name
+        : "",
+      phoneCode: addressContactInfo?.phoneCode ?? "",
+      phoneNumber: addressContactInfo?.phoneNumber ?? "",
     },
   })
+
+  const onSubmit = async (data: z.infer<typeof AddressContactFormSchema>) => {
+    try {
+      setLoading(true)
+      const response = await setAddressContactInfo(data)
+
+      if (response.status === 422 || response.status === 500) {
+        toast.error("Something went wrong!")
+        return
+      }
+      nextStep()
+    } catch {
+      toast.error("Something went wrong!")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <Form {...form}>
@@ -161,7 +141,7 @@ const AddressContact: React.FC<AddressContactProps> = ({}) => {
                           tabIndex={-1}
                           {...field}
                           value={
-                            field.value ? field.value.split("-")[1] : undefined
+                            field.value ? field.value.split("-")[5] : undefined
                           }
                         />
                       </SelectTrigger>
@@ -169,7 +149,7 @@ const AddressContact: React.FC<AddressContactProps> = ({}) => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Country</SelectLabel>
-                        {countryList.map((country) => (
+                        {countries.map((country) => (
                           <SelectItem
                             value={`${country.id}-${country.name}`}
                             content={`${country.name}`}
@@ -207,14 +187,19 @@ const AddressContact: React.FC<AddressContactProps> = ({}) => {
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Phone Code</SelectLabel>
-                          {countryList.map((country) => (
-                            <SelectItem
-                              value={country.country_code}
-                              key={country.id}
-                            >
-                              {country.country_code}
-                            </SelectItem>
-                          ))}
+
+                          {countries
+                            .sort((a, b) =>
+                              a.country_code.localeCompare(b.country_code)
+                            )
+                            .map((country) => (
+                              <SelectItem
+                                value={country.country_code}
+                                key={country.id}
+                              >
+                                {country.country_code}
+                              </SelectItem>
+                            ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -237,7 +222,7 @@ const AddressContact: React.FC<AddressContactProps> = ({}) => {
             />
           </div>
         </div>
-        <StepperFormActions />
+        <StepperFormActions loading={loading} />
       </form>
     </Form>
   )
