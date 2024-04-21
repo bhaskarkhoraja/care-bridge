@@ -28,6 +28,10 @@ export const userContract = c.router({
         status: z.literal(false),
         message: z.literal("Failed to update personal info"),
       }),
+      409: z.object({
+        status: z.literal(false),
+        message: z.literal("Username already taken"),
+      }),
       500: z.object({
         status: z.literal(false),
         message: z.literal("Something went wrong"),
@@ -72,6 +76,10 @@ export const userContract = c.router({
       422: z.object({
         status: z.literal(false),
         message: z.literal("Failed to update address & contact info"),
+      }),
+      409: z.object({
+        status: z.literal(false),
+        message: z.literal("Phone number already taken"),
       }),
       500: z.object({
         status: z.literal(false),

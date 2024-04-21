@@ -61,8 +61,16 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
       setLoading(true)
       const response = await setPersonalInfo(data)
 
+      if (response.status === 409) {
+        form.setError("userName", {
+          type: "validate",
+          message: response.body.message,
+        })
+        return
+      }
+
       if (response.status === 422 || response.status === 500) {
-        toast.error("Something went wrong!")
+        toast.error(response.body.message)
         return
       }
 

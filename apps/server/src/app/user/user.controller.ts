@@ -48,6 +48,13 @@ export class UserController {
         try {
           const success = await this.userService.setPersonalInfo(body, user.id)
 
+          if (success === undefined) {
+            return {
+              status: 409,
+              body: { status: false, message: 'Username already taken' },
+            }
+          }
+
           if (!success) {
             return {
               status: 422,

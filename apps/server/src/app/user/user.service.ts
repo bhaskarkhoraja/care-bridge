@@ -40,8 +40,17 @@ export class UserService {
   async setPersonalInfo(
     personalInfo: z.infer<typeof PersonalInfoFormSchema>,
     userId: string,
-  ): Promise<boolean> {
-    const result = await this.pg.query(
+  ): Promise<boolean | undefined> {
+    const result1 = await this.pg.query(
+      'SELECT * FROM profile WHERE user_name = $1 AND user_id != $2',
+      [personalInfo.userName, userId],
+    )
+
+    if (result1.rowCount !== null && result1.rowCount > 0) {
+      return undefined
+    }
+
+    const result2 = await this.pg.query(
       'INSERT INTO profile (first_name, middle_name, last_name, user_name, date_of_birth, gender, active_status, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ON CONFLICT (user_id) DO UPDATE SET first_name = EXCLUDED.first_name, middle_name = EXCLUDED.middle_name, last_name = EXCLUDED.last_name, user_name = EXCLUDED.user_name, date_of_birth = EXCLUDED.date_of_birth, gender = EXCLUDED.gender, active_status = EXCLUDED.active_status',
       [
         personalInfo.firstName,
@@ -55,7 +64,7 @@ export class UserService {
       ],
     )
 
-    if (result.rowCount === 0) {
+    if (result2.rowCount === 0) {
       return false
     }
 
@@ -92,8 +101,17 @@ export class UserService {
   async setAddressContactInfo(
     addressContactInfo: z.infer<typeof AddressContactFormSchema>,
     profileId: string,
-  ): Promise<boolean> {
+  ): Promise<boolean | undefined> {
     const result1 = await this.pg.query(
+      'SELECT * FROM contact WHERE number = $1 AND profile_id != $2',
+      [addressContactInfo.phoneNumber, profileId],
+    )
+
+    if (result1.rowCount !== null && result1.rowCount > 0) {
+      return undefined
+    }
+
+    const result2 = await this.pg.query(
       'INSERT INTO address (street, city, state, postal_code, country_id, profile_id) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (profile_id) DO UPDATE SET street = EXCLUDED.street, city = EXCLUDED.city, state = EXCLUDED.state, postal_code = EXCLUDED.postal_code, country_id = EXCLUDED.country_id',
       [
         addressContactInfo.street,
@@ -105,12 +123,12 @@ export class UserService {
       ],
     )
 
-    const result2 = await this.pg.query(
+    const result3 = await this.pg.query(
       'INSERT INTO contact (number, prefix, profile_id) VALUES ($1, $2, $3) ON CONFLICT (profile_id) DO UPDATE SET number = EXCLUDED.number, prefix = EXCLUDED.prefix',
       [addressContactInfo.phoneNumber, addressContactInfo.phoneCode, profileId],
     )
 
-    if (result1.rowCount === 0 || result2.rowCount === 0) {
+    if (result2.rowCount === 0 || result3.rowCount === 0) {
       return false
     }
 

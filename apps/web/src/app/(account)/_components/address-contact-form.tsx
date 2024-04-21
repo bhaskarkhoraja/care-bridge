@@ -62,6 +62,14 @@ const AddressContact: React.FC<AddressContactProps> = ({
       setLoading(true)
       const response = await setAddressContactInfo(data)
 
+      if (response.status === 409) {
+        form.setError("phoneNumber", {
+          type: "validate",
+          message: response.body.message,
+        })
+        return
+      }
+
       if (response.status === 422 || response.status === 500) {
         toast.error("Something went wrong!")
         return
