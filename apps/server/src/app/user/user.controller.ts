@@ -51,7 +51,10 @@ export class UserController {
           if (!success) {
             return {
               status: 422,
-              body: { status: true, message: 'Failed to update personal info' },
+              body: {
+                status: false,
+                message: 'Failed to update personal info',
+              },
             }
           }
 
@@ -111,7 +114,7 @@ export class UserController {
             return {
               status: 422,
               body: {
-                status: true,
+                status: false,
                 message: 'Failed to update address & contact info',
               },
             }

@@ -25,7 +25,7 @@ export const userContract = c.router({
         message: z.literal("Personal info updated successfully"),
       }),
       422: z.object({
-        status: z.literal(true),
+        status: z.literal(false),
         message: z.literal("Failed to update personal info"),
       }),
       500: z.object({
@@ -70,7 +70,7 @@ export const userContract = c.router({
         message: z.literal("Address & Contact info updated successfully"),
       }),
       422: z.object({
-        status: z.literal(true),
+        status: z.literal(false),
         message: z.literal("Failed to update address & contact info"),
       }),
       500: z.object({
