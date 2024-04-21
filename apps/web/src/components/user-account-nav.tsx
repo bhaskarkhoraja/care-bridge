@@ -50,14 +50,16 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
               src={user.image as string}
               alt={user.email as string}
             />
-            <AvatarFallback>{getShortName(user.name as string)}</AvatarFallback>
+            <AvatarFallback>
+              {getShortName(user.name ?? "New User")}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user.name && <p className="font-medium">{user.name}</p>}
+            <p className="font-medium">{user.name ?? "New User"}</p>
             {user.email && (
               <p className="text-muted-foreground w-[200px] truncate text-sm">
                 {user.email}
