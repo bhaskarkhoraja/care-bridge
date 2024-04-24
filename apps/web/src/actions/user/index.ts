@@ -1,6 +1,8 @@
 "use server"
 
+import { cookies } from "next/headers"
 import client from "@web/src/lib/ts-rest"
+import { UserType } from "@web/src/types/user"
 import {
   AddressContactFormSchema,
   DocumentFormSchema,
@@ -60,4 +62,19 @@ export async function setDocumentInfo(
   return client.users.setDocumentInfo({
     body: data,
   })
+}
+
+/**
+ *
+ **/
+export async function switchBuyerSeller(): Promise<UserType> {
+  const type = cookies().get("user-type")?.value
+
+  if (type === "buyer" || type === undefined) {
+    cookies().set("user-type", "seller")
+  }
+
+  cookies().set("user-type", "buyer")
+
+  return type === "buyer" ? "seller" : "buyer"
 }
