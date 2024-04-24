@@ -51,6 +51,9 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ documentInfo }) => {
         toast.error("Something went wrong!")
         return
       }
+      toast.success("Profile completed", {
+        description: "Your account will be verified within 2-3 days.",
+      })
       NProgress.start()
       router.push("/user")
     } catch (error) {
