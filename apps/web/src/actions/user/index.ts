@@ -71,10 +71,20 @@ export async function switchBuyerSeller(): Promise<UserType> {
   const type = cookies().get("user-type")?.value
 
   if (type === "buyer" || type === undefined) {
-    cookies().set("user-type", "seller")
+    cookies().set("user-type", "seller", {
+      path: "/",
+      httpOnly: true,
+      maxAge: Date.now() + 60 * 1000,
+      sameSite: "lax",
+    })
   }
 
-  cookies().set("user-type", "buyer")
+  cookies().set("user-type", "buyer", {
+    path: "/",
+    httpOnly: true,
+    maxAge: Date.now() + 60 * 1000,
+    sameSite: "lax",
+  })
 
   return type === "buyer" ? "seller" : "buyer"
 }
