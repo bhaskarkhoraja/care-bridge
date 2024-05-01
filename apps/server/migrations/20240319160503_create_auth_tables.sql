@@ -36,6 +36,7 @@ CREATE TABLE sessions
 );
 
 CREATE TYPE user_role AS ENUM ('admin', 'user');
+CREATE TYPE user_type AS ENUM ('buyer', 'seller');
 
 CREATE TABLE users
 (
@@ -46,6 +47,7 @@ CREATE TABLE users
   image TEXT,
   role user_role,
   completed_profile BOOLEAN DEFAULT FALSE,
+  type user_type DEFAULT 'buyer',
 
   PRIMARY KEY (id)
 );
@@ -89,3 +91,4 @@ COMMENT ON COLUMN users."emailVerified" IS 'Timestamp of email verification';
 COMMENT ON COLUMN users.image IS 'URL of the user image';
 COMMENT ON COLUMN users.role IS 'Role (admin, user)';
 COMMENT ON COLUMN users.completed_profile IS 'Indicates if the user has completed their profile';
+COMMENT ON COLUMN users.type IS 'Stores if user is buyer or seller currently';
