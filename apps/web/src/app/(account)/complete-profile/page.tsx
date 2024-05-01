@@ -33,10 +33,13 @@ export default async function CompleteProfilePage({
     notFound()
   }
 
-  const countries = await getCountries()
-  const personalInfo = await getPersonalInfo()
-  const addressContactInfo = await getAddressContactInfo()
-  const documentInfo = await getDocumentInfo()
+  const [countries, personalInfo, addressContactInfo, documentInfo] =
+    await Promise.all([
+      getCountries(),
+      getPersonalInfo(),
+      getAddressContactInfo(),
+      getDocumentInfo(),
+    ])
 
   if (countries.status === 204) {
     notFound()
