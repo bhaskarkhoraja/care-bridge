@@ -1,6 +1,5 @@
 import { cookies } from "next/headers"
 import Link from "next/link"
-import { switchBuyerSeller } from "@web/src/actions/user"
 import MainNav from "@web/src/components/layout/main-nav"
 import MobileNav from "@web/src/components/layout/mobile-nav"
 import ModeToggle from "@web/src/components/theme/mode-toggle"
