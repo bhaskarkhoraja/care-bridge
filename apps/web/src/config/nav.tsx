@@ -23,6 +23,7 @@ export const navConfig: NavItem = [
     title: "Family",
     adminOnly: false,
     buyerOnly: true,
+    sellerOnly: false,
     items: [
       {
         name: "Family Member",
@@ -38,35 +39,37 @@ export const navConfig: NavItem = [
       },
     ],
   },
-  /* { */
-  /*   title: "Request", */
-  /*   adminOnly: false, */
-  /*   buyerOnly: true, */
-  /*   items: [ */
-  /*     { */
-  /*       name: "Active", */
-  /*       href: "/user/request", */
-  /*       icon: <Activity />, */
-  /*       description: "All your active requests.", */
-  /*     }, */
-  /*     { */
-  /*       name: "Draft", */
-  /*       href: "/user/request/draft", */
-  /*       icon: <ScissorsLineDashed />, */
-  /*       description: "Requests which are not public.", */
-  /*     }, */
-  /*     { */
-  /*       name: "Archived", */
-  /*       href: "/user/request/archived", */
-  /*       icon: <Archive />, */
-  /*       description: "Requests that has been fulfilled.", */
-  /*     }, */
-  /*   ], */
-  /* }, */
+  {
+    title: "Request",
+    adminOnly: false,
+    buyerOnly: true,
+    sellerOnly: false,
+    items: [
+      {
+        name: "Active",
+        href: "/user/request",
+        icon: <Activity />,
+        description: "All your active requests.",
+      },
+      {
+        name: "Draft",
+        href: "/user/request/draft",
+        icon: <ScissorsLineDashed />,
+        description: "Requests which are not public.",
+      },
+      {
+        name: "Archived",
+        href: "/user/request/archived",
+        icon: <Archive />,
+        description: "Requests that has been fulfilled.",
+      },
+    ],
+  },
   {
     title: "Request",
     adminOnly: false,
     buyerOnly: false,
+    sellerOnly: true,
     items: [
       {
         name: "All Request",
@@ -92,6 +95,7 @@ export const navConfig: NavItem = [
     title: "Message",
     adminOnly: false,
     buyerOnly: false,
+    sellerOnly: false,
     items: [
       {
         name: "Inbox",
@@ -117,6 +121,7 @@ export const navConfig: NavItem = [
     title: "Billing",
     adminOnly: false,
     buyerOnly: false,
+    sellerOnly: false,
     items: [
       {
         name: "Dashboard",
@@ -143,6 +148,7 @@ export const navConfig: NavItem = [
     title: "Admin",
     adminOnly: true,
     buyerOnly: false,
+    sellerOnly: false,
     items: [
       {
         name: "Dashboard",
