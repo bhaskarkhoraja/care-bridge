@@ -37,15 +37,75 @@ export class AuthService {
   }
 
   async getUserByEmail(email: string) {
-    const sql = `select * from users where email = $1`
+    const sql = `SELECT * FROM users WHERE email = $1`
     const result = await this.pg.query(sql, [email])
-    return result.rowCount !== 0 ? result.rows[0] : null
+
+    if (result.rowCount !== 0) {
+      const user = result.rows[0]
+
+      if (user.completed_profile) {
+        const profileSql = `SELECT * FROM profile WHERE user_id = $1`
+        const profileResult = await this.pg.query(profileSql, [user.id])
+
+        if (profileResult.rowCount !== 0) {
+          const profile = profileResult.rows[0]
+          const fullName = profile.middle_name
+            ? `${profile.first_name} ${profile.middle_name} ${profile.last_name}`
+            : `${profile.first_name} ${profile.last_name}`
+
+          return {
+            id: user.id,
+            name: fullName,
+            image: profile.profile_url,
+            completed_profile: user.completed_profile,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            role: user.role,
+            type: user.type,
+            profile_id: profile.id,
+          }
+        }
+      }
+      return user
+    }
+
+    return null
   }
 
   async getVerifiedUserByEmail(email: string) {
-    const sql = `select * from users where email = $1 and "emailVerified" is not null`
+    const sql = `SELECT * FROM users WHERE email = $1 AND "emailVerified" IS NOT NULL`
     const result = await this.pg.query(sql, [email])
-    return result.rowCount !== 0 ? result.rows[0] : null
+
+    if (result.rowCount !== 0) {
+      const user = result.rows[0]
+
+      if (user.completed_profile) {
+        const profileSql = `SELECT * FROM profile WHERE user_id = $1`
+        const profileResult = await this.pg.query(profileSql, [user.id])
+
+        if (profileResult.rowCount !== 0) {
+          const profile = profileResult.rows[0]
+          const fullName = profile.middle_name
+            ? `${profile.first_name} ${profile.middle_name} ${profile.last_name}`
+            : `${profile.first_name} ${profile.last_name}`
+
+          return {
+            id: user.id,
+            name: fullName,
+            image: profile.profile_url,
+            completed_profile: user.completed_profile,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            role: user.role,
+            type: user.type,
+            profile_id: profile.id,
+          }
+        }
+      }
+      return user
+    }
+
+    return null
   }
 
   async getUserByAccount(
@@ -53,22 +113,72 @@ export class AuthService {
     provider: string,
   ): Promise<AdapterUser | null> {
     const sql = `
-          select u.* from users u join accounts a on u.id = a."userId"
-          where
-          a.provider = $1
-          and
-          a."providerAccountId" = $2`
+    SELECT u.*, p.*
+    FROM users u
+    JOIN accounts a ON u.id = a."userId"
+    LEFT JOIN profile p ON u.id = p.user_id
+    WHERE a.provider = $1
+    AND a."providerAccountId" = $2`
 
     const result = await this.pg.query(sql, [provider, providerAccountId])
-    return result.rowCount !== 0 ? result.rows[0] : null
+
+    if (result.rowCount !== 0) {
+      const user = result.rows[0]
+      const profile = result.rows[0]
+
+      if (user.completed_profile && profile) {
+        const fullName = profile.middle_name
+          ? `${profile.first_name} ${profile.middle_name} ${profile.last_name}`
+          : `${profile.first_name} ${profile.last_name}`
+
+        return {
+          id: user.id,
+          name: fullName,
+          image: profile.profile_url,
+          completed_profile: user.completed_profile,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          role: user.role,
+          type: user.type,
+          profile_id: profile.id,
+        }
+      }
+      return user
+    }
+
+    return null
   }
 
   async getUser(id: string) {
     const sql = `select * from users where id = $1`
     try {
       const result = await this.pg.query(sql, [id])
-      return result.rowCount === 0 ? null : result.rows[0]
-    } catch (e) {
+
+      if (result.rowCount !== 0) {
+        const user = result.rows[0]
+        const profile = result.rows[0]
+
+        if (user.completed_profile && profile) {
+          const fullName = profile.middle_name
+            ? `${profile.first_name} ${profile.middle_name} ${profile.last_name}`
+            : `${profile.first_name} ${profile.last_name}`
+
+          return {
+            id: user.id,
+            name: fullName,
+            image: profile.profile_url,
+            completed_profile: user.completed_profile,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            role: user.role,
+            type: user.type,
+            profile_id: profile.id,
+          }
+        }
+        return user
+      }
+      return null
+    } catch {
       return null
     }
   }
@@ -216,18 +326,44 @@ export class AuthService {
     }
     const session: AdapterSession = result1.rows[0]
 
-    const result2 = await this.pg.query(
-      `SELECT users.*, (SELECT id FROM profile WHERE profile.user_id = $1) AS profile_id FROM users WHERE users.id = $1`,
-      [session.userId],
-    )
-    if (result2.rowCount === 0) {
-      return null
+    const result2 = await this.pg.query(`SELECT * from users WHERE id = $1`, [
+      session.userId,
+    ])
+
+    let newUser
+
+    if (result2.rowCount !== 0) {
+      newUser = result2.rows[0]
+
+      const profileSql = `SELECT * FROM profile WHERE user_id = $1`
+      const profileResult = await this.pg.query(profileSql, [newUser.id])
+
+      if (profileResult.rowCount !== 0) {
+        const profile = profileResult.rows[0]
+        const fullName = profile.middle_name
+          ? `${profile.first_name} ${profile.middle_name} ${profile.last_name}`
+          : `${profile.first_name} ${profile.last_name}`
+
+        newUser = {
+          id: newUser.id,
+          name: fullName,
+          image: profile.profile_url ? profile.profile_url : newUser.image,
+          completed_profile: newUser.completed_profile,
+          email: newUser.email,
+          emailVerified: newUser.emailVerified,
+          role: newUser.role,
+          type: newUser.type,
+          profile_id: profile.id,
+        }
+      }
+
+      return {
+        session,
+        user: newUser,
+      }
     }
-    const user = result2.rows[0]
-    return {
-      session,
-      user,
-    }
+
+    return null
   }
 
   async updateSession(
