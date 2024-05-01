@@ -27,7 +27,7 @@ COMMENT ON COLUMN profile.user_name IS 'User chosen username';
 COMMENT ON COLUMN profile.gender IS 'gender (male, female, others)';
 COMMENT ON COLUMN profile.date_of_birth IS 'Date of birth of the user';
 COMMENT ON COLUMN profile.active_status IS 'Indicates if user is active';
-COMMENT ON COLUMN profile.profile_url IS 'URL pointing to the user''s profile image';
+COMMENT ON COLUMN profile.profile_url IS 'URL pointing to the user profile image';
 COMMENT ON COLUMN profile.balance_exhausted IS 'Tracks the amount of balance exhausted';
 COMMENT ON COLUMN profile.user_id IS 'Foreign key referencing the user';
 COMMENT ON COLUMN profile.created_at IS 'Timestamp of when the profile was created';
