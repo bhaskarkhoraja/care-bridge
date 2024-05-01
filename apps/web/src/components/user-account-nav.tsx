@@ -20,7 +20,6 @@ import { signOut } from "next-auth/react"
 import { toast } from "sonner"
 
 import { setUserType } from "../actions/user"
-import { NestAdapter } from "../lib/nest-adapter"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Session["user"]
