@@ -16,18 +16,18 @@ export const metadata = {
   description: "Complete profile to start using app",
 }
 
-const steps = [
-  { label: "Step 1", description: "Personal Info" },
-  { label: "Step 2", description: "Address & Contact" },
-  { label: "Step 3", description: "Documents" },
-] satisfies StepItem[]
-
 export default async function CompleteProfilePage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined }
 }) {
   const user = await getCurrentUser()
+
+  const steps = [
+    { label: "Step 1", description: "Personal Info" },
+    { label: "Step 2", description: "Address & Contact" },
+    { label: "Step 3", description: "Documents" },
+  ] satisfies StepItem[]
 
   if (!user) {
     notFound()
