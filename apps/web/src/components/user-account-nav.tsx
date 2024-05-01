@@ -113,6 +113,11 @@ export const UserAccountNav = ({ user, userType }: UserAccountNavProps) => {
             >
               Switch to {userType}
             </DropdownMenuItem>
+            {user.role === "admin" && (
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/settings">Admin Panel</Link>
+              </DropdownMenuItem>
+            )}
           </>
         ) : null}
         <DropdownMenuSeparator />
