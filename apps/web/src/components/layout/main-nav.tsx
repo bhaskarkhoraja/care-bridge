@@ -38,7 +38,13 @@ const MainNav: React.FC<MainNavProps> = ({ user }) => {
           <NavigationMenu>
             <NavigationMenuList>
               {navConfig.map((nav) => {
-                if (nav.adminOnly && user.role !== "admin") return
+                if (
+                  (nav.adminOnly && user.role !== "admin") ||
+                  (nav.sellerOnly && user.type !== "seller") ||
+                  (nav.buyerOnly && user.type !== "buyer")
+                ) {
+                  return
+                }
                 return (
                   <NavigationMenuItem key={nav.title}>
                     <NavigationMenuTrigger>{nav.title}</NavigationMenuTrigger>

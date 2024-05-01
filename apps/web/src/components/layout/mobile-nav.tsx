@@ -77,7 +77,13 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
           {user && pathname.startsWith("/user") ? (
             <Accordion type="single" collapsible className="w-full">
               {navConfig.map((nav) => {
-                if (nav.adminOnly && user.role !== "admin") return
+                if (
+                  (nav.adminOnly && user.role !== "admin") ||
+                  (nav.sellerOnly && user.type !== "seller") ||
+                  (nav.buyerOnly && user.type !== "buyer")
+                ) {
+                  return
+                }
 
                 return (
                   <AccordionItem value={nav.title} key={nav.title}>
