@@ -2,21 +2,36 @@
 
 import * as React from "react"
 import Link, { LinkProps } from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { Icons } from "@web/src/components/icons"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@web/src/components/ui/accordion"
 import { Button } from "@web/src/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@web/src/components/ui/sheet"
+import { navConfig } from "@web/src/config/nav"
+import { siteConfig } from "@web/src/config/site"
 import { cn } from "@web/src/lib/utils"
+import { Session } from "next-auth"
 
-const MobileNav = () => {
+interface MobileNavProps {
+  user: Session["user"] | undefined
+}
+
+const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
   const [open, setOpen] = React.useState(false)
+  const pathname = usePathname()
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 sm:hidden"
         >
           <svg
             strokeWidth="1.5"
@@ -52,12 +67,63 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">
         <MobileLink
-          href="/"
+          href={user ? "/user" : "/"}
           className="flex items-center"
           onOpenChange={setOpen}
         >
-          <Icons.logofull className="mr-2 h-8 w-fit" />
+          <Icons.logofull className="mr-2 h-8 w-auto" />
         </MobileLink>
+        <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pr-4">
+          {user && pathname.startsWith("/user") ? (
+            <Accordion type="single" collapsible className="w-full">
+              {navConfig.map((nav) => {
+                if (nav.adminOnly && user.role !== "admin") return
+
+                return (
+                  <AccordionItem value={nav.title} key={nav.title}>
+                    <AccordionTrigger className="hover:no-underline">
+                      {nav.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="ms-4 flex flex-col">
+                      {nav.items.map((navItem) => (
+                        <Link
+                          href={navItem.href}
+                          key={navItem.name}
+                          className="hover:bg-accent hover:text-accent-foreground rounded-md p-3"
+                        >
+                          <div className="flex items-center gap-3">
+                            {navItem.icon} {navItem.name}
+                          </div>
+                        </Link>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              })}
+            </Accordion>
+          ) : (
+            <>
+              {user && (
+                <Link
+                  href="/user"
+                  className={cn(
+                    "text-foreground/60 hover:text-foreground/80 block transition-colors sm:hidden"
+                  )}
+                >
+                  Get Started
+                </Link>
+              )}
+              <Link
+                href={siteConfig.links.github}
+                className={cn(
+                  "text-foreground/60 hover:text-foreground/80 block transition-colors sm:hidden"
+                )}
+              >
+                GitHub
+              </Link>
+            </>
+          )}
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   )
