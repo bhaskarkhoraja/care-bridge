@@ -85,10 +85,19 @@ export class AuthService {
       ...user,
     }
 
-    const { id, name, email, emailVerified, image } = newUser
+    const {
+      id,
+      name,
+      email,
+      emailVerified,
+      image,
+      role,
+      completed_profile,
+      type,
+    } = newUser
     const updateSql = `
         UPDATE users set
-        name = $2, email = $3, "emailVerified" = $4, image = $5
+        name = $2, email = $3, "emailVerified" = $4, image = $5, role = $6, completed_profile = $7, type = $8
         where id = $1
         RETURNING name, id, email, "emailVerified", image
       `
@@ -98,6 +107,9 @@ export class AuthService {
       email,
       emailVerified,
       image,
+      role,
+      completed_profile,
+      type,
     ])
     return query2.rows[0]
   }
