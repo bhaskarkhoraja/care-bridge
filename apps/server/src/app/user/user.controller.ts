@@ -200,6 +200,37 @@ export class UserController {
           }
         }
       },
+      /**
+       * Set Document info, update or insert
+       **/
+      setUserType: async ({ body }) => {
+        try {
+          const success = await this.userService.setUserType(body, user.id)
+
+          if (!success) {
+            return {
+              status: 422,
+              body: {
+                status: true,
+                message: 'Failed to update user type',
+              },
+            }
+          }
+
+          return {
+            status: 200,
+            body: {
+              status: true,
+              message: 'User type updated successfully',
+            },
+          }
+        } catch (error) {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

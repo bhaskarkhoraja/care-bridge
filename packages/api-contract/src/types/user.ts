@@ -63,3 +63,9 @@ export const DocumentFormSchema = z.object({
     .string()
     .url({ message: "Police report image is required." }),
 })
+
+export const UserTypeSchema = z.object({
+  type: z.enum(["buyer", "seller"], {
+    required_error: "User Type is required.",
+  }),
+})

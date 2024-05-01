@@ -5,6 +5,7 @@ import {
   AddressContactFormSchema,
   DocumentFormSchema,
   PersonalInfoFormSchema,
+  UserTypeSchema,
 } from "../types/user"
 
 const c = initContract()
@@ -155,5 +156,28 @@ export const userContract = c.router({
       }),
     },
     summary: "Get user by id",
+  },
+  /**
+   * Set User Type
+   **/
+  setUserType: {
+    method: "POST",
+    path: "/user/type",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        message: z.literal("User type updated successfully"),
+      }),
+      422: z.object({
+        status: z.literal(true),
+        message: z.literal("Failed to update user type"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    body: UserTypeSchema,
+    summary: "Set user type(buyer | seller)",
   },
 })

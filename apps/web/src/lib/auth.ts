@@ -89,6 +89,7 @@ export const authOptions: NextAuthOptions = {
       session.user.role = user.role
       session.user.completed_profile = user.completed_profile
       session.user.profile_id = user.profile_id
+      session.user.type = user.type
       return session
     },
   },

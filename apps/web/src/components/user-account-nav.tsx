@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   Avatar,
   AvatarFallback,
@@ -15,16 +15,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@web/src/components/ui/dropdown-menu"
-import { UserType } from "@web/src/types/user"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
 
-import { switchBuyerSeller } from "../actions/user"
+import { setUserType } from "../actions/user"
+import { NestAdapter } from "../lib/nest-adapter"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Session["user"]
-  userType: UserType | undefined
 }
 
 /**
@@ -45,30 +44,27 @@ function getShortName(name: string): string {
   return shortName
 }
 
-export const UserAccountNav = ({ user, userType }: UserAccountNavProps) => {
+export const UserAccountNav = ({ user }: UserAccountNavProps) => {
+  const router = useRouter()
   /**
    * Switch user type
    **/
   async function switchUserType() {
     try {
-      const userType = await switchBuyerSeller()
+      const userType = await setUserType({
+        type: user.type === "buyer" ? "seller" : "buyer",
+      })
 
       if (userType) {
         toast.success(
-          `Switched To ${userType[0].toUpperCase() + userType.slice(1)}.`
+          `Switched to ${user.type === "buyer" ? "seller" : "buyer"}.`
         )
+        router.refresh()
       }
     } catch {
       toast.error(`Failed to switch user.`)
     }
   }
-
-  // Switch user to buyer if its undefined
-  useEffect(() => {
-    if (!userType) {
-      switchUserType()
-    }
-  }, [userType])
 
   return (
     <DropdownMenu>
@@ -105,13 +101,8 @@ export const UserAccountNav = ({ user, userType }: UserAccountNavProps) => {
             <DropdownMenuItem asChild>
               <Link href="/dashboard/settings">Settings</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={(event) => {
-                event.preventDefault()
-                switchUserType()
-              }}
-            >
-              Switch to {userType}
+            <DropdownMenuItem onSelect={switchUserType}>
+              Switch to {user.type === "buyer" ? "seller" : "buyer"}
             </DropdownMenuItem>
             {user.role === "admin" && (
               <DropdownMenuItem asChild>

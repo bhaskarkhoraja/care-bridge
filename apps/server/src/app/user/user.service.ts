@@ -5,6 +5,7 @@ import {
   AddressContactFormSchema,
   PersonalInfoFormSchema,
   DocumentFormSchema,
+  UserTypeSchema,
 } from 'api-contract/types'
 import z from 'zod'
 
@@ -182,6 +183,24 @@ export class UserService {
     )
 
     if (result3.rowCount === 0) {
+      return false
+    }
+
+    return true
+  }
+  /**
+   * Set User Type
+   **/
+  async setUserType(
+    userType: z.infer<typeof UserTypeSchema>,
+    userId: string,
+  ): Promise<boolean> {
+    const result = await this.pg.query(
+      'UPDATE public.users SET type = $1 WHERE id = $2',
+      [userType.type, userId],
+    )
+
+    if (result.rowCount === 0) {
       return false
     }
 

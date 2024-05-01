@@ -4,11 +4,11 @@ import { cookies } from "next/headers"
 import { initClient } from "@ts-rest/core"
 import { webEnv } from "@web/src/lib/env"
 import { cookieName } from "@web/src/lib/utils"
-import { UserType } from "@web/src/types/user"
 import {
   AddressContactFormSchema,
   DocumentFormSchema,
   PersonalInfoFormSchema,
+  UserTypeSchema,
 } from "node_modules/api-contract/dist/types/user.mjs"
 import contract from "packages/api-contract/dist/index.mjs"
 import { z } from "zod"
@@ -106,24 +106,14 @@ export async function setDocumentInfo(
 /**
  *
  **/
-export async function switchBuyerSeller(): Promise<UserType> {
-  const type = cookies().get("user-type")?.value
-
-  if (type === "buyer" || type === undefined) {
-    cookies().set("user-type", "seller", {
-      path: "/",
-      httpOnly: true,
-      maxAge: Date.now() + 60 * 1000,
-      sameSite: "lax",
-    })
-  }
-
-  cookies().set("user-type", "buyer", {
-    path: "/",
-    httpOnly: true,
-    maxAge: Date.now() + 60 * 1000,
-    sameSite: "lax",
+export async function setUserType(data: z.infer<typeof UserTypeSchema>) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
   })
-
-  return type === "buyer" ? "seller" : "buyer"
+  return client.users.setUserType({
+    body: data,
+  })
 }

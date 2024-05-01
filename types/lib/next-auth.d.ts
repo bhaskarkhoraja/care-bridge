@@ -7,6 +7,7 @@ declare module "next-auth" {
       id: string
       role: "admin" | "user"
       completed_profile: boolean
+      type: "buyer" | "seller"
       profile_id: string | null
       // default types because
       name?: string | null
@@ -19,5 +20,6 @@ declare module "next-auth" {
     role: "admin" | "user"
     completed_profile: boolean
     profile_id: string | null
+    type: "buyer" | "seller"
   }
 }
