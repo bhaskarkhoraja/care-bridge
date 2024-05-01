@@ -1,19 +1,28 @@
 "use server"
 
 import { cookies } from "next/headers"
-import client from "@web/src/lib/ts-rest"
+import { initClient } from "@ts-rest/core"
+import { webEnv } from "@web/src/lib/env"
+import { cookieName } from "@web/src/lib/utils"
 import { UserType } from "@web/src/types/user"
 import {
   AddressContactFormSchema,
   DocumentFormSchema,
   PersonalInfoFormSchema,
 } from "node_modules/api-contract/dist/types/user.mjs"
+import contract from "packages/api-contract/dist/index.mjs"
 import { z } from "zod"
 
 /**
  * Return the personal info of the profile
  **/
 export async function getPersonalInfo() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
   return client.users.getPersonalInfo()
 }
 
@@ -23,6 +32,12 @@ export async function getPersonalInfo() {
 export async function setPersonalInfo(
   data: z.infer<typeof PersonalInfoFormSchema>
 ) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
   return client.users.setPersonalInfo({
     body: data,
   })
@@ -32,6 +47,12 @@ export async function setPersonalInfo(
  * Return the address info of the profile
  **/
 export async function getAddressContactInfo() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
   return client.users.getAddressContactInfo()
 }
 
@@ -41,6 +62,12 @@ export async function getAddressContactInfo() {
 export async function setAddressContactInfo(
   data: z.infer<typeof AddressContactFormSchema>
 ) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
   return client.users.setAddressContactInfo({
     body: data,
   })
@@ -50,6 +77,12 @@ export async function setAddressContactInfo(
  * Return the document info of the profile
  **/
 export async function getDocumentInfo() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
   return client.users.getDocumentInfo()
 }
 
@@ -59,6 +92,12 @@ export async function getDocumentInfo() {
 export async function setDocumentInfo(
   data: z.infer<typeof DocumentFormSchema>
 ) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
   return client.users.setDocumentInfo({
     body: data,
   })

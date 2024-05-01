@@ -47,3 +47,8 @@ const isDate = (value: unknown): value is string =>
     ? new Date(value).toString() !== "Invalid Date" &&
       !Number.isNaN(Date.parse(value))
     : false
+
+export const cookieName =
+  process.env.NEXTAUTH_URL?.startsWith("https://") ?? !!process.env.VERCEL
+    ? "__Secure-next-auth.session-token"
+    : "next-auth.session-token"
