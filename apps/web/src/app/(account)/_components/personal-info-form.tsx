@@ -92,7 +92,13 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="First Name" {...field} />
+                  <Input
+                    label="First Name"
+                    aria-invalid={
+                      form.formState.errors.firstName ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,7 +110,13 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="Middle Name" {...field} />
+                  <Input
+                    label="Middle Name"
+                    aria-invalid={
+                      form.formState.errors.middleName ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -116,7 +128,13 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="Last Name" {...field} />
+                  <Input
+                    label="Last Name"
+                    aria-invalid={
+                      form.formState.errors.lastName ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -128,7 +146,13 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="Username" {...field} />
+                  <Input
+                    label="Username"
+                    aria-invalid={
+                      form.formState.errors.userName ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,6 +173,9 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
                         label="Gender"
                         className="border-x-0"
                         tabIndex={-1}
+                        aria-invalid={
+                          form.formState.errors.gender ? "true" : "false"
+                        }
                         {...field}
                         value={
                           field.value
@@ -182,6 +209,9 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
                     <PopoverTrigger className="group" asChild>
                       <ButtonInput
                         label="Date of birth"
+                        aria-invalid={
+                          form.formState.errors.dob ? "true" : "false"
+                        }
                         {...field}
                         value={
                           field.value

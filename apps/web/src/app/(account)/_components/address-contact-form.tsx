@@ -92,7 +92,13 @@ const AddressContact: React.FC<AddressContactProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="Street Name" {...field} />
+                  <Input
+                    label="Street Name"
+                    aria-invalid={
+                      form.formState.errors.street ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,7 +110,11 @@ const AddressContact: React.FC<AddressContactProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="City Name" {...field} />
+                  <Input
+                    label="City Name"
+                    aria-invalid={form.formState.errors.city ? "true" : "false"}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -116,7 +126,13 @@ const AddressContact: React.FC<AddressContactProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="State Name" {...field} />
+                  <Input
+                    label="State Name"
+                    aria-invalid={
+                      form.formState.errors.state ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -128,7 +144,14 @@ const AddressContact: React.FC<AddressContactProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input label="Postal Code" type="number" {...field} />
+                  <Input
+                    label="Postal Code"
+                    type="number"
+                    aria-invalid={
+                      form.formState.errors.postalCode ? "true" : "false"
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -147,6 +170,9 @@ const AddressContact: React.FC<AddressContactProps> = ({
                           label="Country Name"
                           className="border-x-0"
                           tabIndex={-1}
+                          aria-invalid={
+                            form.formState.errors.countryId ? "true" : "false"
+                          }
                           {...field}
                           value={
                             field.value ? field.value.split("-")[5] : undefined
@@ -188,6 +214,9 @@ const AddressContact: React.FC<AddressContactProps> = ({
                             label="Code"
                             className="border-x-0"
                             tabIndex={-1}
+                            aria-invalid={
+                              form.formState.errors.phoneCode ? "true" : "false"
+                            }
                             {...field}
                           />
                         </SelectTrigger>
@@ -222,7 +251,14 @@ const AddressContact: React.FC<AddressContactProps> = ({
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormControl>
-                    <Input label="Phone Number" type="number" {...field} />
+                    <Input
+                      label="Phone Number"
+                      type="number"
+                      aria-invalid={
+                        form.formState.errors.phoneNumber ? "true" : "false"
+                      }
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
