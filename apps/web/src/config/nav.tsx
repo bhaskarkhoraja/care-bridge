@@ -33,7 +33,7 @@ export const navConfig: NavItem = [
       },
       {
         name: "Add Member",
-        href: "/user/add-member",
+        href: "/user/family-member/add",
         icon: <UserRoundPlus />,
         description: "Add members to Care Bridge.",
       },
