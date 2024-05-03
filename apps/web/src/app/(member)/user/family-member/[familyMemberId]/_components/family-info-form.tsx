@@ -1,6 +1,8 @@
 "use client"
 
 import { memo, useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { setFamilyMemberInfo } from "@web/src/actions/user/family-member"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
 import { ButtonInput } from "@web/src/components/ui/button-input"
 import { Calendar } from "@web/src/components/ui/calendar"
@@ -28,42 +30,49 @@ import {
 import { useStepper } from "@web/src/components/ui/stepper"
 import { FamilyInfoFormSchema } from "api-contract/types"
 import { format, subYears } from "date-fns"
-import { UseFormReturn } from "react-hook-form"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 interface FamilyInfoFormProps {
-  form: UseFormReturn<z.infer<typeof FamilyInfoFormSchema>, any, undefined>
+  familyMemberId: string
+  familyMemberInfo: z.infer<typeof FamilyInfoFormSchema> | undefined
 }
 
-const FamilyFormInfo: React.FC<FamilyInfoFormProps> = ({ form }) => {
+const FamilyFormInfo: React.FC<FamilyInfoFormProps> = ({
+  familyMemberId,
+  familyMemberInfo,
+}) => {
   const [loading, setLoading] = useState(false)
   const { nextStep } = useStepper()
 
+  const form = useForm<z.infer<typeof FamilyInfoFormSchema>>({
+    resolver: zodResolver(FamilyInfoFormSchema),
+    defaultValues: {
+      firstName: familyMemberInfo?.firstName ?? "",
+      middleName: familyMemberInfo?.middleName ?? "",
+      lastName: familyMemberInfo?.lastName ?? "",
+      dob: familyMemberInfo?.dob ? new Date(familyMemberInfo.dob) : undefined,
+      gender: familyMemberInfo?.gender ?? undefined,
+    },
+  })
+
   const onSubmit = async (data: z.infer<typeof FamilyInfoFormSchema>) => {
-    nextStep()
-    /* try { */
-    /*   setLoading(true) */
-    /*   const response = await setFamilyInfo(data) */
+    try {
+      setLoading(true)
+      const response = await setFamilyMemberInfo(data, familyMemberId)
 
-    /*   if (response.status === 409) { */
-    /*     form.setError("userName", { */
-    /*       type: "validate", */
-    /*       message: response.body.message, */
-    /*     }) */
-    /*     return */
-    /*   } */
+      if (response.status === 422 || response.status === 500) {
+        toast.error(response.body.message)
+        return
+      }
 
-    /*   if (response.status === 422 || response.status === 500) { */
-    /*     toast.error(response.body.message) */
-    /*     return */
-    /*   } */
-
-    /*   nextStep() */
-    /* } catch { */
-    /*   toast.error("Something went wrong!") */
-    /* } finally { */
-    /*   setLoading(false) */
-    /* } */
+      nextStep()
+    } catch {
+      toast.error("Something went wrong!")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

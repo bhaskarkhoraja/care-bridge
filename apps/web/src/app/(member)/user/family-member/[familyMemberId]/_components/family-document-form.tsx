@@ -4,7 +4,7 @@ import { memo, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { setDocumentInfo } from "@web/src/actions/user"
+import { setFamilyDocumentInfo } from "@web/src/actions/user/family-member"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
 import { buttonVariants } from "@web/src/components/ui/button"
 import {
@@ -17,49 +17,54 @@ import {
 import { Label } from "@web/src/components/ui/label"
 import { UploadDropzone } from "@web/src/lib/uploadthing/uploadthing"
 import { cn } from "@web/src/lib/utils"
-import { DocumentFormSchema } from "api-contract/types"
 import { UploadCloud } from "lucide-react"
+import { DocumentFormSchema } from "node_modules/api-contract/dist/types/user.mjs"
 import NProgress from "nprogress"
-import { useForm, UseFormReturn } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
 interface FamilyDocumentFormProps {
-  form: UseFormReturn<z.infer<typeof DocumentFormSchema>, any, undefined>
+  familyMemberId: string
+  familyDocumentInfo: z.infer<typeof DocumentFormSchema> | undefined
 }
 
 // Uploads the images to uploadthing and stores url
-const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({ form }) => {
+const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
+  familyMemberId,
+  familyDocumentInfo,
+}) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  /* const form = useForm<z.infer<typeof DocumentFormSchema>>({ */
-  /*   resolver: zodResolver(DocumentFormSchema), */
-  /*   defaultValues: { */
-  /*     profileUrl: documentInfo?.profileUrl ?? "", */
-  /*     documentUrl: documentInfo?.documentUrl ?? "", */
-  /*     policeReportUrl: documentInfo?.policeReportUrl ?? "", */
-  /*   }, */
-  /* }) */
+  const form = useForm<z.infer<typeof DocumentFormSchema>>({
+    resolver: zodResolver(DocumentFormSchema),
+    defaultValues: {
+      profileUrl: familyDocumentInfo?.profileUrl ?? "",
+      documentUrl: familyDocumentInfo?.documentUrl ?? "",
+      policeReportUrl: familyDocumentInfo?.policeReportUrl ?? "",
+    },
+  })
 
   const onSubmit = async (data: z.infer<typeof DocumentFormSchema>) => {
-    /* try { */
-    /*   setLoading(true) */
-    /*   const response = await setDocumentInfo(data) */
-    /*   if (response.status === 422 || response.status === 500) { */
-    /*     toast.error("Something went wrong!") */
-    /*     return */
-    /*   } */
-    /*   toast.success("Profile completed", { */
-    /*     description: "Your account will be verified within 2-3 days.", */
-    /*   }) */
-    /*   NProgress.start() */
-    /*   router.push("/user") */
-    /* } catch (error) { */
-    /*   toast.error("Something went wrong!") */
-    /* } finally { */
-    /*   setLoading(false) */
-    /* } */
+    try {
+      setLoading(true)
+      const response = await setFamilyDocumentInfo(data, familyMemberId)
+
+      if (response.status === 422 || response.status === 500) {
+        toast.error("Something went wrong!")
+        return
+      }
+      toast.success("Added member successfully", {
+        description: "Member will be verified within 2-3 days.",
+      })
+      NProgress.start()
+      router.push("/user")
+    } catch (error) {
+      toast.error("Something went wrong!")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
