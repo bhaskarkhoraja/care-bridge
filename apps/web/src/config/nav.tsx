@@ -17,6 +17,7 @@ import {
   UsersRound,
   Wallet,
 } from "lucide-react"
+import { v4 as uuidv4 } from "uuid"
 
 export const navConfig: NavItem = [
   {
@@ -33,7 +34,7 @@ export const navConfig: NavItem = [
       },
       {
         name: "Add Member",
-        href: "/user/family-member/add",
+        href: `/user/family-member/${uuidv4()}`,
         icon: <UserRoundPlus />,
         description: "Add members to Care Bridge.",
       },
