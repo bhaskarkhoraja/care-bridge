@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS family_member (
   middle_name VARCHAR(255),
   last_name VARCHAR(255) NOT NULL,
   gender user_gender,
-  profile_url TEXT NOT NULL,
+  profile_url TEXT,
   date_of_birth TIMESTAMPTZ NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
