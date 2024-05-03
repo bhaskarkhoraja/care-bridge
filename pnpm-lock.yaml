@@ -264,6 +264,9 @@ importers:
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
       '@uploadthing/react':
         specifier: ^6.5.1
         version: 6.5.1(@uploadthing/mime-types@0.2.9)(next@14.2.3(@babel/core@7.24.5)(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.10.1(express@4.19.2)(next@14.2.3(@babel/core@7.24.5)(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.15(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))))
@@ -333,6 +336,9 @@ importers:
       uploadthing:
         specifier: ^6.10.1
         version: 6.10.1(express@4.19.2)(next@14.2.3(@babel/core@7.24.5)(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.15(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       vaul:
         specifier: ^0.9.0
         version: 0.9.0(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2340,6 +2346,9 @@ packages:
 
   '@types/unist@3.0.2':
     resolution: {integrity: sha512-dqId9J8K/vGi5Zr7oo212BGii5m3q5Hxlkwy3WpYuKPklmBEvsbMYYyLxAQpSffdLl/gdW0XUpKWFvYmyoWCoQ==}
+
+  '@types/uuid@9.0.8':
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -9368,6 +9377,8 @@ snapshots:
   '@types/unist@2.0.10': {}
 
   '@types/unist@3.0.2': {}
+
+  '@types/uuid@9.0.8': {}
 
   '@types/yargs-parser@21.0.3': {}
 
