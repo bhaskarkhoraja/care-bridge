@@ -54,7 +54,7 @@ export const AddressContactFormSchema = z.object({
 })
 
 /**
- * DocumentFormSchema for user
+ * DocumentFormSchema for user and family member
  **/
 export const DocumentFormSchema = z.object({
   profileUrl: z.string().url({ message: "Profile image is required." }),
