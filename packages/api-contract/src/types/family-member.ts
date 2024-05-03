@@ -29,6 +29,7 @@ export const FamilyInfoFormSchema = z.object({
 export const FamilySpecialNeedsSchema = z.object({
   specialNeeds: z.array(
     z.object({
+      id: z.string(),
       title: z.string().min(5, {
         message: "Title should be atleast 5 characters",
       }),
