@@ -110,7 +110,7 @@ export const userContract = c.router({
         message: z.literal("Something went wrong"),
       }),
     },
-    summary: "Get user by id",
+    summary: "Get address and contact details",
   },
   /**
    * Set Document info, update or insert
@@ -133,7 +133,7 @@ export const userContract = c.router({
       }),
     },
     body: DocumentFormSchema,
-    summary: "Set personal info",
+    summary: "Set user document",
   },
   /**
    * Get the document info of user using session-id
