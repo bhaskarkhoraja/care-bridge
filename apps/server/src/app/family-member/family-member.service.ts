@@ -159,8 +159,13 @@ export class FamilyMemberService {
     )
 
     const result2 = await this.pg.query(
-      'INSERT INTO family_document (document_url, police_report_url, family_member_id) VALUES ($1, $2, $3) ON CONFLICT (family_member_id) DO UPDATE SET document_url = EXCLUDED.document_url, police_report_url = EXCLUDED.police_report_url',
-      [documentInfo.documentUrl, documentInfo.policeReportUrl, familyMemberId],
+      'INSERT INTO family_document (document_url, police_report_url, family_member_id, verified) VALUES ($1, $2, $3, $4) ON CONFLICT (family_member_id) DO UPDATE SET document_url = EXCLUDED.document_url, police_report_url = EXCLUDED.police_report_url, verified = EXCLUDED.verified',
+      [
+        documentInfo.documentUrl,
+        documentInfo.policeReportUrl,
+        familyMemberId,
+        null,
+      ],
     )
 
     if (result1.rowCount === 0 || result2.rowCount === 0) {
