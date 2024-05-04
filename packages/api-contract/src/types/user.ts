@@ -57,6 +57,7 @@ export const AddressContactFormSchema = z.object({
  * DocumentFormSchema for user and family member
  **/
 export const DocumentFormSchema = z.object({
+  verified: z.boolean().nullable(),
   profileUrl: z.string().url({ message: "Profile image is required." }),
   documentUrl: z.string().url({ message: "Document image is required." }),
   policeReportUrl: z
