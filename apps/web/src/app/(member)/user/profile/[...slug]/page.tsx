@@ -1,3 +1,4 @@
+import { Metadata, ResolvingMetadata } from "next"
 import { notFound, redirect } from "next/navigation"
 import getCountries from "@web/src/actions/general"
 import {
@@ -10,6 +11,39 @@ import { getCurrentUser } from "@web/src/lib/session"
 
 import CompleteProfileForm from "./_components/complete-profile-form"
 import UserProfile from "./_components/user-profile"
+
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: { slug: string[] }
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const profileId = params.slug.length === 2 ? params.slug[1] : params.slug[0]
+
+  const personalInfo = await getPersonalInfo(profileId)
+
+  const previousImages = (await parent).openGraph?.images || []
+
+  if (personalInfo.status === 200) {
+    return {
+      title: personalInfo.body.data.middleName
+        ? `${personalInfo.body.data.firstName} ${personalInfo.body.data.middleName} ${personalInfo.body.data.lastName}`
+        : `${personalInfo.body.data.firstName} ${personalInfo.body.data.lastName}`,
+      openGraph: {
+        images: [
+          personalInfo.body.data.profileUrl as string,
+          ...previousImages,
+        ],
+      },
+    }
+  }
+
+  return {
+    title: "Profile",
+  }
+}
 
 export default async function UpdateProfilePage({
   params,
