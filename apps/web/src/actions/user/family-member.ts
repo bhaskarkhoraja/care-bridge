@@ -113,3 +113,16 @@ export async function setFamilyDocumentInfo(
     },
   })
 }
+
+/**
+ * Get all family member info
+ **/
+export async function getAllFamilyMemberInfo() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.family.getAllFamilyMemberInfo()
+}
