@@ -133,10 +133,10 @@ export const familyContract = c.router({
       familyMemberId: z.string(),
       data: DocumentFormSchema,
     }),
-    summary: "Set personal info",
+    summary: "Set family document info",
   },
   /**
-   * Get family member info using family member id
+   * Get family member document
    **/
   getFamilyDocumentInfo: {
     method: "GET",
@@ -155,6 +155,6 @@ export const familyContract = c.router({
         message: z.literal("Something went wrong"),
       }),
     },
-    summary: "Get user by id",
+    summary: "Get family document info",
   },
 })
