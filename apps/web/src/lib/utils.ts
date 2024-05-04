@@ -52,3 +52,21 @@ export const cookieName =
   process.env.NEXTAUTH_URL?.startsWith("https://") ?? !!process.env.VERCEL
     ? "__Secure-next-auth.session-token"
     : "next-auth.session-token"
+
+/**
+ * Get user initials, Bhaskar Khoraja -> BK
+ **/
+export function getShortName(name: string): string {
+  let names = name.split(" ")
+  let shortName = ""
+
+  if (names.length === 1) {
+    shortName = names[0].charAt(0).toUpperCase()
+  } else {
+    shortName =
+      names[0].charAt(0).toUpperCase() +
+      names[names.length - 1].charAt(0).toUpperCase()
+  }
+
+  return shortName
+}

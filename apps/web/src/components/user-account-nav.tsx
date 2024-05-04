@@ -20,27 +20,10 @@ import { signOut } from "next-auth/react"
 import { toast } from "sonner"
 
 import { setUserType } from "../actions/user"
+import { getShortName } from "../lib/utils"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Session["user"]
-}
-
-/**
- * Get user initials, Bhaskar Khoraja -> BK
- **/
-function getShortName(name: string): string {
-  let names = name.split(" ")
-  let shortName = ""
-
-  if (names.length === 1) {
-    shortName = names[0].charAt(0).toUpperCase()
-  } else {
-    shortName =
-      names[0].charAt(0).toUpperCase() +
-      names[names.length - 1].charAt(0).toUpperCase()
-  }
-
-  return shortName
 }
 
 export const UserAccountNav = ({ user }: UserAccountNavProps) => {
