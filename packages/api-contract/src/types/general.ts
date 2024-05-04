@@ -4,7 +4,7 @@ import { z } from "zod"
  * Countries Schema
  **/
 export const CountriesSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string(),
   nationality: z.string(),
   short_name: z.string(),
