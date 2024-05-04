@@ -28,7 +28,7 @@ import { z } from "zod"
 
 interface FamilyMemberProfileProps {
   familyMemberInfo: z.infer<typeof FamilyInfoFormSchema>
-  familySpecialNeedInfo: z.infer<typeof FamilySpecialNeedsSchema>
+  familySpecialNeedInfo: z.infer<typeof FamilySpecialNeedsSchema> | undefined
   familyDocumentInfo: z.infer<typeof DocumentFormSchema>
   familyMemberId: string
 }
@@ -116,39 +116,45 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
               Special Needs
             </h1>
             <div className="flex flex-wrap justify-start gap-4">
-              {familySpecialNeedInfo.specialNeeds.map((needs, index) => (
-                <Card className="w-full md:w-[350px]" key={needs.id}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">
-                      Special Needs #{index + 1}
-                    </CardTitle>
-                    <CardDescription>
-                      Short sumary of any special needs
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Input
-                      label="Title"
-                      value={needs.title}
-                      readOnly
-                      aria-readonly
-                    />
-                    <Textarea
-                      label="Description"
-                      value={needs.description}
-                      readOnly
-                      aria-readonly
-                    />
-                    <Input
-                      label="Url"
-                      type="url"
-                      value={needs.url}
-                      readOnly
-                      aria-readonly
-                    />
-                  </CardContent>
-                </Card>
-              ))}
+              {!familySpecialNeedInfo ? (
+                <p className="text-muted-foreground text-sm">
+                  No special needs found
+                </p>
+              ) : (
+                familySpecialNeedInfo.specialNeeds.map((needs, index) => (
+                  <Card className="w-full md:w-[350px]" key={needs.id}>
+                    <CardHeader>
+                      <CardTitle className="text-lg">
+                        Special Needs #{index + 1}
+                      </CardTitle>
+                      <CardDescription>
+                        Short sumary of any special needs
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <Input
+                        label="Title"
+                        value={needs.title}
+                        readOnly
+                        aria-readonly
+                      />
+                      <Textarea
+                        label="Description"
+                        value={needs.description}
+                        readOnly
+                        aria-readonly
+                      />
+                      <Input
+                        label="Url"
+                        type="url"
+                        value={needs.url}
+                        readOnly
+                        aria-readonly
+                      />
+                    </CardContent>
+                  </Card>
+                ))
+              )}
             </div>
           </div>
           <div className="my-4">
@@ -174,7 +180,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
                       width={300}
                       height={250}
                       alt="Passport / Birth Certificate"
-                      className="rounded-lg"
+                      className="bg-foreground h-52 w-full rounded-lg object-cover"
                     />
                   </CardContent>
                 </Card>
@@ -197,7 +203,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
                       width={300}
                       height={250}
                       alt="Police Report Document"
-                      className="rounded-lg"
+                      className="bg-foreground h-52 w-full rounded-lg object-cover"
                     />
                   </CardContent>
                 </Card>

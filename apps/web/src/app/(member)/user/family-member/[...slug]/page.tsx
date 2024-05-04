@@ -36,7 +36,6 @@ export default async function FamilyMemberPage({
     if (
       familyMemberInfo.status === 204 ||
       familyMemberInfo.status === 500 ||
-      familySpecialNeedInfo.status === 204 ||
       familySpecialNeedInfo.status === 500 ||
       familyDocumentInfo.status === 204 ||
       familyDocumentInfo.status === 500
@@ -47,7 +46,11 @@ export default async function FamilyMemberPage({
       <main className="w-full">
         <FamilyMemberProfile
           familyMemberInfo={familyMemberInfo.body.data}
-          familySpecialNeedInfo={familySpecialNeedInfo.body.data}
+          familySpecialNeedInfo={
+            familySpecialNeedInfo.status === 200
+              ? familySpecialNeedInfo.body.data
+              : undefined
+          }
           familyDocumentInfo={familyDocumentInfo.body.data}
           familyMemberId={familyMemberId}
         />
