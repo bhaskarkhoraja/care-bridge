@@ -28,6 +28,7 @@ export const PersonalInfoFormSchema = z.object({
   gender: z.enum(["male", "female", "others"], {
     required_error: "Gender is required.",
   }),
+  profileUrl: z.string().url().optional(),
 })
 
 /**

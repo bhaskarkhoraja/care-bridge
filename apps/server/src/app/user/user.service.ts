@@ -19,7 +19,7 @@ export class UserService {
     profileId: string,
   ): Promise<z.infer<typeof PersonalInfoFormSchema> | undefined> {
     const result = await this.pg.query(
-      'SELECT first_name, middle_name, last_name, date_of_birth, gender, user_name  FROM public.profile where id = $1',
+      'SELECT first_name, middle_name, last_name, date_of_birth, gender, user_name, profile_url FROM public.profile where id = $1',
       [profileId],
     )
     if (result.rowCount === 0) {
@@ -33,6 +33,7 @@ export class UserService {
       dob: result.rows[0].date_of_birth,
       gender: result.rows[0].gender,
       userName: result.rows[0].user_name,
+      profileUrl: result.rows[0].profile_url,
     }
   }
   /**
