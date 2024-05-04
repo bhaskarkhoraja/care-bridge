@@ -57,7 +57,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
                   : `${familyMemberInfo.firstName} ${familyMemberInfo.lastName}`
               }
             />
-            <AvatarFallback className="text-2xl">
+            <AvatarFallback className="pb-2 text-4xl">
               {getShortName(
                 familyMemberInfo.middleName
                   ? `${familyMemberInfo.firstName} ${familyMemberInfo.middleName} ${familyMemberInfo.lastName}`
