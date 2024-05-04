@@ -49,7 +49,7 @@ export default withAuth(
     const isAuthPage = req.nextUrl.pathname.startsWith("/auth")
     if (isAuthPage) {
       if (session) {
-        return NextResponse.redirect(new URL("/user", req.url))
+        return NextResponse.redirect(new URL("/user/family-member", req.url))
       }
 
       return null
@@ -71,7 +71,7 @@ export default withAuth(
     const isAdminPage = req.nextUrl.pathname.startsWith("/admin")
     if (isAdminPage) {
       if (user.role != "admin") {
-        return NextResponse.redirect(new URL(`/user`, req.url))
+        return NextResponse.redirect(new URL(`/user/family-member`, req.url))
       }
     }
 
@@ -83,7 +83,13 @@ export default withAuth(
 
     // check if profile is completed but still in complete-profile page
     if (isCompleteProfilePage && user.completed_profile) {
-      return NextResponse.redirect(new URL(`/user`, req.url))
+      return NextResponse.redirect(new URL(`/user/family-member`, req.url))
+    }
+
+    // check if current page is user than redirect to user/family-member
+    const isUserPage = req.nextUrl.pathname === "/user"
+    if (isUserPage) {
+      return NextResponse.redirect(new URL(`/user/family-member`, req.url))
     }
   },
   {
