@@ -1,5 +1,11 @@
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import { getAllFamilyMemberInfo } from "@web/src/actions/user/family-member"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@web/src/components/ui/alert"
 import {
   Avatar,
   AvatarFallback,
@@ -13,16 +19,33 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@web/src/components/ui/tooltip"
+import { getCurrentUser } from "@web/src/lib/session"
 import { cn, getShortName } from "@web/src/lib/utils"
 import { format } from "date-fns"
-import { Check, Clock4, Plus, X } from "lucide-react"
+import { Check, Clock4, MailWarning, Plus, X } from "lucide-react"
 import { v4 as uuidv4 } from "uuid"
 
 export default async function FamilyMembers() {
   const familyMembers = await getAllFamilyMemberInfo()
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect("/")
+  }
 
   return (
     <main className="w-full">
+      {user.verified === false && (
+        <Link href={`/user/profile/update/${user.id}`}>
+          <Alert className="mb-4" variant={"destructive"}>
+            <MailWarning className="size-4" />
+            <AlertTitle>Account verification failed.</AlertTitle>
+            <AlertDescription>
+              Please go through your profile and update it.
+            </AlertDescription>
+          </Alert>
+        </Link>
+      )}
       <h1 className="mb-4 text-2xl font-bold leading-none">Family Members</h1>
       {familyMembers.status === 204 ? (
         <>

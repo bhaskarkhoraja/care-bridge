@@ -33,7 +33,8 @@ export default async function UpdateProfilePage({
   if (
     user.profile_id &&
     user.profile_id !== profileId &&
-    action !== undefined
+    action !== undefined &&
+    user.verified !== false
   ) {
     redirect("/user/family-member")
   }

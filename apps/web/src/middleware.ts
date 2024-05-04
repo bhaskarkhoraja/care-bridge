@@ -90,7 +90,11 @@ export default withAuth(
     }
 
     // check if profile is completed but still in /user/profile/complete page
-    if (isCompleteProfilePage && user.completed_profile) {
+    if (
+      isCompleteProfilePage &&
+      user.completed_profile &&
+      user.verified !== false
+    ) {
       return NextResponse.redirect(new URL(`/user/family-member`, req.url))
     }
 
