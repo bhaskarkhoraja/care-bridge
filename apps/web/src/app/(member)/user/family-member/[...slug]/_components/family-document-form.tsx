@@ -40,6 +40,7 @@ const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
   const form = useForm<z.infer<typeof DocumentFormSchema>>({
     resolver: zodResolver(DocumentFormSchema),
     defaultValues: {
+      verified: familyDocumentInfo?.verified ?? null,
       profileUrl: familyDocumentInfo?.profileUrl ?? "",
       documentUrl: familyDocumentInfo?.documentUrl ?? "",
       policeReportUrl: familyDocumentInfo?.policeReportUrl ?? "",

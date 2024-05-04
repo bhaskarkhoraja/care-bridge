@@ -34,7 +34,7 @@ export const navConfig: NavItem = [
       },
       {
         name: "Add Member",
-        href: `/user/family-member/${uuidv4()}`,
+        href: `/user/family-member/add/${uuidv4()}`,
         icon: <UserRoundPlus />,
         description: "Add members to Care Bridge.",
       },

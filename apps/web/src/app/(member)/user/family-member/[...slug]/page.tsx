@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation"
 import {
   getFamilyDocumentInfo,
   getFamilyMemberInfo,
@@ -11,31 +12,62 @@ export default async function FamilyMemberPage({
   params,
   searchParams,
 }: {
-  params: { familyMemberId: string }
+  params: { slug: string[] }
   searchParams: { [key: string]: string | undefined }
 }) {
+  const action = params.slug.length === 2 ? params.slug[0] : undefined
+
+  if (action !== undefined && action !== "add" && action !== "update") {
+    redirect("/user")
+  }
+
+  const familyMemberId =
+    params.slug.length === 2 ? params.slug[1] : params.slug[0]
+
+  const [familyMemberInfo, familySpecialNeedInfo, familyDocumentInfo] =
+    await Promise.all([
+      getFamilyMemberInfo(familyMemberId),
+      getFamilySpecialNeed(familyMemberId),
+      getFamilyDocumentInfo(familyMemberId),
+    ])
+
+  if (action === undefined) {
+    if (
+      familyMemberInfo.status === 204 ||
+      familyMemberInfo.status === 500 ||
+      familySpecialNeedInfo.status === 204 ||
+      familySpecialNeedInfo.status === 500 ||
+      familyDocumentInfo.status === 204 ||
+      familyDocumentInfo.status === 500
+    ) {
+      redirect("/user")
+    }
+    return (
+      <>
+        {JSON.stringify(familyMemberInfo)}
+        <hr />
+        {JSON.stringify(familySpecialNeedInfo)}
+        <hr />
+        {JSON.stringify(familyDocumentInfo)}
+      </>
+    )
+  }
+
   const steps = [
     { label: "Step 1", description: "Family Member Info" },
     { label: "Step 2", description: "Special needs" },
     { label: "Step 3", description: "Documents" },
   ] satisfies StepItem[]
 
-  const [familyMemberInfo, familySpecialNeedInfo, familyDocumentInfo] =
-    await Promise.all([
-      getFamilyMemberInfo(params.familyMemberId),
-      getFamilySpecialNeed(params.familyMemberId),
-      getFamilyDocumentInfo(params.familyMemberId),
-    ])
-
   return (
     <main className="w-full">
       <h1 className="text-foreground mb-8 text-center text-2xl font-extrabold">
-        Add Family Members
+        {action[0].toUpperCase() + action.slice(1)} Family Members
       </h1>
       <FamilyMemberForm
         steps={steps}
         step={parseInt(searchParams.step || "1")}
-        familyMemberId={params.familyMemberId}
+        familyMemberId={familyMemberId}
         familyMemberInfo={
           familyMemberInfo.status === 204 || familyMemberInfo.status === 500
             ? undefined
