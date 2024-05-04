@@ -15,6 +15,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@web/src/components/ui/dropdown-menu"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@web/src/components/ui/tooltip"
+import { Check, Clock4, Plus, X } from "lucide-react"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
@@ -66,7 +73,33 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            <p className="font-medium">{user.name ?? "New User"}</p>
+            <div className="flex items-center gap-2">
+              <p className="font-medium">{user.name ?? "New User"}</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger className="">
+                    <div>
+                      {user.verified === null || user.verified === undefined ? (
+                        <Clock4 className="size-3" />
+                      ) : !user.verified ? (
+                        <X className="size-3" />
+                      ) : (
+                        <Check className="size-3" />
+                      )}
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {user.verified === null ? (
+                      <p>Verification Pending</p>
+                    ) : !user.verified ? (
+                      <p>Verification Failed</p>
+                    ) : (
+                      <p>Verified User</p>
+                    )}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             {user.email && (
               <p className="text-muted-foreground w-[200px] truncate text-sm">
                 {user.email}

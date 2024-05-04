@@ -115,10 +115,12 @@ export class AuthService {
     const sql = `
     SELECT
         u.id as user_id, u.name, u.image, u.completed_profile, u.email,u."emailVerified", u.role, u.type,
-        p.id as profile_id, p.first_name, p.middle_name, p.last_name, p.profile_url
+        p.id as profile_id, p.first_name, p.middle_name, p.last_name, p.profile_url,
+        d.verified
         FROM users u
         JOIN accounts a ON u.id = a."userId"
         LEFT JOIN profile p ON u.id = p.user_id
+        LEFT JOIN document d ON p.id = d.profile_id
         WHERE a.provider = $1
         AND a."providerAccountId" = $2
     `
@@ -134,6 +136,7 @@ export class AuthService {
           ? `${data.first_name} ${data.middle_name} ${data.last_name}`
           : `${data.first_name} ${data.last_name}`
       }
+
       return {
         id: data.user_id,
         name: fullName,
@@ -144,6 +147,7 @@ export class AuthService {
         role: data.role,
         type: data.type,
         profile_id: data.profile_id,
+        verified: data.verified,
       }
     }
 
@@ -331,12 +335,15 @@ export class AuthService {
       session.userId,
     ])
 
-    let newUser
+    let newUser: AdapterUser
 
     if (result2.rowCount !== 0) {
       newUser = result2.rows[0]
 
-      const profileSql = `SELECT * FROM profile WHERE user_id = $1`
+      const profileSql = `SELECT p.*, d.verified
+        FROM profile p
+        LEFT JOIN document d ON p.id = d.profile_id
+        WHERE p.user_id = $1`
       const profileResult = await this.pg.query(profileSql, [newUser.id])
 
       if (profileResult.rowCount !== 0) {
@@ -355,6 +362,7 @@ export class AuthService {
           role: newUser.role,
           type: newUser.type,
           profile_id: profile.id,
+          verified: profile.verified,
         }
       }
 
