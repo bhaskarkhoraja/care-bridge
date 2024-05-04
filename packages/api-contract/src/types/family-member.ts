@@ -23,6 +23,15 @@ export const FamilyInfoFormSchema = z.object({
 })
 
 /**
+ * Family Member Schema with id and profile url
+ **/
+export const ExtendedFamilyInfoFormSchema = FamilyInfoFormSchema.extend({
+  id: z.string(),
+  profileUrl: z.string(),
+  verified: z.boolean().nullable(),
+})
+
+/**
  * Family Member Special Needs Schema
  **/
 // rested specialNeeds because RHF couldn't deal with array of object

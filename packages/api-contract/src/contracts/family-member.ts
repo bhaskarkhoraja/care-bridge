@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import {
   DocumentFormSchema,
+  ExtendedFamilyInfoFormSchema,
   FamilyInfoFormSchema,
   FamilySpecialNeedsSchema,
 } from "../types"
@@ -156,5 +157,27 @@ export const familyContract = c.router({
       }),
     },
     summary: "Get family document info",
+  },
+  /**
+   * Get all family members
+   **/
+  getAllFamilyMemberInfo: {
+    method: "GET",
+    path: "/user/family-member",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.array(ExtendedFamilyInfoFormSchema),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No family member found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get all family members",
   },
 })

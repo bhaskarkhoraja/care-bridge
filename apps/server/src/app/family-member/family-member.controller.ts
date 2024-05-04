@@ -191,6 +191,31 @@ export class FamilyMemberController {
           }
         }
       },
+      /**
+       * Get all family member by profile id
+       **/
+      getAllFamilyMemberInfo: async () => {
+        try {
+          const familyMemberInfo =
+            await this.familyMemberService.getAllFamilyMemberInfo(
+              user.profile_id as string,
+            )
+
+          if (familyMemberInfo === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No family member found' },
+            }
+          }
+
+          return { status: 200, body: { status: true, data: familyMemberInfo } }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

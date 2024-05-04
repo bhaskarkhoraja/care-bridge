@@ -3,6 +3,7 @@ import { InjectClient } from 'nest-postgres'
 import {
   DocumentFormSchema,
   FamilyInfoFormSchema,
+  ExtendedFamilyInfoFormSchema,
   FamilySpecialNeedsSchema,
 } from 'packages/api-contract/dist/types'
 import { Client } from 'pg'
@@ -167,5 +168,49 @@ export class FamilyMemberService {
     }
 
     return true
+  }
+  /**
+   * Get the all family member by profile id
+   **/
+  async getAllFamilyMemberInfo(
+    profileId: string,
+  ): Promise<z.infer<typeof ExtendedFamilyInfoFormSchema>[] | undefined> {
+    const result = await this.pg.query(
+      `SELECT
+        fm.id,
+        fm.first_name,
+        fm.middle_name,
+        fm.last_name,
+        fm.date_of_birth,
+        fm.gender,
+        fm.profile_url,
+        fd.verified
+      FROM
+        public.family_member fm
+        LEFT JOIN public.family_document fd ON fm.id = fd.family_member_id
+      WHERE
+      fm.profile_id = $1;`,
+      [profileId],
+    )
+    if (result.rowCount === 0) {
+      return undefined
+    }
+
+    const data: z.infer<typeof ExtendedFamilyInfoFormSchema>[] = []
+
+    for (const row of result.rows) {
+      data.push({
+        id: row.id,
+        profileUrl: row.profile_url,
+        firstName: row.first_name,
+        middleName: row.middle_name,
+        lastName: row.last_name,
+        dob: row.date_of_birth,
+        gender: row.gender,
+        verified: row.verified,
+      })
+    }
+
+    return data
   }
 }
