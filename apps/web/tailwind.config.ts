@@ -18,6 +18,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        serif: ["var(--font-agbalumo-serif)", ...fontFamily.serif],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -11,7 +11,7 @@ import ThemeSwitcher from "@web/src/components/theme/theme-switcher"
 import ThemeWrapper from "@web/src/components/theme/theme-wrapper"
 import { Toaster } from "@web/src/components/ui/sonner"
 import { siteConfig } from "@web/src/config/site"
-import { fontSans } from "@web/src/lib/font"
+import { fontAgbalumo, fontSans } from "@web/src/lib/font"
 import { cn } from "@web/src/lib/utils"
 import NextTopLoader from "nextjs-toploader"
 import { extractRouterConfig } from "uploadthing/server"
@@ -92,7 +92,9 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-background min-h-screen font-sans antialiased",
-          fontSans.className
+          fontSans.className,
+          fontAgbalumo.className,
+          fontAgbalumo.variable
         )}
       >
         <ThemeProvider
