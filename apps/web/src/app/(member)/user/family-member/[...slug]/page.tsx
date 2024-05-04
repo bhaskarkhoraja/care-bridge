@@ -19,7 +19,7 @@ export default async function FamilyMemberPage({
   const action = params.slug.length === 2 ? params.slug[0] : undefined
 
   if (action !== undefined && action !== "add" && action !== "update") {
-    redirect("/user")
+    redirect("/user/family-member")
   }
 
   const familyMemberId =
@@ -40,7 +40,7 @@ export default async function FamilyMemberPage({
       familyDocumentInfo.status === 204 ||
       familyDocumentInfo.status === 500
     ) {
-      redirect("/user")
+      redirect("/user/family-member")
     }
     return (
       <main className="w-full">
