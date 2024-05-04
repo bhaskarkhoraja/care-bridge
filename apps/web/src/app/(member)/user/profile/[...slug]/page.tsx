@@ -10,7 +10,7 @@ import { getCurrentUser } from "@web/src/lib/session"
 
 import CompleteProfileForm from "./_components/complete-profile-form"
 
-export default async function ProfilePage({
+export default async function UpdateProfilePage({
   params,
   searchParams,
 }: {
