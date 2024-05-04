@@ -27,7 +27,7 @@ const MainNav: React.FC<MainNavProps> = ({ user }) => {
   return (
     <div className="mr-4 hidden sm:flex">
       <Link
-        href={user ? "/user" : "/"}
+        href={user ? "/user/family-member" : "/"}
         className="mr-6 flex items-center space-x-2"
       >
         <Icons.logofull className="h-8 w-fit" />

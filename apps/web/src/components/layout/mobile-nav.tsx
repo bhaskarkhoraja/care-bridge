@@ -67,7 +67,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">
         <MobileLink
-          href={user ? "/user" : "/"}
+          href={user ? "/user/family-member" : "/"}
           className="flex items-center"
           onOpenChange={setOpen}
         >
