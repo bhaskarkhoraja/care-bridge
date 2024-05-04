@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { setDocumentInfo } from "@web/src/actions/user"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
@@ -31,6 +31,8 @@ interface DocumentFormProps {
 // Uploads the images to uploadthing and stores url
 const DocumentForm: React.FC<DocumentFormProps> = ({ documentInfo }) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const from = searchParams.get("from")
   const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof DocumentFormSchema>>({
@@ -56,7 +58,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ documentInfo }) => {
         description: "Your account will be verified within 2-3 days.",
       })
       NProgress.start()
-      router.push("/user")
+      router.push(from ? from : "/user/family-member")
     } catch (error) {
       toast.error("Something went wrong!")
     } finally {
