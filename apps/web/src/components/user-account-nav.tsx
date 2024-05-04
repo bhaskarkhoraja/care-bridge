@@ -111,7 +111,7 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/user/profile/${user.id}`}>Profile</Link>
+              <Link href={`/user/profile/${user.profile_id}`}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/dashboard/billing">Billing</Link>
