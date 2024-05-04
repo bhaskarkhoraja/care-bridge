@@ -27,12 +27,14 @@ import { z } from "zod"
 interface FamilyDocumentFormProps {
   familyMemberId: string
   familyDocumentInfo: z.infer<typeof DocumentFormSchema> | undefined
+  action: "add" | "update"
 }
 
 // Uploads the images to uploadthing and stores url
 const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
   familyMemberId,
   familyDocumentInfo,
+  action,
 }) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -56,9 +58,12 @@ const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
         toast.error("Something went wrong!")
         return
       }
-      toast.success("Added member successfully", {
-        description: "Member will be verified within 2-3 days.",
-      })
+      toast.success(
+        `${action === "add" ? "Added" : "Updated"} member successfully`,
+        {
+          description: "Member will be verified within 2-3 days.",
+        }
+      )
       NProgress.start()
       router.push("/user")
     } catch (error) {

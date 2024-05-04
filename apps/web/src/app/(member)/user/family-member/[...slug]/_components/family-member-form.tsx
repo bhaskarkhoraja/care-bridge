@@ -19,6 +19,7 @@ interface FamilyMemberFormProps {
   familyMemberInfo: z.infer<typeof FamilyInfoFormSchema> | undefined
   familySpecialNeedInfo: z.infer<typeof FamilySpecialNeedsSchema> | undefined
   familyDocumentInfo: z.infer<typeof DocumentFormSchema> | undefined
+  action: "add" | "update"
 }
 
 const FamilyMemberForm: React.FC<FamilyMemberFormProps> = ({
@@ -28,6 +29,7 @@ const FamilyMemberForm: React.FC<FamilyMemberFormProps> = ({
   familyMemberInfo,
   familySpecialNeedInfo,
   familyDocumentInfo,
+  action,
 }) => {
   return (
     <Stepper
@@ -61,6 +63,7 @@ const FamilyMemberForm: React.FC<FamilyMemberFormProps> = ({
             <FamilyDocumentForm
               familyDocumentInfo={familyDocumentInfo}
               familyMemberId={familyMemberId}
+              action={action}
             />
           </Step>
         )

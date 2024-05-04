@@ -86,6 +86,7 @@ export default async function FamilyMemberPage({
             ? undefined
             : familyDocumentInfo.body.data
         }
+        action={action}
       />
     </main>
   )
