@@ -1,3 +1,4 @@
+import { Metadata, ResolvingMetadata } from "next"
 import { notFound, redirect } from "next/navigation"
 import {
   checkFamilyMemberEditable,
@@ -10,6 +11,40 @@ import { getCurrentUser } from "@web/src/lib/session"
 
 import FamilyMemberForm from "./_components/family-member-form"
 import FamilyMemberProfile from "./_components/family-member-profile"
+
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: { slug: string[] }
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const familyMemberId =
+    params.slug.length === 2 ? params.slug[1] : params.slug[0]
+
+  const familyMemberInfo = await getFamilyMemberInfo(familyMemberId)
+
+  const previousImages = (await parent).openGraph?.images || []
+
+  if (familyMemberInfo.status === 200) {
+    return {
+      title: familyMemberInfo.body.data.middleName
+        ? `${familyMemberInfo.body.data.firstName} ${familyMemberInfo.body.data.middleName} ${familyMemberInfo.body.data.lastName}`
+        : `${familyMemberInfo.body.data.firstName} ${familyMemberInfo.body.data.lastName}`,
+      openGraph: {
+        images: [
+          familyMemberInfo.body.data.profileUrl as string,
+          ...previousImages,
+        ],
+      },
+    }
+  }
+
+  return {
+    title: "Profile",
+  }
+}
 
 export default async function FamilyMemberPage({
   params,

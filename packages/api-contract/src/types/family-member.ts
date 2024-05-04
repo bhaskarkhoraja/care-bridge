@@ -20,6 +20,7 @@ export const FamilyInfoFormSchema = z.object({
     required_error: "Gender is required.",
   }),
   dob: z.date({ required_error: "Date of birth is required." }),
+  profileUrl: z.string().url().optional(),
 })
 
 /**

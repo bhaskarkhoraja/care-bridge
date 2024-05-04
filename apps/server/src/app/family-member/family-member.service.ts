@@ -19,7 +19,7 @@ export class FamilyMemberService {
     familyMemberId: string,
   ): Promise<z.infer<typeof FamilyInfoFormSchema> | undefined> {
     const result = await this.pg.query(
-      'SELECT first_name, middle_name, last_name, date_of_birth, gender FROM public.family_member where id = $1',
+      'SELECT first_name, middle_name, last_name, date_of_birth, gender, profile_url FROM public.family_member where id = $1',
       [familyMemberId],
     )
     if (result.rowCount === 0) {
@@ -32,6 +32,7 @@ export class FamilyMemberService {
       lastName: result.rows[0].last_name,
       dob: result.rows[0].date_of_birth,
       gender: result.rows[0].gender,
+      profileUrl: result.rows[0].profile_url,
     }
   }
   /**

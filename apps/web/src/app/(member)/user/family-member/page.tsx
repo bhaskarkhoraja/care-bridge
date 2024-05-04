@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getAllFamilyMemberInfo } from "@web/src/actions/user/family-member"
@@ -24,6 +25,11 @@ import { cn, getShortName } from "@web/src/lib/utils"
 import { format } from "date-fns"
 import { Check, Clock4, MailWarning, Plus, X } from "lucide-react"
 import { v4 as uuidv4 } from "uuid"
+
+export const metadata: Metadata = {
+  title: "Family Members",
+  description: "All the family members you've added",
+}
 
 export default async function FamilyMembers() {
   const familyMembers = await getAllFamilyMemberInfo()
