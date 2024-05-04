@@ -67,7 +67,7 @@ const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
         }
       )
       NProgress.start()
-      router.push(from ? from : "/user")
+      router.push(from ? from : "/user/family-member")
     } catch (error) {
       toast.error("Something went wrong!")
     } finally {
