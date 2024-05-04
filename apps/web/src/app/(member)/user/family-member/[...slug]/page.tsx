@@ -7,6 +7,7 @@ import {
 import { StepItem } from "@web/src/components/ui/stepper"
 
 import FamilyMemberForm from "./_components/family-member-form"
+import FamilyMemberProfile from "./_components/family-member-profile"
 
 export default async function FamilyMemberPage({
   params,
@@ -43,13 +44,14 @@ export default async function FamilyMemberPage({
       redirect("/user")
     }
     return (
-      <>
-        {JSON.stringify(familyMemberInfo)}
-        <hr />
-        {JSON.stringify(familySpecialNeedInfo)}
-        <hr />
-        {JSON.stringify(familyDocumentInfo)}
-      </>
+      <main className="w-full">
+        <FamilyMemberProfile
+          familyMemberInfo={familyMemberInfo.body.data}
+          familySpecialNeedInfo={familySpecialNeedInfo.body.data}
+          familyDocumentInfo={familyDocumentInfo.body.data}
+          familyMemberId={familyMemberId}
+        />
+      </main>
     )
   }
 
