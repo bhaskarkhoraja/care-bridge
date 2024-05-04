@@ -180,4 +180,30 @@ export const familyContract = c.router({
     },
     summary: "Get all family members",
   },
+  /**
+   * Check if user can edit or update
+   **/
+  checkFamilyMemberEditable: {
+    method: "GET",
+    path: "/user/family-member/editable/:id",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        message: z.literal("User can be edited"),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No family member found"),
+      }),
+      401: z.object({
+        status: z.literal(false),
+        message: z.literal("User not authorized to perform this action"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Check if user is able to update an family member",
+  },
 })

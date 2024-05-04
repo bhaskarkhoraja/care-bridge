@@ -126,3 +126,18 @@ export async function getAllFamilyMemberInfo() {
   })
   return client.family.getAllFamilyMemberInfo()
 }
+
+/**
+ * Check if user can edit or update
+ **/
+export async function checkFamilyMemberEditable(familyMemberId: string) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.family.checkFamilyMemberEditable({
+    params: { id: familyMemberId },
+  })
+}

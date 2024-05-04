@@ -216,6 +216,45 @@ export class FamilyMemberController {
           }
         }
       },
+      /**
+       * Check if user can edit or update
+       **/
+      checkFamilyMemberEditable: async ({ params }) => {
+        try {
+          const editable =
+            await this.familyMemberService.checkFamilyMemberEditable(
+              params.id,
+              user.profile_id as string,
+            )
+
+          if (editable === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No family member found' },
+            }
+          }
+
+          if (!editable) {
+            return {
+              status: 401,
+              body: {
+                status: false,
+                message: 'User not authorized to perform this action',
+              },
+            }
+          }
+
+          return {
+            status: 200,
+            body: { status: true, message: 'User can be edited' },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

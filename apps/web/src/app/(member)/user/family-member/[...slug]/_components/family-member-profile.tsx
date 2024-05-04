@@ -30,6 +30,7 @@ interface FamilyMemberProfileProps {
   familySpecialNeedInfo: z.infer<typeof FamilySpecialNeedsSchema> | undefined
   familyDocumentInfo: z.infer<typeof DocumentFormSchema>
   familyMemberId: string
+  editable: boolean
 }
 
 const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
@@ -37,6 +38,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
   familySpecialNeedInfo,
   familyDocumentInfo,
   familyMemberId,
+  editable,
 }) => {
   return (
     <div className="flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
@@ -94,7 +96,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
                 : "Failed"}
           </p>
         </div>
-        {familyDocumentInfo.verified === false && (
+        {familyDocumentInfo.verified === false && editable && (
           <Link
             href={`/user/family-member/update/${familyMemberId}`}
             className={cn(
@@ -153,59 +155,61 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
               )}
             </div>
           </div>
-          <div className="my-4">
-            <h1 className="mb-4 text-2xl font-extrabold leading-none">
-              Documents
-            </h1>
-            <div className="flex flex-wrap justify-start gap-4">
-              <Link
-                href={familyDocumentInfo.documentUrl}
-                target="_blank"
-                className="w-full md:w-fit"
-              >
-                <Card className="w-full md:w-[350px]">
-                  <CardHeader>
-                    <CardTitle className="text-muted-foreground flex items-center justify-between text-base font-semibold">
-                      <span> Passport / Birth Certificate</span>
-                      <ExternalLink className="size-4" />
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-center">
-                    <Image
-                      src={familyDocumentInfo.documentUrl}
-                      width={300}
-                      height={250}
-                      alt="Passport / Birth Certificate"
-                      className="bg-foreground h-52 w-full rounded-lg object-cover"
-                    />
-                  </CardContent>
-                </Card>
-              </Link>
-              <Link
-                href={familyDocumentInfo.policeReportUrl}
-                target="_blank"
-                className="w-full md:w-fit"
-              >
-                <Card className="w-full md:w-[350px]">
-                  <CardHeader>
-                    <CardTitle className="text-muted-foreground flex items-center justify-between text-base font-semibold">
-                      <span>Police Report Document</span>
-                      <ExternalLink className="size-4" />
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-center">
-                    <Image
-                      src={familyDocumentInfo.policeReportUrl}
-                      width={300}
-                      height={250}
-                      alt="Police Report Document"
-                      className="bg-foreground h-52 w-full rounded-lg object-cover"
-                    />
-                  </CardContent>
-                </Card>
-              </Link>
+          {editable && (
+            <div className="my-4">
+              <h1 className="mb-4 text-2xl font-extrabold leading-none">
+                Documents
+              </h1>
+              <div className="flex flex-wrap justify-start gap-4">
+                <Link
+                  href={familyDocumentInfo.documentUrl}
+                  target="_blank"
+                  className="w-full md:w-fit"
+                >
+                  <Card className="w-full md:w-[350px]">
+                    <CardHeader>
+                      <CardTitle className="text-muted-foreground flex items-center justify-between text-base font-semibold">
+                        <span> Passport / Birth Certificate</span>
+                        <ExternalLink className="size-4" />
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center">
+                      <Image
+                        src={familyDocumentInfo.documentUrl}
+                        width={300}
+                        height={250}
+                        alt="Passport / Birth Certificate"
+                        className="bg-foreground h-52 w-full rounded-lg object-cover"
+                      />
+                    </CardContent>
+                  </Card>
+                </Link>
+                <Link
+                  href={familyDocumentInfo.policeReportUrl}
+                  target="_blank"
+                  className="w-full md:w-fit"
+                >
+                  <Card className="w-full md:w-[350px]">
+                    <CardHeader>
+                      <CardTitle className="text-muted-foreground flex items-center justify-between text-base font-semibold">
+                        <span>Police Report Document</span>
+                        <ExternalLink className="size-4" />
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center">
+                      <Image
+                        src={familyDocumentInfo.policeReportUrl}
+                        width={300}
+                        height={250}
+                        alt="Police Report Document"
+                        className="bg-foreground h-52 w-full rounded-lg object-cover"
+                      />
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
         </ScrollArea>
       </div>
     </div>

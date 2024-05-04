@@ -213,4 +213,26 @@ export class FamilyMemberService {
 
     return data
   }
+
+  /**
+   * Check if user can edit or update
+   **/
+  async checkFamilyMemberEditable(
+    familyMemberId: string,
+    profileId: string,
+  ): Promise<boolean | undefined> {
+    const result = await this.pg.query(
+      'SELECT profile_id FROM public.family_member WHERE id = $1',
+      [familyMemberId],
+    )
+
+    if (result.rowCount === 0) {
+      return undefined
+    }
+
+    if (profileId !== result.rows[0].profile_id) {
+      return false
+    }
+    return true
+  }
 }

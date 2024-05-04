@@ -1,10 +1,12 @@
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import {
+  checkFamilyMemberEditable,
   getFamilyDocumentInfo,
   getFamilyMemberInfo,
   getFamilySpecialNeed,
 } from "@web/src/actions/user/family-member"
 import { StepItem } from "@web/src/components/ui/stepper"
+import { getCurrentUser } from "@web/src/lib/session"
 
 import FamilyMemberForm from "./_components/family-member-form"
 import FamilyMemberProfile from "./_components/family-member-profile"
@@ -22,8 +24,19 @@ export default async function FamilyMemberPage({
     redirect("/user/family-member")
   }
 
+  const user = await getCurrentUser()
+  if (!user) {
+    notFound()
+  }
+
   const familyMemberId =
     params.slug.length === 2 ? params.slug[1] : params.slug[0]
+
+  const editable = await checkFamilyMemberEditable(familyMemberId)
+
+  if (editable.status !== 200 && action === "update") {
+    redirect("/user/family-member")
+  }
 
   const [familyMemberInfo, familySpecialNeedInfo, familyDocumentInfo] =
     await Promise.all([
@@ -53,6 +66,7 @@ export default async function FamilyMemberPage({
           }
           familyDocumentInfo={familyDocumentInfo.body.data}
           familyMemberId={familyMemberId}
+          editable={editable.body.status}
         />
       </main>
     )
