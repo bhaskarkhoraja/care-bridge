@@ -20,11 +20,9 @@ export class UserController {
       /**
        * Get the personal data using profile_id
        **/
-      getPersonalInfo: async () => {
+      getPersonalInfo: async ({ params }) => {
         try {
-          const personalInfo = await this.userService.getPersonalInfo(
-            user.profile_id as string,
-          )
+          const personalInfo = await this.userService.getPersonalInfo(params.id)
 
           if (personalInfo === undefined) {
             return {
@@ -86,12 +84,10 @@ export class UserController {
       /**
        * Get Address and contact info using profile_id
        **/
-      getAddressContactInfo: async () => {
+      getAddressContactInfo: async ({ params }) => {
         try {
           const addressContactInfo =
-            await this.userService.getAddressContactInfo(
-              user.profile_id as string,
-            )
+            await this.userService.getAddressContactInfo(params.id)
 
           if (addressContactInfo === undefined) {
             return {
@@ -155,11 +151,9 @@ export class UserController {
       /**
        * Get the document info of user using profile_id
        **/
-      getDocumentInfo: async () => {
+      getDocumentInfo: async ({ params }) => {
         try {
-          const documentInfo = await this.userService.getDocumentInfo(
-            user.profile_id as string,
-          )
+          const documentInfo = await this.userService.getDocumentInfo(params.id)
 
           if (documentInfo === undefined) {
             return {

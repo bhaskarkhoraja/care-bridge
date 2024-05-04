@@ -46,7 +46,7 @@ export const userContract = c.router({
    **/
   getPersonalInfo: {
     method: "GET",
-    path: "/user/personal-info",
+    path: "/user/personal-info/:id",
     responses: {
       200: z.object({
         status: z.literal(true),
@@ -95,7 +95,7 @@ export const userContract = c.router({
    **/
   getAddressContactInfo: {
     method: "GET",
-    path: "/user/address-contact-info",
+    path: "/user/address-contact-info/:id",
     responses: {
       200: z.object({
         status: z.literal(true),
@@ -140,7 +140,7 @@ export const userContract = c.router({
    **/
   getDocumentInfo: {
     method: "GET",
-    path: "/user/document-info",
+    path: "/user/document-info/:id",
     responses: {
       200: z.object({
         status: z.literal(true),

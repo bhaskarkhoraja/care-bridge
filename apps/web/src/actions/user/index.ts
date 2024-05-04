@@ -16,14 +16,14 @@ import { z } from "zod"
 /**
  * Return the personal info of the profile
  **/
-export async function getPersonalInfo() {
+export async function getPersonalInfo(profileId: string) {
   const client = initClient(contract, {
     baseUrl: webEnv.SERVER_URL,
     baseHeaders: {
       cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
     },
   })
-  return client.users.getPersonalInfo()
+  return client.users.getPersonalInfo({ params: { id: profileId } })
 }
 
 /**
@@ -47,14 +47,14 @@ export async function setPersonalInfo(
 /**
  * Return the address info of the profile
  **/
-export async function getAddressContactInfo() {
+export async function getAddressContactInfo(profileId: string) {
   const client = initClient(contract, {
     baseUrl: webEnv.SERVER_URL,
     baseHeaders: {
       cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
     },
   })
-  return client.users.getAddressContactInfo()
+  return client.users.getAddressContactInfo({ params: { id: profileId } })
 }
 
 /**
@@ -77,14 +77,14 @@ export async function setAddressContactInfo(
 /**
  * Return the document info of the profile
  **/
-export async function getDocumentInfo() {
+export async function getDocumentInfo(profileId: string) {
   const client = initClient(contract, {
     baseUrl: webEnv.SERVER_URL,
     baseHeaders: {
       cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
     },
   })
-  return client.users.getDocumentInfo()
+  return client.users.getDocumentInfo({ params: { id: profileId } })
 }
 
 /**

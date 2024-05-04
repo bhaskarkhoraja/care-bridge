@@ -42,9 +42,9 @@ export default async function UpdateProfilePage({
   const [countries, personalInfo, addressContactInfo, documentInfo] =
     await Promise.all([
       getCountries(),
-      getPersonalInfo(),
-      getAddressContactInfo(),
-      getDocumentInfo(),
+      getPersonalInfo(profileId),
+      getAddressContactInfo(profileId),
+      getDocumentInfo(profileId),
     ])
 
   if (countries.status === 204) {
