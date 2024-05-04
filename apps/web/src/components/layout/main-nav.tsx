@@ -71,7 +71,7 @@ const MainNav: React.FC<MainNavProps> = ({ user }) => {
           <>
             {user && (
               <Link
-                href="/user"
+                href="/user/family-member"
                 className={cn(
                   "text-foreground/60 hover:text-foreground/80 hidden transition-colors sm:block"
                 )}

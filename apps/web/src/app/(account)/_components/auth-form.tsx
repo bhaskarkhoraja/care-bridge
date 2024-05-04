@@ -61,7 +61,7 @@ const AuthForm = () => {
       const signInResult = await signIn("email", {
         email: data.email.toLowerCase(),
         redirect: false,
-        callbackUrl: searchParams?.get("from") || "/user",
+        callbackUrl: searchParams?.get("from") || "/user/family-member",
       })
 
       if (signInResult?.ok) {
