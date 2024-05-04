@@ -20,6 +20,7 @@ interface CompleteProfileFormProps {
   personalInfo: z.infer<typeof PersonalInfoFormSchema> | undefined
   addressContactInfo: z.infer<typeof AddressContactFormSchema> | undefined
   documentInfo: z.infer<typeof DocumentFormSchema> | undefined
+  profileId: string
 }
 
 const CompleteProfileForm: React.FC<CompleteProfileFormProps> = ({
@@ -29,6 +30,7 @@ const CompleteProfileForm: React.FC<CompleteProfileFormProps> = ({
   personalInfo,
   addressContactInfo,
   documentInfo,
+  profileId,
 }) => {
   return (
     <Stepper
@@ -40,7 +42,10 @@ const CompleteProfileForm: React.FC<CompleteProfileFormProps> = ({
         if (index === 0) {
           return (
             <Step key={stepProps.label} {...stepProps}>
-              <PersonalFormInfo personalInfo={personalInfo} />
+              <PersonalFormInfo
+                personalInfo={personalInfo}
+                profileId={profileId}
+              />
             </Step>
           )
         }

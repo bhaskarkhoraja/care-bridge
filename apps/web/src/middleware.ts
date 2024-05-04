@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 import { format } from "@web/src/lib/utils"
 import { AdapterSession, AdapterUser } from "next-auth/adapters"
 import { withAuth } from "next-auth/middleware"
+import { v4 as uuidv4 } from "uuid"
 
 import { webEnv } from "./lib/env"
 
@@ -76,12 +77,19 @@ export default withAuth(
     }
 
     // check if profile is completed
-    const isCompleteProfilePage = req.nextUrl.pathname === "/complete-profile"
+    const isCompleteProfilePage = req.nextUrl.pathname.startsWith(
+      "/user/profile/complete"
+    )
     if (!user.completed_profile && !isCompleteProfilePage) {
-      return NextResponse.redirect(new URL("/complete-profile", req.url))
+      return NextResponse.redirect(
+        new URL(
+          `/user/profile/complete/${user.profile_id ? user.profile_id : uuidv4()}`,
+          req.url
+        )
+      )
     }
 
-    // check if profile is completed but still in complete-profile page
+    // check if profile is completed but still in /user/profile/complete page
     if (isCompleteProfilePage && user.completed_profile) {
       return NextResponse.redirect(new URL(`/user/family-member`, req.url))
     }
@@ -105,10 +113,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/user/:path*",
-    "/auth/:path*",
-    "/complete-profile",
-  ],
+  matcher: ["/admin/:path*", "/user/:path*", "/auth/:path*"],
 }

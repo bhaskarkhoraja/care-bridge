@@ -1,0 +1,94 @@
+import { notFound, redirect } from "next/navigation"
+import getCountries from "@web/src/actions/general"
+import {
+  getAddressContactInfo,
+  getDocumentInfo,
+  getPersonalInfo,
+} from "@web/src/actions/user"
+import { StepItem } from "@web/src/components/ui/stepper"
+import { getCurrentUser } from "@web/src/lib/session"
+
+import CompleteProfileForm from "./_components/complete-profile-form"
+
+export default async function ProfilePage({
+  params,
+  searchParams,
+}: {
+  params: { slug: string[] }
+  searchParams: { [key: string]: string | undefined }
+}) {
+  const action = params.slug.length === 2 ? params.slug[0] : undefined
+
+  if (action !== undefined && action !== "complete" && action !== "update") {
+    redirect("/")
+  }
+
+  const user = await getCurrentUser()
+  if (!user) {
+    notFound()
+  }
+
+  const profileId = params.slug.length === 2 ? params.slug[1] : params.slug[0]
+
+  if (
+    user.profile_id &&
+    user.profile_id !== profileId &&
+    action !== undefined
+  ) {
+    redirect("/user/family-member")
+  }
+
+  const [countries, personalInfo, addressContactInfo, documentInfo] =
+    await Promise.all([
+      getCountries(),
+      getPersonalInfo(),
+      getAddressContactInfo(),
+      getDocumentInfo(),
+    ])
+
+  if (countries.status === 204) {
+    notFound()
+  }
+
+  if (action === undefined) {
+    /* TODO: validated fetched data */
+    /* TODO: user profile */
+    return <>user profile</>
+  }
+
+  const steps = [
+    { label: "Step 1", description: "Personal Info" },
+    { label: "Step 2", description: "Address & Contact" },
+    { label: "Step 3", description: "Documents" },
+  ] satisfies StepItem[]
+
+  /* Complete profile page with stepper */
+  return (
+    <main className="w-full">
+      <h1 className="text-foreground mb-8 text-center text-2xl font-extrabold">
+        {action[0].toUpperCase() + action.slice(1)} Profile
+      </h1>
+      <CompleteProfileForm
+        steps={steps}
+        step={parseInt(searchParams.step || "1")}
+        countries={countries.body.data}
+        personalInfo={
+          personalInfo.status === 204 || personalInfo.status === 500
+            ? undefined
+            : personalInfo.body.data
+        }
+        profileId={profileId}
+        addressContactInfo={
+          addressContactInfo.status === 204 || addressContactInfo.status === 500
+            ? undefined
+            : addressContactInfo.body.data
+        }
+        documentInfo={
+          documentInfo.status === 204 || documentInfo.status === 500
+            ? undefined
+            : documentInfo.body.data
+        }
+      />
+    </main>
+  )
+}
