@@ -36,10 +36,12 @@ import { z } from "zod"
 
 interface PersonalInfoFormProps {
   personalInfo: z.infer<typeof PersonalInfoFormSchema> | undefined
+  profileId: string
 }
 
 const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
   personalInfo,
+  profileId,
 }) => {
   const [loading, setLoading] = useState(false)
   const { nextStep } = useStepper()
@@ -59,7 +61,7 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
   const onSubmit = async (data: z.infer<typeof PersonalInfoFormSchema>) => {
     try {
       setLoading(true)
-      const response = await setPersonalInfo(data)
+      const response = await setPersonalInfo(data, profileId)
 
       if (response.status === 409) {
         form.setError("userName", {

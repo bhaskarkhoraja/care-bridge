@@ -46,7 +46,11 @@ export class UserController {
        **/
       setPersonalInfo: async ({ body }) => {
         try {
-          const success = await this.userService.setPersonalInfo(body, user.id)
+          const success = await this.userService.setPersonalInfo(
+            body.data,
+            user.profile_id ? user.profile_id : body.profileId,
+            user.id,
+          )
 
           if (success === undefined) {
             return {

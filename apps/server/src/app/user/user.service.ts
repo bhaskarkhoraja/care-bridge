@@ -40,6 +40,7 @@ export class UserService {
    **/
   async setPersonalInfo(
     personalInfo: z.infer<typeof PersonalInfoFormSchema>,
+    profileId: string,
     userId: string,
   ): Promise<boolean | undefined> {
     const result1 = await this.pg.query(
@@ -52,8 +53,9 @@ export class UserService {
     }
 
     const result2 = await this.pg.query(
-      'INSERT INTO profile (first_name, middle_name, last_name, user_name, date_of_birth, gender, active_status, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ON CONFLICT (user_id) DO UPDATE SET first_name = EXCLUDED.first_name, middle_name = EXCLUDED.middle_name, last_name = EXCLUDED.last_name, user_name = EXCLUDED.user_name, date_of_birth = EXCLUDED.date_of_birth, gender = EXCLUDED.gender, active_status = EXCLUDED.active_status',
+      'INSERT INTO profile (id, first_name, middle_name, last_name, user_name, date_of_birth, gender, active_status, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ON CONFLICT (user_id) DO UPDATE SET first_name = EXCLUDED.first_name, middle_name = EXCLUDED.middle_name, last_name = EXCLUDED.last_name, user_name = EXCLUDED.user_name, date_of_birth = EXCLUDED.date_of_birth, gender = EXCLUDED.gender, active_status = EXCLUDED.active_status',
       [
+        profileId,
         personalInfo.firstName,
         personalInfo.middleName,
         personalInfo.lastName,

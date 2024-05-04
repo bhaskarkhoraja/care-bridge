@@ -38,7 +38,7 @@ export const userContract = c.router({
         message: z.literal("Something went wrong"),
       }),
     },
-    body: PersonalInfoFormSchema,
+    body: z.object({ data: PersonalInfoFormSchema, profileId: z.string() }),
     summary: "Set personal info",
   },
   /**

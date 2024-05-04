@@ -30,7 +30,8 @@ export async function getPersonalInfo() {
  * Set the personal info of the profile
  **/
 export async function setPersonalInfo(
-  data: z.infer<typeof PersonalInfoFormSchema>
+  data: z.infer<typeof PersonalInfoFormSchema>,
+  profileId: string
 ) {
   const client = initClient(contract, {
     baseUrl: webEnv.SERVER_URL,
@@ -39,7 +40,7 @@ export async function setPersonalInfo(
     },
   })
   return client.users.setPersonalInfo({
-    body: data,
+    body: { data: data, profileId: profileId },
   })
 }
 
