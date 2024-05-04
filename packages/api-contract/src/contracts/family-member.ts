@@ -44,7 +44,7 @@ export const familyContract = c.router({
    **/
   getFamilyMemberInfo: {
     method: "GET",
-    path: "/user/personal-info/:id",
+    path: "/user/family-member/personal-info/:id",
     responses: {
       200: z.object({
         status: z.literal(true),
