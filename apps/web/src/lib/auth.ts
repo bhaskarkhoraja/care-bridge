@@ -91,6 +91,7 @@ export const authOptions: NextAuthOptions = {
       session.user.profile_id = user.profile_id
       session.user.type = user.type
       session.user.verified = user.verified
+      session.user.id = user.id
       return session
     },
   },
