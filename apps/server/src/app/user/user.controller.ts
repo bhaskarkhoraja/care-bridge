@@ -117,6 +117,13 @@ export class UserController {
             user.profile_id as string,
           )
 
+          if (success === undefined) {
+            return {
+              status: 409,
+              body: { status: false, message: 'Phone number already taken' },
+            }
+          }
+
           if (!success) {
             return {
               status: 422,
