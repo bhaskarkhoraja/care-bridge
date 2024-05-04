@@ -140,7 +140,10 @@ export class FamilyMemberController {
       getFamilyDocumentInfo: async ({ params }) => {
         try {
           const documentInfo =
-            await this.familyMemberService.getFamilyDocumentInfo(params.id)
+            await this.familyMemberService.getFamilyDocumentInfo(
+              params.id,
+              user.profile_id as string,
+            )
 
           if (documentInfo === undefined) {
             return {

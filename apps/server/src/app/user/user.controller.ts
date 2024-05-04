@@ -153,7 +153,10 @@ export class UserController {
        **/
       getDocumentInfo: async ({ params }) => {
         try {
-          const documentInfo = await this.userService.getDocumentInfo(params.id)
+          const documentInfo = await this.userService.getDocumentInfo(
+            params.id,
+            user.profile_id as string,
+          )
 
           if (documentInfo === undefined) {
             return {

@@ -129,20 +129,25 @@ export class FamilyMemberService {
    **/
   async getFamilyDocumentInfo(
     familyMemberId: string,
+    profileId: string,
   ): Promise<z.infer<typeof DocumentFormSchema> | undefined> {
     const result = await this.pg.query(
-      'SELECT d.document_url, d.police_report_url, d.verified, p.profile_url FROM public.family_document d JOIN public.family_member p ON d.family_member_id = p.id WHERE p.id = $1',
+      'SELECT d.document_url, d.police_report_url, d.verified, fm.profile_url, fm.profile_id as profile_id FROM public.family_document d JOIN public.family_member fm ON d.family_member_id = fm.id WHERE fm.id = $1',
       [familyMemberId],
     )
     if (result.rowCount === 0) {
       return undefined
     }
 
+    const familyBelongToProfile = profileId === result.rows[0].profile_id
+
     return {
       verified: result.rows[0].verified,
-      profileUrl: result.rows[0].profile_url,
-      documentUrl: result.rows[0].document_url,
-      policeReportUrl: result.rows[0].police_report_url,
+      profileUrl: familyBelongToProfile ? result.rows[0].profile_url : '',
+      documentUrl: familyBelongToProfile ? result.rows[0].document_url : '',
+      policeReportUrl: familyBelongToProfile
+        ? result.rows[0].police_report_url
+        : '',
     }
   }
 
