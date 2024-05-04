@@ -26,7 +26,9 @@ export default async function FamilyMembers() {
       <h1 className="mb-4 text-2xl font-bold leading-none">Family Members</h1>
       {familyMembers.status === 204 ? (
         <>
-          <p>No family members found</p>
+          <p className="text-muted-foreground text-sm">
+            No family members found
+          </p>
           <Link
             href={`/user/family-member/add/${uuidv4()}`}
             className={cn(buttonVariants({ variant: "default" }), "mt-4")}

@@ -9,7 +9,6 @@ import { buttonVariants } from "@web/src/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@web/src/components/ui/card"
@@ -124,12 +123,9 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
                 familySpecialNeedInfo.specialNeeds.map((needs, index) => (
                   <Card className="w-full md:w-[350px]" key={needs.id}>
                     <CardHeader>
-                      <CardTitle className="text-lg">
+                      <CardTitle className="text-muted-foreground text-base font-semibold">
                         Special Needs #{index + 1}
                       </CardTitle>
-                      <CardDescription>
-                        Short sumary of any special needs
-                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <Input
@@ -169,7 +165,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
               >
                 <Card className="w-full md:w-[350px]">
                   <CardHeader>
-                    <CardTitle className="flex items-center justify-between text-lg">
+                    <CardTitle className="text-muted-foreground flex items-center justify-between text-base font-semibold">
                       <span> Passport / Birth Certificate</span>
                       <ExternalLink className="size-4" />
                     </CardTitle>
@@ -192,7 +188,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
               >
                 <Card className="w-full md:w-[350px]">
                   <CardHeader>
-                    <CardTitle className="flex items-center justify-between text-lg">
+                    <CardTitle className="text-muted-foreground flex items-center justify-between text-base font-semibold">
                       <span>Police Report Document</span>
                       <ExternalLink className="size-4" />
                     </CardTitle>
