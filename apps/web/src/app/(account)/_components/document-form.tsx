@@ -36,6 +36,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ documentInfo }) => {
   const form = useForm<z.infer<typeof DocumentFormSchema>>({
     resolver: zodResolver(DocumentFormSchema),
     defaultValues: {
+      verified: documentInfo?.verified ?? null,
       profileUrl: documentInfo?.profileUrl ?? "",
       documentUrl: documentInfo?.documentUrl ?? "",
       policeReportUrl: documentInfo?.policeReportUrl ?? "",
