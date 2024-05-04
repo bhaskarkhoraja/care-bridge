@@ -111,6 +111,9 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
+              <Link href={`/user/profile/${user.id}`}>Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link href="/dashboard/billing">Billing</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
@@ -119,11 +122,6 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
             <DropdownMenuItem onSelect={switchUserType}>
               Switch to {user.type === "buyer" ? "seller" : "buyer"}
             </DropdownMenuItem>
-            {user.role === "admin" && (
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings">Admin Panel</Link>
-              </DropdownMenuItem>
-            )}
           </>
         ) : null}
         <DropdownMenuSeparator />
