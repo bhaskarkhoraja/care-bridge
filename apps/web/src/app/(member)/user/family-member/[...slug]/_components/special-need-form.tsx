@@ -22,6 +22,7 @@ import {
 } from "@web/src/components/ui/form"
 import { Input } from "@web/src/components/ui/input"
 import { useStepper } from "@web/src/components/ui/stepper"
+import { Textarea } from "@web/src/components/ui/textarea"
 import { FamilySpecialNeedsSchema } from "api-contract/types"
 import { Plus } from "lucide-react"
 import { useFieldArray, useForm } from "react-hook-form"
@@ -155,7 +156,7 @@ const SpecialNeedFormInfo: React.FC<SpecialNeedInfoFormProps> = ({
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input label="Description" {...field} />
+                        <Textarea label="Description" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
