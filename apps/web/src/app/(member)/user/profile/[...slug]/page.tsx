@@ -9,6 +9,7 @@ import { StepItem } from "@web/src/components/ui/stepper"
 import { getCurrentUser } from "@web/src/lib/session"
 
 import CompleteProfileForm from "./_components/complete-profile-form"
+import UserProfile from "./_components/user-profile"
 
 export default async function UpdateProfilePage({
   params,
@@ -52,9 +53,28 @@ export default async function UpdateProfilePage({
   }
 
   if (action === undefined) {
-    /* TODO: validated fetched data */
-    /* TODO: user profile */
-    return <>user profile</>
+    if (
+      personalInfo.status === 204 ||
+      personalInfo.status === 500 ||
+      addressContactInfo.status === 204 ||
+      addressContactInfo.status === 500 ||
+      documentInfo.status === 204 ||
+      documentInfo.status === 500
+    ) {
+      redirect("/user/family-member")
+    }
+    return (
+      <main className="w-full">
+        <UserProfile
+          countries={countries.body.data}
+          personalInfo={personalInfo.body.data}
+          addressContactInfo={addressContactInfo.body.data}
+          documentInfo={documentInfo.body.data}
+          editable={user.profile_id === profileId}
+          profileId={profileId}
+        />
+      </main>
+    )
   }
 
   const steps = [
