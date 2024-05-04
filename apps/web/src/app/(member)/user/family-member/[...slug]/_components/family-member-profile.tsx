@@ -110,7 +110,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
         )}
       </div>
 
-      <div className="mt-4 w-full md:sticky md:z-30 md:-ml-2 md:mt-0 md:h-[calc(100vh-3.5rem)] md:shrink-0">
+      <div className="mt-4 w-full md:sticky md:z-30 md:-ml-2 md:mt-0 md:h-[calc(100vh-5.5rem)] md:shrink-0">
         <ScrollArea className="h-full">
           <div>
             <h1 className="mb-4 text-2xl font-extrabold leading-none">
