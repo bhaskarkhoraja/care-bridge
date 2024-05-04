@@ -113,37 +113,38 @@ export class AuthService {
     provider: string,
   ): Promise<AdapterUser | null> {
     const sql = `
-    SELECT u.*, p.*
-    FROM users u
-    JOIN accounts a ON u.id = a."userId"
-    LEFT JOIN profile p ON u.id = p.user_id
-    WHERE a.provider = $1
-    AND a."providerAccountId" = $2`
+    SELECT
+        u.id as user_id, u.name, u.image, u.completed_profile, u.email,u."emailVerified", u.role, u.type,
+        p.id as profile_id, p.first_name, p.middle_name, p.last_name, p.profile_url
+        FROM users u
+        JOIN accounts a ON u.id = a."userId"
+        LEFT JOIN profile p ON u.id = p.user_id
+        WHERE a.provider = $1
+        AND a."providerAccountId" = $2
+    `
 
     const result = await this.pg.query(sql, [provider, providerAccountId])
 
     if (result.rowCount !== 0) {
-      const user = result.rows[0]
-      const profile = result.rows[0]
+      const data = result.rows[0]
+      let fullName, image
 
-      if (user.completed_profile && profile) {
-        const fullName = profile.middle_name
-          ? `${profile.first_name} ${profile.middle_name} ${profile.last_name}`
-          : `${profile.first_name} ${profile.last_name}`
-
-        return {
-          id: user.id,
-          name: fullName,
-          image: profile.profile_url,
-          completed_profile: user.completed_profile,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          role: user.role,
-          type: user.type,
-          profile_id: profile.id,
-        }
+      if (data.completed_profile && data.profile_id) {
+        fullName = data.middle_name
+          ? `${data.first_name} ${data.middle_name} ${data.last_name}`
+          : `${data.first_name} ${data.last_name}`
       }
-      return user
+      return {
+        id: data.user_id,
+        name: fullName,
+        image: image,
+        completed_profile: data.completed_profile,
+        email: data.email,
+        emailVerified: data.emailVerified,
+        role: data.role,
+        type: data.type,
+        profile_id: data.profile_id,
+      }
     }
 
     return null
