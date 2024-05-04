@@ -98,7 +98,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
         </div>
         {familyDocumentInfo.verified === false && editable && (
           <Link
-            href={`/user/family-member/update/${familyMemberId}`}
+            href={`/user/family-member/update/${familyMemberId}?from=${encodeURIComponent(`/user/family-member/${familyMemberId}`)}`}
             className={cn(
               buttonVariants({ variant: "default" }),
               "mr-0 md:mr-6"

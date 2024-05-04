@@ -2,7 +2,7 @@
 
 import { memo, useState } from "react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { setFamilyDocumentInfo } from "@web/src/actions/user/family-member"
 import { StepperFormActions } from "@web/src/components/stepper-form-action"
@@ -37,6 +37,8 @@ const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
   action,
 }) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const from = searchParams.get("from")
   const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof DocumentFormSchema>>({
@@ -65,7 +67,7 @@ const FamilyDocumentForm: React.FC<FamilyDocumentFormProps> = ({
         }
       )
       NProgress.start()
-      router.push("/user")
+      router.push(from ? from : "/user")
     } catch (error) {
       toast.error("Something went wrong!")
     } finally {
