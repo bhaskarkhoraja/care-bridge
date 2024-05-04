@@ -142,7 +142,7 @@ export class UserService {
     profileId: string,
   ): Promise<z.infer<typeof DocumentFormSchema> | undefined> {
     const result = await this.pg.query(
-      'SELECT d.document_url, d.police_report_url, p.profile_url FROM public.document d JOIN public.profile p ON d.profile_id = p.id WHERE p.id = $1',
+      'SELECT d.document_url, d.police_report_url, d.verified, p.profile_url FROM public.document d JOIN public.profile p ON d.profile_id = p.id WHERE p.id = $1',
       [profileId],
     )
     if (result.rowCount === 0) {
@@ -150,6 +150,7 @@ export class UserService {
     }
 
     return {
+      verified: result.rows[0].verified,
       profileUrl: result.rows[0].profile_url,
       documentUrl: result.rows[0].document_url,
       policeReportUrl: result.rows[0].police_report_url,
