@@ -100,29 +100,34 @@ export class FamilyMemberService {
     familyMemberInfo: z.infer<typeof FamilySpecialNeedsSchema>,
     familyMemberId: string,
   ): Promise<boolean> {
-    await this.pg.query('BEGIN')
+    try {
+      await this.pg.query('BEGIN')
 
-    for (const specialNeed of familyMemberInfo.specialNeeds) {
-      const result = await this.pg.query(
-        'INSERT INTO special_needs (title, description, url, family_member_id, id) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description, url = EXCLUDED.url',
-        [
-          specialNeed.title,
-          specialNeed.description,
-          specialNeed.url,
-          familyMemberId,
-          specialNeed.id,
-        ],
-      )
+      for (const specialNeed of familyMemberInfo.specialNeeds) {
+        const result = await this.pg.query(
+          'INSERT INTO special_needs (title, description, url, family_member_id, id) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description, url = EXCLUDED.url',
+          [
+            specialNeed.title,
+            specialNeed.description,
+            specialNeed.url,
+            familyMemberId,
+            specialNeed.id,
+          ],
+        )
 
-      if (result.rowCount === 0) {
-        await this.pg.query('ROLLBACK')
-        return false
+        if (result.rowCount === 0) {
+          await this.pg.query('ROLLBACK')
+          return false
+        }
       }
+
+      await this.pg.query('COMMIT')
+
+      return true
+    } catch {
+      await this.pg.query('ROLLBACK')
+      return false
     }
-
-    await this.pg.query('COMMIT')
-
-    return true
   }
 
   /**
