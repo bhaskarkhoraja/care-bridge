@@ -96,6 +96,7 @@ export const UserApprovalTable = <TData, TValue>({
       {
         loading: "Loading...",
         success: (msg) => {
+          setRowSelection({})
           router.refresh()
           return msg
         },
