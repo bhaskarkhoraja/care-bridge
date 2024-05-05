@@ -103,4 +103,32 @@ export class AdminService {
       return false
     }
   }
+  /**
+   * Pending family member actions
+   **/
+
+  async pendingFamilyMemberActions({
+    action,
+    ids,
+  }: z.infer<typeof PendingActionsSchema>): Promise<boolean> {
+    try {
+      await this.pg.query('BEGIN')
+
+      const updateQuery = `UPDATE public.family_document SET verified = $1 WHERE family_member_id = ANY($2)`
+      const values = [action === 'accept', ids]
+
+      const result = await this.pg.query(updateQuery, values)
+
+      if (result.rowCount !== ids.length) {
+        await this.pg.query('ROLLBACK')
+        return false
+      }
+
+      await this.pg.query('COMMIT')
+      return true
+    } catch {
+      await this.pg.query('ROLLBACK')
+      return false
+    }
+  }
 }
