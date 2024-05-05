@@ -156,6 +156,7 @@ export class UserController {
           const documentInfo = await this.userService.getDocumentInfo(
             params.id,
             user.profile_id as string,
+            user.role === 'admin',
           )
 
           if (documentInfo === undefined) {

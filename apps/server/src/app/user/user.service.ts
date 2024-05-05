@@ -144,6 +144,7 @@ export class UserService {
   async getDocumentInfo(
     searchedProfileId: string,
     userProfileId: string,
+    isAdmin: boolean,
   ): Promise<z.infer<typeof DocumentFormSchema> | undefined> {
     const result = await this.pg.query(
       'SELECT d.document_url, d.police_report_url, d.verified, p.profile_url FROM public.document d JOIN public.profile p ON d.profile_id = p.id WHERE p.id = $1',
@@ -153,7 +154,7 @@ export class UserService {
       return undefined
     }
 
-    const personalDocument = searchedProfileId === userProfileId
+    const personalDocument = searchedProfileId === userProfileId || isAdmin
 
     return {
       verified: result.rows[0].verified,
