@@ -75,7 +75,13 @@ export class AdminController {
 
           return {
             status: 200,
-            body: { status: true, message: 'Users has been verified' },
+            body: {
+              status: true,
+              message:
+                body.action === 'accept'
+                  ? 'Users has been verified'
+                  : 'Users has been rejected',
+            },
           }
         } catch {
           return {
