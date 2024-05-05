@@ -106,6 +106,7 @@ export default async function UpdateProfilePage({
           documentInfo={documentInfo.body.data}
           editable={user.profile_id === profileId}
           profileId={profileId}
+          isAdmin={user.role === "admin"}
         />
       </main>
     )

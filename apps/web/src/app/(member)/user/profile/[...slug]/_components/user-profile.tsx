@@ -32,6 +32,7 @@ interface UserProfileProps {
   documentInfo: z.infer<typeof DocumentFormSchema>
   editable: boolean
   profileId: string
+  isAdmin: boolean
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -41,6 +42,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   documentInfo,
   editable,
   profileId,
+  isAdmin,
 }) => {
   const countryName = countries.find(
     (country) => country.id === addressContactInfo.countryId
@@ -172,7 +174,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
               </Card>
             </div>
           </div>
-          {editable && (
+          {(editable || isAdmin) && (
             <div className="my-4">
               <h1 className="mb-4 text-2xl font-extrabold leading-none">
                 Documents
