@@ -1,8 +1,7 @@
 import { initContract } from "@ts-rest/core"
 import { z } from "zod"
 
-import { AddressContactFormSchema, PersonalInfoFormSchema } from "../types"
-import { PendingUserActionsSchema, PendingUsersSchema } from "../types/admin"
+import { PendingActionsSchema, PendingUsersSchema } from "../types/admin"
 
 const c = initContract()
 
@@ -45,7 +44,10 @@ export const adminContract = c.router({
     responses: {
       200: z.object({
         status: z.literal(true),
-        message: z.literal("Users has been verified"),
+        message: z.union([
+          z.literal("Users has been verified"),
+          z.literal("Users has been rejected"),
+        ]),
       }),
       422: z.object({
         status: z.literal(false),
@@ -60,7 +62,7 @@ export const adminContract = c.router({
         message: z.literal("Something went wrong"),
       }),
     },
-    body: PendingUserActionsSchema,
+    body: PendingActionsSchema,
     summary: "Accept or reject pending users",
   },
 })
