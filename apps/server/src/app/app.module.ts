@@ -9,6 +9,7 @@ import { AdminMiddleware } from '@server/src/lib/middlewares/admin.middleware'
 import { GeneralModule } from './general/general.module'
 import { UserModule } from './user/user.module'
 import { FamilyMemberModule } from './family-member/family-member.module'
+import { AdminModule } from './admin/admin.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FamilyMemberModule } from './family-member/family-member.module'
     GeneralModule,
     UserModule,
     FamilyMemberModule,
+    AdminModule,
   ],
   controllers: [],
   providers: [],
