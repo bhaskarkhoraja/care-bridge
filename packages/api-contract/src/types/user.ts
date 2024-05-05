@@ -32,6 +32,14 @@ export const PersonalInfoFormSchema = z.object({
 })
 
 /**
+ * Personal Info Schema with id
+ **/
+export const ExtendedPersonalInfoFormSchema = PersonalInfoFormSchema.extend({
+  id: z.string(),
+  email: z.string().email(),
+})
+
+/**
  * AddressContactSchema for user
  **/
 export const AddressContactFormSchema = z.object({
