@@ -95,7 +95,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
               ? "Pending"
               : documentInfo.verified
                 ? "Yes"
-                : "Failed"}
+                : "No"}
           </p>
         </div>
         {documentInfo.verified === false && editable && (

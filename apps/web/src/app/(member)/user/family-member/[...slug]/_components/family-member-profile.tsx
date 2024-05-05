@@ -93,7 +93,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
               ? "Pending"
               : familyDocumentInfo.verified
                 ? "Yes"
-                : "Failed"}
+                : "No"}
           </p>
         </div>
         {familyDocumentInfo.verified === false && editable && (
