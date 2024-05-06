@@ -96,7 +96,7 @@ export const userApprovalColumn: ColumnDef<
   },
   {
     id: "email",
-    accessorFn: (user) => `${user.personalInfo.email}`,
+    accessorKey: "personalInfo.email",
     header: ({ column, table }) => {
       return <HeaderCellButton title="Email" column={column} table={table} />
     },
