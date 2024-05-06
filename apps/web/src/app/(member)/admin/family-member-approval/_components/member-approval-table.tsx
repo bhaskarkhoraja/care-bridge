@@ -72,10 +72,13 @@ export const MemberApprovalTable = <TData, TValue>({
     },
   })
 
-  const pendingActions = async (action: "accept" | "reject", ids: string[]) => {
+  const pendingActions = async (action: "accept" | "reject") => {
     const result = await pendingMemberActions({
       action: action,
-      ids: ids,
+      ids: table
+        .getFilteredSelectedRowModel()
+        // @ts-ignore
+        .rows.map((row) => row.original.familyMemberInfo.id) as string[],
     })
 
     if (result.status === 200) {
@@ -86,24 +89,15 @@ export const MemberApprovalTable = <TData, TValue>({
   }
 
   const verifyUser = (action: "accept" | "reject") => {
-    toast.promise(
-      pendingActions(
-        action,
-        table
-          .getFilteredSelectedRowModel()
-          // @ts-ignore
-          .rows.map((row) => row.original.familyMemberInfo.id) as string[]
-      ),
-      {
-        loading: "Loading...",
-        success: (msg) => {
-          setRowSelection({})
-          router.refresh()
-          return msg
-        },
-        error: (msg) => msg,
-      }
-    )
+    toast.promise(pendingActions(action), {
+      loading: "Loading...",
+      success: (msg) => {
+        setRowSelection({})
+        router.refresh()
+        return msg
+      },
+      error: (msg) => msg,
+    })
   }
 
   return (
