@@ -83,6 +83,7 @@ export const memberApprovalColumn: ColumnDef<
     ),
     enableSorting: false,
     enableHiding: false,
+    enableGlobalFilter: false,
   },
   {
     id: "name",
@@ -93,18 +94,17 @@ export const memberApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Name" column={column} table={table} />
     },
+    enableGlobalFilter: true,
   },
   {
     id: "dob",
-    accessorKey: "familyMemberInfo.dob",
+    accessorFn: (data) => `${format(data.familyMemberInfo.dob, "PPP")}`,
     header: ({ column, table }) => {
       return (
         <HeaderCellButton title="Date of Birth" column={column} table={table} />
       )
     },
-    cell: ({ row }) => {
-      return `${format(row.getValue("dob"), "PPP")}`
-    },
+    enableGlobalFilter: true,
   },
   {
     id: "gender",
@@ -113,6 +113,7 @@ export const memberApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Gender" column={column} table={table} />
     },
+    enableGlobalFilter: false,
   },
   {
     id: "nead-name",
@@ -125,6 +126,7 @@ export const memberApprovalColumn: ColumnDef<
         <HeaderCellButton title="Head name" column={column} table={table} />
       )
     },
+    enableGlobalFilter: true,
   },
   {
     id: "head-username",
@@ -134,6 +136,7 @@ export const memberApprovalColumn: ColumnDef<
         <HeaderCellButton title="Head username" column={column} table={table} />
       )
     },
+    enableGlobalFilter: true,
   },
   {
     id: "actions",
@@ -195,5 +198,6 @@ export const memberApprovalColumn: ColumnDef<
         </DropdownMenu>
       )
     },
+    enableGlobalFilter: false,
   },
 ]
