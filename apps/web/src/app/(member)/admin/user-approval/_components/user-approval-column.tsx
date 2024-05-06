@@ -83,6 +83,7 @@ export const userApprovalColumn: ColumnDef<
     ),
     enableSorting: false,
     enableHiding: false,
+    enableGlobalFilter: false,
   },
   {
     id: "name",
@@ -93,6 +94,7 @@ export const userApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Name" column={column} table={table} />
     },
+    enableGlobalFilter: true,
   },
   {
     id: "email",
@@ -100,6 +102,7 @@ export const userApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Email" column={column} table={table} />
     },
+    enableGlobalFilter: true,
   },
   {
     id: "username",
@@ -107,6 +110,7 @@ export const userApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Username" column={column} table={table} />
     },
+    enableGlobalFilter: true,
   },
   {
     id: "dob",
@@ -119,6 +123,7 @@ export const userApprovalColumn: ColumnDef<
     cell: ({ row }) => {
       return `${format(row.getValue("dob"), "PPP")}`
     },
+    enableGlobalFilter: true,
   },
   {
     id: "gender",
@@ -127,6 +132,7 @@ export const userApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Gender" column={column} table={table} />
     },
+    enableGlobalFilter: false,
   },
   {
     id: "address",
@@ -135,6 +141,7 @@ export const userApprovalColumn: ColumnDef<
     header: ({ column, table }) => {
       return <HeaderCellButton title="Address" column={column} table={table} />
     },
+    enableGlobalFilter: true,
   },
   {
     id: "contact",
@@ -146,6 +153,7 @@ export const userApprovalColumn: ColumnDef<
     cell: ({ row }) => {
       return `+${row.getValue("contact")}`
     },
+    enableGlobalFilter: true,
   },
   {
     id: "actions",
@@ -187,5 +195,6 @@ export const userApprovalColumn: ColumnDef<
         </DropdownMenu>
       )
     },
+    enableGlobalFilter: false,
   },
 ]
