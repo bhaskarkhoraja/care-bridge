@@ -38,3 +38,34 @@ export async function pendingUserActions({
     body: { action: action, ids: ids },
   })
 }
+
+/**
+ * Return all pending Members
+ **/
+export async function getAllPendingMembers() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.admin.getAllPendingMembers()
+}
+
+/**
+ * Accept or reject pending members with certain id
+ **/
+export async function pendingMemberActions({
+  action,
+  ids,
+}: z.infer<typeof PendingActionsSchema>) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.admin.pendingMemberActions({
+    body: { action: action, ids: ids },
+  })
+}
