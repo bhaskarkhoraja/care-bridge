@@ -2,6 +2,7 @@ import { z } from "zod"
 
 import {
   AddressContactFormSchema,
+  ExtendedFamilyInfoFormSchema,
   ExtendedPersonalInfoFormSchema,
 } from "../types"
 
@@ -21,3 +22,13 @@ export const PendingActionsSchema = z.object({
   action: z.union([z.literal("accept"), z.literal("reject")]),
   ids: z.array(z.string()),
 })
+
+/**
+ * Array of PendingUSers
+ **/
+export const PendingMembersSchema = z.array(
+  z.object({
+    familyMemberInfo: ExtendedFamilyInfoFormSchema,
+    userPersonalInfo: ExtendedPersonalInfoFormSchema,
+  })
+)
