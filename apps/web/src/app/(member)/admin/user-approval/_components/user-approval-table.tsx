@@ -1,10 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
 import {
   ColumnDef,
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -34,26 +32,25 @@ import {
   TableRow,
 } from "@web/src/components/ui/table"
 import { Settings2, UserRoundCog } from "lucide-react"
+import { PendingUsersSchema } from "node_modules/api-contract/dist/types/admin.mjs"
 import { toast } from "sonner"
+import { z } from "zod"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+interface DataTableProps {
+  columns: ColumnDef<z.infer<typeof PendingUsersSchema.element>>[]
+  data: z.infer<typeof PendingUsersSchema>
 }
 
-export const UserApprovalTable = <TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) => {
+export const UserApprovalTable = ({ columns, data }: DataTableProps) => {
+  const [tableData, setTableData] = React.useState(data)
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [globalFilter, setGlobalFilter] =
     React.useState<GlobalFilterTableState>()
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
-  const router = useRouter()
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -71,12 +68,11 @@ export const UserApprovalTable = <TData, TValue>({
     },
   })
 
-  const pendingActions = async (action: "accept" | "reject", ids: string[]) => {
+  const pendingActions = async (action: "accept" | "reject") => {
     const result = await pendingUserActions({
       action: action,
       ids: table
         .getFilteredSelectedRowModel()
-        // @ts-ignore
         .rows.map((row) => row.original.personalInfo.id) as string[],
     })
 
@@ -87,12 +83,22 @@ export const UserApprovalTable = <TData, TValue>({
     }
   }
 
+  const deleteSelectedRow = () => {
+    const selectedIds = table
+      .getFilteredSelectedRowModel()
+      .rows.map((row) => row.original.personalInfo.id) as string[]
+    const newTableData = tableData.filter(
+      (item) => !selectedIds.includes(item.personalInfo.id)
+    )
+    setRowSelection({})
+    setTableData(newTableData)
+  }
+
   const verifyUser = (action: "accept" | "reject") => {
     toast.promise(pendingActions(action), {
       loading: "Loading...",
       success: (msg) => {
-        setRowSelection({})
-        router.refresh()
+        deleteSelectedRow()
         return msg
       },
       error: (msg) => msg,
