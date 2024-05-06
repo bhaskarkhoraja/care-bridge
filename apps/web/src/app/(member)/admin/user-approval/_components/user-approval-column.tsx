@@ -102,6 +102,13 @@ export const userApprovalColumn: ColumnDef<
     },
   },
   {
+    id: "username",
+    accessorKey: "personalInfo.userName",
+    header: ({ column, table }) => {
+      return <HeaderCellButton title="Username" column={column} table={table} />
+    },
+  },
+  {
     id: "dob",
     accessorKey: "personalInfo.dob",
     header: ({ column, table }) => {
