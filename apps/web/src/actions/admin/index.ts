@@ -8,6 +8,9 @@ import contract from "packages/api-contract/dist/index.mjs"
 import { PendingActionsSchema } from "packages/api-contract/dist/types/index.mjs"
 import { z } from "zod"
 
+/**
+ * Return all pending Users
+ **/
 export async function getAllPendingUsers() {
   const client = initClient(contract, {
     baseUrl: webEnv.SERVER_URL,
@@ -18,6 +21,9 @@ export async function getAllPendingUsers() {
   return client.admin.getAllPendingUsers()
 }
 
+/**
+ * Accept or reject pending users with certain id
+ **/
 export async function pendingUserActions({
   action,
   ids,
