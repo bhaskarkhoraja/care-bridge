@@ -6,7 +6,7 @@ import { MemberApprovalTable } from "./_components/member-approval-table"
 
 export const metadata: Metadata = {
   title: "Verify Members",
-  description: "List and verify pending users",
+  description: "List and verify pending members",
 }
 
 export default async function MemberApprovalPage() {
