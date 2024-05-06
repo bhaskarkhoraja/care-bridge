@@ -17,6 +17,7 @@ import {
   ArrowDownAZ,
   ArrowUpAZ,
   ArrowUpDown,
+  ClipboardList,
   ExternalLink,
   MoreHorizontal,
 } from "lucide-react"
@@ -158,7 +159,9 @@ export const userApprovalColumn: ColumnDef<
             <DropdownMenuItem
               onClick={() => {
                 navigator.clipboard.writeText(userInfo.personalInfo.id)
-                toast.success("Copied profile id to clipboard")
+                toast("Copied profile id to clipboard", {
+                  icon: <ClipboardList className="size-4" />,
+                })
               }}
             >
               Copy profile id
