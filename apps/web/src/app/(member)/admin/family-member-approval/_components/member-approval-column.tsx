@@ -85,7 +85,7 @@ export const memberApprovalColumn: ColumnDef<
     enableHiding: false,
   },
   {
-    id: "Name",
+    id: "name",
     accessorFn: (data) =>
       data.familyMemberInfo.middleName
         ? `${data.familyMemberInfo.firstName} ${data.familyMemberInfo.middleName} ${data.familyMemberInfo.lastName}`
