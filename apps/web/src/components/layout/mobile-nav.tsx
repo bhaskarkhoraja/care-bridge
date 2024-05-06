@@ -74,7 +74,8 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
           <Icons.logofull className="mr-2 h-8 w-auto" />
         </MobileLink>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pr-4">
-          {user && pathname.startsWith("/user") ? (
+          {user &&
+          (pathname.startsWith("/user") || pathname.startsWith("/admin")) ? (
             <Accordion type="single" collapsible className="w-full">
               {navConfig.map((nav) => {
                 if (

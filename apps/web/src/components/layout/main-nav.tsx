@@ -34,7 +34,8 @@ const MainNav: React.FC<MainNavProps> = ({ user }) => {
       </Link>
 
       <nav className="flex items-center gap-4 text-sm lg:gap-6">
-        {user && pathname.startsWith("/user") ? (
+        {user &&
+        (pathname.startsWith("/user") || pathname.startsWith("/admin")) ? (
           <NavigationMenu>
             <NavigationMenuList>
               {navConfig.map((nav) => {
