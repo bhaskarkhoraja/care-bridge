@@ -15,7 +15,7 @@ export default async function UserApprovalPage() {
   return (
     <main className="w-full">
       <h1 className="mb-4 text-2xl font-bold leading-none">
-        Pending Verification
+        Pending User Verification
       </h1>
       {pendingUsers.status !== 200 ? (
         <p className="text-muted-foreground text-sm">
