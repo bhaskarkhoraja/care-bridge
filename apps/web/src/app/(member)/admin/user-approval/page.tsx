@@ -1,7 +1,5 @@
 import { Metadata } from "next"
-import { notFound } from "next/navigation"
 import { getAllPendingUsers } from "@web/src/actions/admin"
-import getCountries from "@web/src/actions/general"
 
 import { userApprovalColumn } from "./_components/user-approval-column"
 import { UserApprovalTable } from "./_components/user-approval-table"
@@ -12,14 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function UserApprovalPage() {
-  const [countries, pendingUsers] = await Promise.all([
-    getCountries(),
-    getAllPendingUsers(),
-  ])
-
-  if (countries.status === 204) {
-    notFound()
-  }
+  const pendingUsers = await getAllPendingUsers()
 
   return (
     <main className="w-full">
