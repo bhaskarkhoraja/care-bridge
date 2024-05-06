@@ -102,6 +102,7 @@ export default async function FamilyMemberPage({
           familyDocumentInfo={familyDocumentInfo.body.data}
           familyMemberId={familyMemberId}
           editable={editable.body.status}
+          isAdmin={user.role === "admin"}
         />
       </main>
     )

@@ -31,6 +31,7 @@ interface FamilyMemberProfileProps {
   familyDocumentInfo: z.infer<typeof DocumentFormSchema>
   familyMemberId: string
   editable: boolean
+  isAdmin: boolean
 }
 
 const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
@@ -39,6 +40,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
   familyDocumentInfo,
   familyMemberId,
   editable,
+  isAdmin,
 }) => {
   return (
     <div className="flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
@@ -155,7 +157,7 @@ const FamilyMemberProfile: React.FC<FamilyMemberProfileProps> = ({
               )}
             </div>
           </div>
-          {editable && (
+          {(editable || isAdmin) && (
             <div className="my-4">
               <h1 className="mb-4 text-2xl font-extrabold leading-none">
                 Documents

@@ -136,6 +136,7 @@ export class FamilyMemberService {
   async getFamilyDocumentInfo(
     familyMemberId: string,
     profileId: string,
+    isAdmin: boolean,
   ): Promise<z.infer<typeof DocumentFormSchema> | undefined> {
     const result = await this.pg.query(
       'SELECT d.document_url, d.police_report_url, d.verified, fm.profile_url, fm.profile_id as profile_id FROM public.family_document d JOIN public.family_member fm ON d.family_member_id = fm.id WHERE fm.id = $1',
@@ -145,7 +146,8 @@ export class FamilyMemberService {
       return undefined
     }
 
-    const familyBelongToProfile = profileId === result.rows[0].profile_id
+    const familyBelongToProfile =
+      profileId === result.rows[0].profile_id || isAdmin
 
     return {
       verified: result.rows[0].verified,

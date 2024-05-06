@@ -143,6 +143,7 @@ export class FamilyMemberController {
             await this.familyMemberService.getFamilyDocumentInfo(
               params.id,
               user.profile_id as string,
+              user.role === 'admin',
             )
 
           if (documentInfo === undefined) {
