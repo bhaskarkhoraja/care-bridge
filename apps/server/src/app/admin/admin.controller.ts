@@ -90,6 +90,79 @@ export class AdminController {
           }
         }
       },
+      /**
+       * Get all of the member that are pending
+       **/
+      getAllPendingMembers: async () => {
+        try {
+          if (user.role !== 'admin') {
+            return {
+              status: 401,
+              body: {
+                status: false,
+                message: 'User not authorized to perform this action',
+              },
+            }
+          }
+
+          const pendingMembers = await this.adminService.getAllPendingMembers()
+
+          if (pendingMembers === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No pending members found' },
+            }
+          }
+
+          return { status: 200, body: { status: true, data: pendingMembers } }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
+      /**
+       * Pending member actions
+       **/
+      pendingMemberActions: async ({ body }) => {
+        try {
+          if (user.role !== 'admin') {
+            return {
+              status: 401,
+              body: {
+                status: false,
+                message: 'User not authorized to perform this action',
+              },
+            }
+          }
+
+          const success = await this.adminService.pendingMemberActions(body)
+
+          if (!success) {
+            return {
+              status: 422,
+              body: { status: false, message: 'Failed to verify members' },
+            }
+          }
+
+          return {
+            status: 200,
+            body: {
+              status: true,
+              message:
+                body.action === 'accept'
+                  ? 'Members has been verified'
+                  : 'Members has been rejected',
+            },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
