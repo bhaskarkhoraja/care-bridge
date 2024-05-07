@@ -113,7 +113,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
             <>
               {user && (
                 <Link
-                  href="/user"
+                  href="/user/family-member"
                   className={cn(
                     "hover:bg-accent hover:text-accent-foreground flex items-center gap-4 rounded-md p-2 transition-colors sm:hidden"
                   )}
