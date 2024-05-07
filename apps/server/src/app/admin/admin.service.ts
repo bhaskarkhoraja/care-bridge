@@ -4,7 +4,7 @@ import {
   PendingActionsSchema,
   PendingMembersSchema,
   PendingUsersSchema,
-} from 'packages/api-contract/dist/types'
+} from 'api-contract/types'
 import { Client } from 'pg'
 import z from 'zod'
 
