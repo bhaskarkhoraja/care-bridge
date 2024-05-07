@@ -16,6 +16,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@web/src/components/ui/sheet"
 import { navConfig } from "@web/src/config/nav"
 import { siteConfig } from "@web/src/config/site"
 import { cn } from "@web/src/lib/utils"
+import { ExternalLink } from "lucide-react"
 import { Session } from "next-auth"
 
 interface MobileNavProps {
@@ -114,16 +115,17 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
                 <Link
                   href="/user"
                   className={cn(
-                    "text-foreground/60 hover:text-foreground/80 block transition-colors sm:hidden"
+                    "hover:bg-accent hover:text-accent-foreground flex items-center gap-4 rounded-md p-2 transition-colors sm:hidden"
                   )}
                 >
-                  Get Started
+                  <p>Get Started</p>
+                  <ExternalLink className="size-4" />
                 </Link>
               )}
               <Link
                 href={siteConfig.links.github}
                 className={cn(
-                  "text-foreground/60 hover:text-foreground/80 block transition-colors sm:hidden"
+                  "hover:bg-accent hover:text-accent-foreground block rounded-md p-2 transition-colors sm:hidden"
                 )}
               >
                 GitHub

@@ -15,6 +15,7 @@ import {
 import { navConfig } from "@web/src/config/nav"
 import { siteConfig } from "@web/src/config/site"
 import { cn } from "@web/src/lib/utils"
+import { ExternalLink } from "lucide-react"
 import { Session } from "next-auth"
 
 interface MainNavProps {
@@ -74,10 +75,11 @@ const MainNav: React.FC<MainNavProps> = ({ user }) => {
               <Link
                 href="/user/family-member"
                 className={cn(
-                  "text-foreground/60 hover:text-foreground/80 hidden transition-colors sm:block"
+                  "text-foreground/60 hover:text-foreground/80 hidden items-center gap-2 transition-colors sm:flex"
                 )}
               >
-                Get Started
+                <p>Get Started</p>
+                <ExternalLink className="size-4" />
               </Link>
             )}
             <Link
