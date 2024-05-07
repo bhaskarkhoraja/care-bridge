@@ -170,6 +170,7 @@ export class UserService {
     documentInfo: z.infer<typeof DocumentFormSchema>,
     profileId: string,
     userId: string,
+    isAdmin: boolean,
   ): Promise<boolean> {
     const result1 = await this.pg.query(
       'UPDATE public.profile SET profile_url = $1 WHERE id = $2',
@@ -178,7 +179,12 @@ export class UserService {
 
     const result2 = await this.pg.query(
       'INSERT INTO document (document_url, police_report_url, profile_id, verified) VALUES ($1, $2, $3, $4) ON CONFLICT (profile_id) DO UPDATE SET document_url = EXCLUDED.document_url, police_report_url = EXCLUDED.police_report_url, verified = EXCLUDED.verified',
-      [documentInfo.documentUrl, documentInfo.policeReportUrl, profileId, null],
+      [
+        documentInfo.documentUrl,
+        documentInfo.policeReportUrl,
+        profileId,
+        isAdmin ? true : null,
+      ],
     )
 
     if (result1.rowCount === 0 || result2.rowCount === 0) {

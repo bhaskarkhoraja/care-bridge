@@ -183,6 +183,7 @@ export class UserController {
             body,
             user.profile_id as string,
             user.id,
+            user.role === 'admin',
           )
 
           if (!success) {
