@@ -69,14 +69,14 @@ export default async function FamilyMembers() {
       ) : familyMembers.status === 500 ? (
         familyMembers.body.message
       ) : (
-        <div className="flex flex-wrap gap-4">
+        <div className="gird-cols-1 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {familyMembers.body.data.map((member) => (
             <Link
               href={`/user/family-member/${member.id}`}
-              className="w-full md:w-fit"
+              className="w-full"
               key={member.id}
             >
-              <Card className="w-full md:w-[350px]">
+              <Card className="w-full">
                 <CardContent className="flex items-center gap-4 pt-6">
                   <Avatar className={"size-14"}>
                     <AvatarImage
