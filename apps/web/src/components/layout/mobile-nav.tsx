@@ -92,7 +92,10 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
                     <AccordionTrigger className="hover:no-underline">
                       {nav.title}
                     </AccordionTrigger>
-                    <AccordionContent className="ms-4 flex flex-col">
+                    <AccordionContent
+                      className="ms-4 flex flex-col"
+                      onClick={() => setOpen(false)}
+                    >
                       {nav.items.map((navItem) => (
                         <Link
                           href={navItem.href}
