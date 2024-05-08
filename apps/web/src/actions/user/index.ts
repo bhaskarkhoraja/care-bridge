@@ -4,13 +4,13 @@ import { cookies } from "next/headers"
 import { initClient } from "@ts-rest/core"
 import { webEnv } from "@web/src/lib/env"
 import { cookieName } from "@web/src/lib/utils"
+import contract from "api-contract"
 import {
   AddressContactFormSchema,
   DocumentFormSchema,
   PersonalInfoFormSchema,
   UserTypeSchema,
-} from "node_modules/api-contract/dist/types/user.mjs"
-import contract from "packages/api-contract/dist/index.mjs"
+} from "api-contract/types"
 import { z } from "zod"
 
 /**

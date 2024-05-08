@@ -2,10 +2,10 @@
 
 import { Step, StepItem, Stepper } from "@web/src/components/ui/stepper"
 import {
+  DocumentFormSchema,
   FamilyInfoFormSchema,
   FamilySpecialNeedsSchema,
-} from "node_modules/api-contract/dist/types/family-member.mjs"
-import { DocumentFormSchema } from "node_modules/api-contract/dist/types/user.mjs"
+} from "api-contract/types"
 import { z } from "zod"
 
 import FamilyDocumentForm from "./family-document-form"

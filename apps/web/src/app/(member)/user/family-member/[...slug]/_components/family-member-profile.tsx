@@ -16,13 +16,13 @@ import { Input } from "@web/src/components/ui/input"
 import { ScrollArea } from "@web/src/components/ui/scroll-area"
 import { Textarea } from "@web/src/components/ui/textarea"
 import { cn, getShortName } from "@web/src/lib/utils"
-import { format } from "date-fns"
-import { ExternalLink, PencilLine } from "lucide-react"
 import {
+  DocumentFormSchema,
   FamilyInfoFormSchema,
   FamilySpecialNeedsSchema,
-} from "node_modules/api-contract/dist/types/family-member.mjs"
-import { DocumentFormSchema } from "node_modules/api-contract/dist/types/user.mjs"
+} from "api-contract/types"
+import { format } from "date-fns"
+import { ExternalLink, PencilLine } from "lucide-react"
 import { z } from "zod"
 
 interface FamilyMemberProfileProps {

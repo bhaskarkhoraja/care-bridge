@@ -15,14 +15,14 @@ import {
 import { Input } from "@web/src/components/ui/input"
 import { ScrollArea } from "@web/src/components/ui/scroll-area"
 import { cn, getShortName } from "@web/src/lib/utils"
-import { format } from "date-fns"
-import { ExternalLink, PencilLine } from "lucide-react"
-import { CountriesSchema } from "node_modules/api-contract/dist/types/general.mjs"
 import {
   AddressContactFormSchema,
+  CountriesSchema,
   DocumentFormSchema,
   PersonalInfoFormSchema,
-} from "node_modules/api-contract/dist/types/user.mjs"
+} from "api-contract/types"
+import { format } from "date-fns"
+import { ExternalLink, PencilLine } from "lucide-react"
 import { z } from "zod"
 
 interface UserProfileProps {

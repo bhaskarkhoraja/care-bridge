@@ -31,8 +31,8 @@ import {
   TableHeader,
   TableRow,
 } from "@web/src/components/ui/table"
+import { PendingMembersSchema } from "api-contract/types"
 import { Settings2, UserRoundCog } from "lucide-react"
-import { PendingMembersSchema } from "node_modules/api-contract/dist/types/admin.mjs"
 import { toast } from "sonner"
 import { z } from "zod"
 

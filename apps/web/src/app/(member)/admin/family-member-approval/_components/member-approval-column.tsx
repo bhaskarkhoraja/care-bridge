@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@web/src/components/ui/dropdown-menu"
+import { PendingMembersSchema } from "api-contract/types"
 import { format } from "date-fns"
 import {
   ArrowDownAZ,
@@ -21,7 +22,6 @@ import {
   ExternalLink,
   MoreHorizontal,
 } from "lucide-react"
-import { PendingMembersSchema } from "packages/api-contract/dist/types/index.mjs"
 import { toast } from "sonner"
 import { z } from "zod"
 
