@@ -2,6 +2,7 @@ import { NavItem } from "@web/src/types/nav"
 import {
   Activity,
   Archive,
+  CalendarPlus,
   DollarSign,
   HandCoins,
   Mail,
@@ -50,6 +51,12 @@ export const navConfig: NavItem = [
         name: "Active",
         href: "/user/request",
         icon: <Activity />,
+        description: "All your active requests.",
+      },
+      {
+        name: "Add request",
+        href: `/user/request/add/${uuidv4()}`,
+        icon: <CalendarPlus />,
         description: "All your active requests.",
       },
       {
