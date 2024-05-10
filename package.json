@@ -37,16 +37,16 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@ts-rest/core": "^3.45.0",
+    "@ts-rest/core": "^3.45.2",
     "api-contract": "workspace:*",
     "axios": "^1.6.8",
     "concurrently": "^8.2.2",
     "date-fns": "^3.6.0",
-    "dotenv-cli": "^7.4.1",
+    "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.0",
     "next-auth": "^4.24.7",
     "nodemailer": "^6.9.13",
-    "zod": "^3.23.5"
+    "zod": "^3.23.8"
   },
   "pnpm": {
     "overrides": {
