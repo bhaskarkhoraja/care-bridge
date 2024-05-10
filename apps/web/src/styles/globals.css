@@ -97,3 +97,8 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+/* Hide clock icon for time type */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: none;
+}
