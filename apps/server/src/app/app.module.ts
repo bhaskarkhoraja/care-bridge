@@ -10,6 +10,7 @@ import { GeneralModule } from './general/general.module'
 import { UserModule } from './user/user.module'
 import { FamilyMemberModule } from './family-member/family-member.module'
 import { AdminModule } from './admin/admin.module'
+import { RequestModule } from './request/request.module'
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AdminModule } from './admin/admin.module'
     UserModule,
     FamilyMemberModule,
     AdminModule,
+    RequestModule,
   ],
   controllers: [],
   providers: [],
