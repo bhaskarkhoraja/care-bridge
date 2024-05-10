@@ -95,7 +95,7 @@ export default async function UpdateRequestPage({
         ) : (
           <Alert className="mb-4" variant={"destructive"}>
             <MailWarning className="size-4" />
-            <AlertTitle>Your account has&aposnt been verified yet.</AlertTitle>
+            <AlertTitle>Your account has&apos;nt been verified yet.</AlertTitle>
             <AlertDescription>
               It takes 2-3 business days to verify your account.
             </AlertDescription>
