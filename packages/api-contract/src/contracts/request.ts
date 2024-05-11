@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core"
 import { z } from "zod"
 
+import { ExtendedPersonalInfoFormSchema } from "../types"
 import { ExtendedRequestSchema, RequestSchema } from "../types/request"
 
 const c = initContract()
@@ -122,5 +123,27 @@ export const requestContract = c.router({
       requestId: z.string(),
     }),
     summary: "Apply for request",
+  },
+  /**
+   * Get applied user for certain request
+   **/
+  getRequestApplicant: {
+    method: "GET",
+    path: "/user/request-applicant/:id",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.array(ExtendedPersonalInfoFormSchema),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No applicants found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get applied user for certain request",
   },
 })
