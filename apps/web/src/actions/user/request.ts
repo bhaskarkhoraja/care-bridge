@@ -72,3 +72,16 @@ export async function applyForRequest(requestId: string) {
   })
   return client.request.applyForRequest({ body: { requestId: requestId } })
 }
+
+/**
+ * Get applied user for certain request
+ **/
+export async function getRequestApplicant(requestId: string) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.getRequestApplicant({ params: { id: requestId } })
+}
