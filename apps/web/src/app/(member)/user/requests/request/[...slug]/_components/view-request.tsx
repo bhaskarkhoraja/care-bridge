@@ -127,7 +127,7 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
           </div>
           <div className="col-span-2 hidden w-full items-center justify-end lg:flex">
             <Link
-              href={`/user/request/update/${requestDetails.id}`}
+              href={`/user/requests/request/update/${requestDetails.id}`}
               className={buttonVariants({ variant: "default" })}
             >
               Update Request
@@ -199,7 +199,7 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
           </ScrollArea>
           <div className="col-span-2 flex w-full items-center justify-end lg:hidden">
             <Link
-              href={`/user/request/update/${requestDetails.id}`}
+              href={`/user/requests/request/update/${requestDetails.id}`}
               className={buttonVariants({ variant: "default" })}
             >
               Update Request

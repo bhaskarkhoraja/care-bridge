@@ -119,7 +119,9 @@ const RequestForm: React.FC<RequestFormProps> = ({
 
       toast.success("Successfully created request")
       NProgress.start()
-      router.push(data.status === "open" ? "/user/request" : "/user/draft")
+      router.push(
+        data.status === "open" ? "/user/requests" : "/user/requests/draft"
+      )
     } catch {
       toast.error("Something went wrong")
     } finally {
