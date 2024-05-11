@@ -59,3 +59,16 @@ export async function getRequestForSeller() {
   })
   return client.request.getRequestForSeller()
 }
+
+/**
+ * Apply for request
+ **/
+export async function applyForRequest(requestId: string) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.applyForRequest({ body: { requestId: requestId } })
+}
