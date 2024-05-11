@@ -49,25 +49,25 @@ export const navConfig: NavItem = [
     items: [
       {
         name: "Active",
-        href: "/user/request",
+        href: "/user/requests",
         icon: <Activity />,
         description: "All your active requests.",
       },
       {
         name: "Add request",
-        href: `/user/request/add/${uuidv4()}`,
+        href: `/user/requests/request/add/${uuidv4()}`,
         icon: <CalendarPlus />,
         description: "All your active requests.",
       },
       {
         name: "Draft",
-        href: "/user/request/draft",
+        href: "/user/requests/draft",
         icon: <ScissorsLineDashed />,
         description: "Requests which are not public.",
       },
       {
-        name: "Archived",
-        href: "/user/request/archived",
+        name: "Archive",
+        href: "/user/requests/archive",
         icon: <Archive />,
         description: "Requests that has been fulfilled.",
       },
