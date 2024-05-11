@@ -81,7 +81,7 @@ export const navConfig: NavItem = [
     items: [
       {
         name: "All Request",
-        href: "/user/request",
+        href: "/user/requests/seller",
         icon: <PackageSearch />,
         description: "All available request you can apply to.",
       },
