@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectClient } from 'nest-postgres'
 import {
   ExtendedFamilyInfoFormSchema,
+  ExtendedPersonalInfoFormSchema,
   ExtendedRequestSchema,
   RequestSchema,
 } from 'api-contract/types'
@@ -332,5 +333,48 @@ export class RequestService {
     }
 
     return true
+  }
+  /**
+   * Get applied user for certain request
+   **/
+  async getRequestApplicant(
+    requestId: string,
+  ): Promise<z.infer<typeof ExtendedPersonalInfoFormSchema>[] | undefined> {
+    const result = await this.pg.query(
+      `
+      SELECT
+        sra.applicant_profile_id as id,
+        p.first_name,
+        p.middle_name,
+        p.last_name,
+        p.user_name,
+        p.gender,
+        p.date_of_birth,
+        p.profile_url
+      FROM service_request_application sra
+      LEFT JOIN profile p ON p.id = sra.applicant_profile_id
+      WHERE sra.service_request_id = $1
+    `,
+      [requestId],
+    )
+
+    if (result.rowCount === 0) {
+      return undefined
+    }
+
+    const data: z.infer<typeof ExtendedPersonalInfoFormSchema>[] =
+      result.rows.map((row) => ({
+        id: row.id,
+        firstName: row.first_name,
+        middleName: row.middle_name,
+        lastName: row.last_name,
+        userName: row.user_name,
+        gender: row.gender,
+        dob: row.date_of_birth,
+        profileUrl: row.profile_url,
+        email: '',
+      }))
+
+    return data
   }
 }

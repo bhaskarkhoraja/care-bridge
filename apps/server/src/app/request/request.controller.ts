@@ -153,6 +153,33 @@ export class RequestController {
           }
         }
       },
+      /**
+       * Get applied user for certain request
+       **/
+      getRequestApplicant: async ({ params }) => {
+        try {
+          const applicants = await this.requestService.getRequestApplicant(
+            params.id,
+          )
+
+          if (applicants === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No applicants found' },
+            }
+          }
+
+          return {
+            status: 200,
+            body: { status: true, data: applicants },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
