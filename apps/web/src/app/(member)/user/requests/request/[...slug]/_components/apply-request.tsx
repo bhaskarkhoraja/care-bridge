@@ -5,17 +5,20 @@ import { useRouter } from "next/navigation"
 import { applyForRequest } from "@web/src/actions/user/request"
 import { Icons } from "@web/src/components/icons"
 import { Button } from "@web/src/components/ui/button"
+import { Check } from "lucide-react"
 import { toast } from "sonner"
 
 interface ApplyRequestProps {
   requestId: string
+  applied: boolean
 }
 
-const ApplyRequest: React.FC<ApplyRequestProps> = ({ requestId }) => {
+const ApplyRequest: React.FC<ApplyRequestProps> = ({ requestId, applied }) => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const handleApply = async () => {
+    if (applied) return
     try {
       setLoading(true)
 
@@ -38,7 +41,8 @@ const ApplyRequest: React.FC<ApplyRequestProps> = ({ requestId }) => {
   return (
     <Button type="button" onClick={handleApply} disabled={loading}>
       {loading && <Icons.spinner className="mr-2 size-4 animate-spin" />}
-      Apply
+      {applied && <Check className="mr-2 size-4" />}
+      {applied ? "Applied" : "Apply"}
     </Button>
   )
 }
