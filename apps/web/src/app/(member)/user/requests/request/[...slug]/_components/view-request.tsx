@@ -206,9 +206,7 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
                 ))
               ) : (
                 <p className="text-muted-foreground text-sm">
-                  {" "}
-                  {requestDetails.familyMemberIds.length} family members
-                  selected
+                  No. of family members: {requestDetails.familyMemberIds.length}
                 </p>
               )}
             </div>
