@@ -4,7 +4,6 @@ import { TsRest, TsRestHandler, tsRestHandler } from '@ts-rest/nest'
 import contract from 'api-contract'
 import { User } from '@server/src/lib/decorators/user.decorator'
 import { AdapterUser } from 'next-auth/adapters'
-import { log } from 'console'
 
 @Controller()
 @TsRest({
@@ -95,8 +94,7 @@ export class RequestController {
           }
 
           return { status: 200, body: { status: true, data: requests } }
-        } catch (error) {
-          log(error)
+        } catch {
           return {
             status: 500,
             body: { status: false, message: 'Something went wrong' },
