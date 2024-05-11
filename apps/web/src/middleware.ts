@@ -103,6 +103,26 @@ export default withAuth(
     if (isUserPage) {
       return NextResponse.redirect(new URL(`/user/family-member`, req.url))
     }
+
+    const isRequestPage = req.nextUrl.pathname.startsWith("/user/requests")
+    const isFamilyMemberPage = req.nextUrl.pathname.startsWith(
+      "/user/family-member"
+    )
+    if (isRequestPage || isFamilyMemberPage) {
+      const currentPage = req.nextUrl.pathname
+      if (
+        currentPage.startsWith("/user/requests/seller") &&
+        user.type === "buyer"
+      ) {
+        return NextResponse.redirect(new URL(`/user/requests`, req.url))
+      } else if (
+        (!currentPage.startsWith("/user/requests/seller") ||
+          isFamilyMemberPage) &&
+        user.type === "seller"
+      ) {
+        return NextResponse.redirect(new URL(`/user/requests/seller`, req.url))
+      }
+    }
   },
   {
     callbacks: {
