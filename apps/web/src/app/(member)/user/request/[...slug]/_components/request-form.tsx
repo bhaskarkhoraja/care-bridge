@@ -132,7 +132,7 @@ const RequestForm: React.FC<RequestFormProps> = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex-1 items-start lg:grid lg:grid-cols-[minmax(0,1fr)_410px] lg:gap-10">
-            <div className="grid gap-4 px-1 sm:grid-cols-2 sm:px-0">
+            <div className="flex flex-col gap-4 px-1 sm:grid sm:grid-cols-2 sm:px-0">
               <FormField
                 control={form.control}
                 name="location"
