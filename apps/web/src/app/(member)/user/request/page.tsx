@@ -38,7 +38,10 @@ export default async function AllRequest() {
           >
             <Card className="w-full">
               <CardHeader>
-                <CardTitle># {requestIndex + 1}</CardTitle>
+                <CardTitle className="flex items-center justify-between text-lg">
+                  <div># {requestIndex + 1}</div>
+                  <div>NRs {request.price}</div>
+                </CardTitle>
                 <div>
                   <dl className="space-y-2">
                     <div className="flex items-center justify-between">
