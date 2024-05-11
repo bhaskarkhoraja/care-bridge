@@ -10,6 +10,7 @@ import { Input } from "@web/src/components/ui/input"
 import { Label } from "@web/src/components/ui/label"
 import { ScrollArea } from "@web/src/components/ui/scroll-area"
 import { Switch } from "@web/src/components/ui/switch"
+import { Textarea } from "@web/src/components/ui/textarea"
 import {
   Tooltip,
   TooltipContent,
@@ -108,6 +109,21 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
               </Label>
             </div>
             <Switch checked={requestDetails.mandatoryNationality} />
+          </div>
+          <Input label="Currency" readOnly aria-readonly value={"NRs"} />
+          <Input
+            label="Price"
+            readOnly
+            aria-readonly
+            value={requestDetails.price}
+          />
+          <div className="col-span-2">
+            <Textarea
+              label="Description"
+              readOnly
+              aria-readonly
+              value={requestDetails.description}
+            />
           </div>
           <div className="col-span-2 hidden w-full items-center justify-end lg:flex">
             <Link

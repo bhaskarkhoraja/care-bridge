@@ -23,7 +23,7 @@ export class RequestService {
       await this.pg.query('BEGIN')
 
       const result1 = await this.pg.query(
-        'INSERT INTO service_request (id, profile_id, description, start_time, end_time, status, prefered_gender, mandatory_gender, prefered_age, mandatory_age, prefered_nationality_id, mandatory_nationality, location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)  ON CONFLICT (id) DO UPDATE SET description = EXCLUDED.description, start_time = EXCLUDED.start_time, end_time = EXCLUDED.end_time, status = EXCLUDED.status, prefered_gender = EXCLUDED.prefered_gender, mandatory_gender = EXCLUDED.mandatory_gender, prefered_age = EXCLUDED.prefered_age, mandatory_age = EXCLUDED.mandatory_age, prefered_nationality_id = EXCLUDED.prefered_nationality_id, location = EXCLUDED.location',
+        'INSERT INTO service_request (id, profile_id, description, start_time, end_time, status, prefered_gender, mandatory_gender, prefered_age, mandatory_age, prefered_nationality_id, mandatory_nationality, location, price) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)  ON CONFLICT (id) DO UPDATE SET description = EXCLUDED.description, start_time = EXCLUDED.start_time, end_time = EXCLUDED.end_time, status = EXCLUDED.status, prefered_gender = EXCLUDED.prefered_gender, mandatory_gender = EXCLUDED.mandatory_gender, prefered_age = EXCLUDED.prefered_age, mandatory_age = EXCLUDED.mandatory_age, prefered_nationality_id = EXCLUDED.prefered_nationality_id, location = EXCLUDED.location, price = EXCLUDED.price',
         [
           body.id,
           profileId,
@@ -40,6 +40,7 @@ export class RequestService {
             : null, // Replace last string with empty string as it contain country nationality
           body.mandatoryNationality,
           body.location,
+          body.price,
         ],
       )
       if (result1.rowCount === 0) {
@@ -103,6 +104,7 @@ export class RequestService {
         sr.status,
         sr.start_time,
         sr.end_time,
+        sr.price,
         sr.location,
         sr.description,
         sr.prefered_age,
@@ -129,6 +131,7 @@ export class RequestService {
       status: row.status,
       startTime: row.start_time,
       endTime: row.end_time,
+      price: row.price,
       location: row.location,
       description: row.description,
       preferedAge: row.prefered_age,
@@ -158,6 +161,7 @@ export class RequestService {
         sr.status,
         sr.start_time,
         sr.end_time,
+        sr.price,
         sr.location,
         sr.description,
         sr.prefered_age,
@@ -222,6 +226,7 @@ export class RequestService {
       status: result1.rows[0].status,
       startTime: result1.rows[0].start_time,
       endTime: result1.rows[0].end_time,
+      price: result1.rows[0].price,
       location: result1.rows[0].location,
       description: result1.rows[0].description,
       preferedAge: result1.rows[0].prefered_age,

@@ -24,6 +24,7 @@ export const RequestSchema = z.object({
   familyMemberIds: z
     .array(z.string())
     .min(1, { message: "Atleast one family member must be selected" }),
+  price: z.coerce.number().min(100, { message: "Minimum price should be 100" }),
   status: z.enum(["open", "close", "draft"]),
 })
 

@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS service_request (
   mandatory_age BOOLEAN DEFAULT FALSE,
   prefered_nationality_id UUID REFERENCES country(id),
   mandatory_nationality BOOLEAN DEFAULT FALSE,
+  price INT NOT NULL,
   location TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -34,6 +35,7 @@ COMMENT ON COLUMN service_request.prefered_age IS 'Preferred age range for the s
 COMMENT ON COLUMN service_request.mandatory_age IS 'Indicates if age preference is mandatory';
 COMMENT ON COLUMN service_request.prefered_nationality_id IS 'Foreign key referencing the country of the preferred nationality';
 COMMENT ON COLUMN service_request.mandatory_nationality IS 'Indicates if nationality preference is mandatoray';
+COMMENT ON COLUMN service_request.price IS 'Price of the service request';
 COMMENT ON COLUMN service_request.location IS 'Location of the service request';
 COMMENT ON COLUMN service_request.created_at IS 'Timestamp of when the service request was created';
 COMMENT ON COLUMN service_request.updated_at IS 'Timestamp of the last update to the service request';

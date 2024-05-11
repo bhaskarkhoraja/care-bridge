@@ -89,6 +89,7 @@ const RequestForm: React.FC<RequestFormProps> = ({
       endTime: requestDetails?.endTime
         ? new Date(requestDetails?.endTime)
         : undefined,
+      price: requestDetails?.price ?? undefined,
       location: requestDetails?.location ?? "",
       preferedAge: requestDetails?.preferedAge ?? undefined,
       mandatoryAge: requestDetails?.mandatoryAge ?? false,
@@ -518,6 +519,28 @@ const RequestForm: React.FC<RequestFormProps> = ({
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Input label="Currency" value="NRs" readOnly aria-readonly />
+
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        label="Price"
+                        type="number"
+                        aria-invalid={
+                          form.formState.errors.price ? "true" : "false"
+                        }
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
