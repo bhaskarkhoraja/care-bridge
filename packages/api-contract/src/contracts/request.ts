@@ -98,4 +98,29 @@ export const requestContract = c.router({
     },
     summary: "Get request for seller",
   },
+  /**
+   * Apply for request
+   **/
+  applyForRequest: {
+    method: "POST",
+    path: "/user/seller/apply",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        message: z.literal("Application has been submitted"),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No such requests found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    body: z.object({
+      requestId: z.string(),
+    }),
+    summary: "Apply for request",
+  },
 })
