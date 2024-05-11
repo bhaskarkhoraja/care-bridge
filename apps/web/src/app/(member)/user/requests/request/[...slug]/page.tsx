@@ -69,6 +69,7 @@ export default async function UpdateRequestPage({
         <ViewRequest
           requestDetails={request.body.data}
           countries={countries.body.data}
+          showFamilyMembers={user.type === "buyer" ? true : false}
         />
       </main>
     )

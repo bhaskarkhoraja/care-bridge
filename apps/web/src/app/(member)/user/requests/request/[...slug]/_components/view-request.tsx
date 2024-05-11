@@ -26,11 +26,13 @@ import { z } from "zod"
 interface ViewRequestProps {
   requestDetails: z.infer<typeof ExtendedRequestSchema>
   countries: z.infer<typeof CountriesSchema>[]
+  showFamilyMembers: boolean
 }
 
 const ViewRequest: React.FC<ViewRequestProps> = ({
   requestDetails,
   countries,
+  showFamilyMembers,
 }) => {
   return (
     <div>
@@ -143,64 +145,72 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
         <div className="mt-4 w-full md:sticky lg:z-30 lg:-ml-2 lg:mt-0 lg:h-[calc(100vh-10.75rem)] lg:shrink-0 lg:border-l">
           <ScrollArea className="h-full">
             <div className="space-y-4 p-4">
-              {requestDetails.familyMembers.map((member) => (
-                <Card className={cn("w-full")} key={member.id}>
-                  <CardContent className="flex items-center gap-4 pt-6">
-                    <Avatar className={"size-14"}>
-                      <AvatarImage
-                        src={member.profileUrl}
-                        alt={
-                          member.middleName
-                            ? `${member.firstName} ${member.middleName} ${member.lastName}`
-                            : `${member.firstName} ${member.lastName}`
-                        }
-                      />
-                      <AvatarFallback className="text-2xl">
-                        {getShortName(
-                          member.middleName
-                            ? `${member.firstName} ${member.middleName} ${member.lastName}`
-                            : `${member.firstName} ${member.lastName}` ??
-                                "New User"
-                        )}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold">
-                          {member.middleName
-                            ? `${member.firstName} ${member.middleName} ${member.lastName}`
-                            : `${member.firstName} ${member.lastName}`}
+              {showFamilyMembers ? (
+                requestDetails.familyMembers.map((member) => (
+                  <Card className={cn("w-full")} key={member.id}>
+                    <CardContent className="flex items-center gap-4 pt-6">
+                      <Avatar className={"size-14"}>
+                        <AvatarImage
+                          src={member.profileUrl}
+                          alt={
+                            member.middleName
+                              ? `${member.firstName} ${member.middleName} ${member.lastName}`
+                              : `${member.firstName} ${member.lastName}`
+                          }
+                        />
+                        <AvatarFallback className="text-2xl">
+                          {getShortName(
+                            member.middleName
+                              ? `${member.firstName} ${member.middleName} ${member.lastName}`
+                              : `${member.firstName} ${member.lastName}` ??
+                                  "New User"
+                          )}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold">
+                            {member.middleName
+                              ? `${member.firstName} ${member.middleName} ${member.lastName}`
+                              : `${member.firstName} ${member.lastName}`}
+                          </p>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger type="button">
+                                <div>
+                                  <Check className="size-3" />
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {member.verified === null ? (
+                                  <p>Verification Pending</p>
+                                ) : !member.verified ? (
+                                  <p>Verification Failed</p>
+                                ) : (
+                                  <p>Verified Member</p>
+                                )}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                        <p className="text-muted-foreground text-sm">
+                          {format(member.dob, "PPP") as string}
                         </p>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger type="button">
-                              <div>
-                                <Check className="size-3" />
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {member.verified === null ? (
-                                <p>Verification Pending</p>
-                              ) : !member.verified ? (
-                                <p>Verification Failed</p>
-                              ) : (
-                                <p>Verified Member</p>
-                              )}
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                        <p className="text-muted-foreground text-sm">
+                          {member.gender[0].toUpperCase() +
+                            member.gender.slice(1)}
+                        </p>
                       </div>
-                      <p className="text-muted-foreground text-sm">
-                        {format(member.dob, "PPP") as string}
-                      </p>
-                      <p className="text-muted-foreground text-sm">
-                        {member.gender[0].toUpperCase() +
-                          member.gender.slice(1)}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <p className="text-muted-foreground text-sm">
+                  {" "}
+                  {requestDetails.familyMemberIds.length} family members
+                  selected
+                </p>
+              )}
             </div>
           </ScrollArea>
           <div className="col-span-2 flex w-full items-center justify-end lg:hidden">
