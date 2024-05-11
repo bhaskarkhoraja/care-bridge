@@ -46,3 +46,16 @@ export async function getRequest(requestId: string) {
   })
   return client.request.getRequest({ params: { id: requestId } })
 }
+
+/**
+ * Get request for seller
+ **/
+export async function getRequestForSeller() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.getRequestForSeller()
+}
