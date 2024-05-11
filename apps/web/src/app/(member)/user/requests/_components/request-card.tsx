@@ -16,7 +16,7 @@ interface RequestCardProps {
 
 const RequestCard: React.FC<RequestCardProps> = ({ request, index }) => {
   return (
-    <Link href={`/user/request/${request.id}`} className="w-full">
+    <Link href={`/user/requests/request/${request.id}`} className="w-full">
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-lg">
