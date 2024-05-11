@@ -23,6 +23,8 @@ import { format } from "date-fns"
 import { Check } from "lucide-react"
 import { z } from "zod"
 
+import ApplyRequest from "./apply-request"
+
 interface ViewRequestProps {
   requestDetails: z.infer<typeof ExtendedRequestSchema>
   countries: z.infer<typeof CountriesSchema>[]
@@ -128,18 +130,22 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
             />
           </div>
           <div className="col-span-2 hidden w-full items-center justify-end lg:flex">
-            <Link
-              href={
-                requestDetails.status === "close"
-                  ? "/user/requests/archive"
-                  : `/user/requests/request/update/${requestDetails.id}`
-              }
-              className={buttonVariants({ variant: "default" })}
-            >
-              {requestDetails.status === "close"
-                ? "View Archive"
-                : "Update Request"}
-            </Link>
+            {showFamilyMembers ? (
+              <Link
+                href={
+                  requestDetails.status === "close"
+                    ? "/user/requests/archive"
+                    : `/user/requests/request/update/${requestDetails.id}`
+                }
+                className={buttonVariants({ variant: "default" })}
+              >
+                {requestDetails.status === "close"
+                  ? "View Archive"
+                  : "Update Request"}
+              </Link>
+            ) : (
+              <ApplyRequest requestId={requestDetails.id} />
+            )}
           </div>
         </div>
         <div className="mt-4 w-full md:sticky lg:z-30 lg:-ml-2 lg:mt-0 lg:h-[calc(100vh-10.75rem)] lg:shrink-0 lg:border-l">
