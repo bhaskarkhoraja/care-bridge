@@ -298,4 +298,39 @@ export class RequestService {
 
     return data
   }
+  /**
+   * Apply for request
+   **/
+  async applyForRequest(
+    requestId: string,
+    profileId: string,
+  ): Promise<boolean | undefined> {
+    const result1 = await this.pg.query(
+      `SELECT id from service_request WHERE id=$1`,
+      [requestId],
+    )
+    if (result1.rowCount === 0) {
+      return undefined
+    }
+
+    const result2 = await this.pg.query(
+      `SELECT id from service_request_application WHERE service_request_id = $1 AND applicant_profile_id = $2`,
+      [requestId, profileId],
+    )
+    if (result2.rowCount !== 0) {
+      return true
+    }
+
+    const result3 = await this.pg.query(
+      `
+      INSERT INTO service_request_application (applicant_profile_id, service_request_id) VALUES ($1, $2)
+      `,
+      [profileId, requestId],
+    )
+    if (result3.rowCount === 0) {
+      return false
+    }
+
+    return true
+  }
 }

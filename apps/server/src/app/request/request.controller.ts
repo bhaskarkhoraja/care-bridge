@@ -125,6 +125,34 @@ export class RequestController {
           }
         }
       },
+      /**
+       * Apply for request
+       **/
+      applyForRequest: async ({ body }) => {
+        try {
+          const requests = await this.requestService.applyForRequest(
+            body.requestId,
+            user.profile_id as string,
+          )
+
+          if (requests === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No such requests found' },
+            }
+          }
+
+          return {
+            status: 200,
+            body: { status: true, message: 'Application has been submitted' },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
