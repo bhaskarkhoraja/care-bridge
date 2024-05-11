@@ -37,7 +37,7 @@ export const requestContract = c.router({
    **/
   getMyRequest: {
     method: "GET",
-    path: "/user/request/seller",
+    path: "/user/request",
     responses: {
       200: z.object({
         status: z.literal(true),
@@ -75,5 +75,27 @@ export const requestContract = c.router({
       }),
     },
     summary: "Get specific request",
+  },
+  /**
+   * Get request for seller
+   **/
+  getRequestForSeller: {
+    method: "GET",
+    path: "/user/seller/request",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.array(RequestSchema),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No requests found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get request for seller",
   },
 })
