@@ -106,7 +106,13 @@ export default withAuth(
 
     const isRequestPage =
       req.nextUrl.pathname.startsWith("/user/requests") &&
-      !req.nextUrl.pathname.startsWith("/user/requests/request/")
+      !(
+        req.nextUrl.pathname.startsWith("/user/requests/request/") &&
+        !(
+          req.nextUrl.pathname.startsWith("/user/requests/request/add") ||
+          req.nextUrl.pathname.startsWith("/user/requests/request/update")
+        )
+      )
     const isFamilyMemberPage = req.nextUrl.pathname.startsWith(
       "/user/family-member"
     )
