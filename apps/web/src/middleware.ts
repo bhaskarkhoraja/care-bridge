@@ -104,7 +104,9 @@ export default withAuth(
       return NextResponse.redirect(new URL(`/user/family-member`, req.url))
     }
 
-    const isRequestPage = req.nextUrl.pathname.startsWith("/user/requests")
+    const isRequestPage =
+      req.nextUrl.pathname.startsWith("/user/requests") &&
+      !req.nextUrl.pathname.startsWith("/user/requests/request/")
     const isFamilyMemberPage = req.nextUrl.pathname.startsWith(
       "/user/family-member"
     )
