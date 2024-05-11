@@ -101,6 +101,30 @@ export class RequestController {
           }
         }
       },
+      /**
+       * Get request for seller
+       **/
+      getRequestForSeller: async () => {
+        try {
+          const requests = await this.requestService.getRequestForSeller(
+            user.profile_id as string,
+          )
+
+          if (requests === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No requests found' },
+            }
+          }
+
+          return { status: 200, body: { status: true, data: requests } }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

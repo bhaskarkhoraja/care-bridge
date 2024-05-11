@@ -244,4 +244,58 @@ export class RequestService {
 
     return data
   }
+  /**
+   * Get request for seller
+   **/
+  async getRequestForSeller(
+    profileId: string,
+  ): Promise<z.infer<typeof RequestSchema>[] | undefined> {
+    const result = await this.pg.query(
+      `
+      SELECT
+        sr.id,
+        sr.status,
+        sr.start_time,
+        sr.end_time,
+        sr.price,
+        sr.location,
+        sr.description,
+        sr.prefered_age,
+        sr.mandatory_age,
+        sr.prefered_gender,
+        sr.mandatory_gender,
+        sr.prefered_nationality_id AS prefered_nationality,
+        sr.mandatory_nationality,
+        ARRAY_AGG(srm.family_member_id) AS family_member_ids
+      FROM service_request sr
+      LEFT JOIN service_request_member srm ON sr.id = srm.service_request_id
+      WHERE sr.profile_id <> $1 AND sr.status = 'open'
+      GROUP BY sr.id
+    `,
+      [profileId],
+    )
+
+    if (result.rowCount === 0) {
+      return undefined
+    }
+
+    const data: z.infer<typeof RequestSchema>[] = result.rows.map((row) => ({
+      id: row.id,
+      status: row.status,
+      startTime: row.start_time,
+      endTime: row.end_time,
+      price: row.price,
+      location: row.location,
+      description: row.description,
+      preferedAge: row.prefered_age,
+      mandatoryAge: row.mandatory_age,
+      preferedGender: row.prefered_gender,
+      mandatoryGender: row.mandatory_gender,
+      preferedNationality: row.prefered_nationality,
+      mandatoryNationality: row.mandatory_nationality,
+      familyMemberIds: Array(row.family_member_ids.length).fill(''),
+    }))
+
+    return data
+  }
 }
