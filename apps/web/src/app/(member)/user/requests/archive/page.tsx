@@ -1,8 +1,14 @@
+import { Metadata } from "next"
 import { getMyRequest } from "@web/src/actions/user/request"
 import { RequestSchema } from "api-contract/types"
 import { z } from "zod"
 
 import RequestCard from "../_components/request-card"
+
+export const metadata: Metadata = {
+  title: "Archived request",
+  description: "View all of your archived request",
+}
 
 export default async function DraftRequest() {
   const myRequest = await getMyRequest()

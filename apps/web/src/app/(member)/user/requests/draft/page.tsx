@@ -1,8 +1,14 @@
+import { Metadata } from "next"
 import { getMyRequest } from "@web/src/actions/user/request"
 import { RequestSchema } from "node_modules/api-contract/dist/types/request.mjs"
 import { z } from "zod"
 
 import RequestCard from "../_components/request-card"
+
+export const metadata: Metadata = {
+  title: "Draft request",
+  description: "View all of your draft request",
+}
 
 export default async function DraftRequest() {
   const myRequest = await getMyRequest()

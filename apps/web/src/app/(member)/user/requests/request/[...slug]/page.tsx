@@ -1,3 +1,4 @@
+import { Metadata, ResolvingMetadata } from "next"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import getCountries from "@web/src/actions/general"
@@ -14,6 +15,20 @@ import { v4 as uuidv4 } from "uuid"
 
 import RequestForm from "./_components/request-form"
 import ViewRequest from "./_components/view-request"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string[] }
+}): Promise<Metadata> {
+  const action = params.slug.length === 2 ? params.slug[0] : undefined
+
+  return {
+    title: action
+      ? action[0].toUpperCase() + action.slice(1) + " Request"
+      : "View Request",
+  }
+}
 
 export default async function UpdateRequestPage({
   params,
