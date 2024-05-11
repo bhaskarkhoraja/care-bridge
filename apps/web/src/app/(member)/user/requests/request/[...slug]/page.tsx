@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import getCountries from "@web/src/actions/general"
 import { getAllFamilyMemberInfo } from "@web/src/actions/user/family-member"
-import { getRequest } from "@web/src/actions/user/request"
+import { getRequest, getRequestApplicant } from "@web/src/actions/user/request"
 import {
   Alert,
   AlertDescription,
@@ -47,11 +47,13 @@ export default async function UpdateRequestPage({
 
   const requestId = params.slug.length === 2 ? params.slug[1] : params.slug[0]
 
-  const [countries, familyMemberInfo, request] = await Promise.all([
-    getCountries(),
-    getAllFamilyMemberInfo(),
-    getRequest(requestId),
-  ])
+  const [countries, familyMemberInfo, request, requestApplicant] =
+    await Promise.all([
+      getCountries(),
+      getAllFamilyMemberInfo(),
+      getRequest(requestId),
+      getRequestApplicant(requestId),
+    ])
 
   if (countries.status === 204) {
     notFound()
@@ -70,6 +72,18 @@ export default async function UpdateRequestPage({
           requestDetails={request.body.data}
           countries={countries.body.data}
           showFamilyMembers={user.type === "buyer" ? true : false}
+          applied={
+            requestApplicant.status !== 200
+              ? false
+              : requestApplicant.body.data.find(
+                  (applicant) => applicant.id === user.profile_id
+                ) !== undefined
+          }
+          applicants={
+            requestApplicant.status !== 200
+              ? undefined
+              : requestApplicant.body.data
+          }
         />
       </main>
     )
