@@ -146,4 +146,26 @@ export const requestContract = c.router({
     },
     summary: "Get applied user for certain request",
   },
+  /**
+   * Get request that seller applied to
+   **/
+  getAppliedRequest: {
+    method: "GET",
+    path: "/user/applied-request",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.array(RequestSchema),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No applied request found found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get request that seller applied to",
+  },
 })
