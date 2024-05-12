@@ -85,3 +85,16 @@ export async function getRequestApplicant(requestId: string) {
   })
   return client.request.getRequestApplicant({ params: { id: requestId } })
 }
+
+/**
+ * Get request that seller applied to
+ **/
+export async function getAppliedRequest() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.getAppliedRequest()
+}
