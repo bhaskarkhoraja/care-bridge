@@ -87,7 +87,7 @@ export const navConfig: NavItem = [
       },
       {
         name: "Applied",
-        href: "/user/request/applied",
+        href: "/user/requests/seller/applied",
         icon: <PackageOpen />,
         description: "Requests you have applied to.",
       },

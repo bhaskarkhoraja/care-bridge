@@ -180,6 +180,30 @@ export class RequestController {
           }
         }
       },
+      /**
+       * Get request that seller applied to
+       **/
+      getAppliedRequest: async () => {
+        try {
+          const requests = await this.requestService.getAppliedRequest(
+            user.profile_id as string,
+          )
+
+          if (requests === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No applied request found found' },
+            }
+          }
+
+          return { status: 200, body: { status: true, data: requests } }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
