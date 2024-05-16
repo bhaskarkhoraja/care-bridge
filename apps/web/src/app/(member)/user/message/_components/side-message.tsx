@@ -44,15 +44,6 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    socket.on("recieveMessage", (newMessage: z.infer<typeof MessageSchema>) => {
-      updateMessage(newMessage)
-    })
-    socket.on("seenMessage", (newMessage: z.infer<typeof MessageSchema>) => {
-      seenMessage(newMessage)
-    })
-  }, [messages, socket, user.profile_id])
-
   const updateMessage = async (newMessage: z.infer<typeof MessageSchema>) => {
     if (
       newMessage.senderProfileId !== user.profile_id &&
@@ -158,6 +149,15 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
       setMessages(updatedMessages)
     }
   }
+
+  useEffect(() => {
+    socket.on("recieveMessage", (newMessage: z.infer<typeof MessageSchema>) => {
+      updateMessage(newMessage)
+    })
+    socket.on("seenMessage", (newMessage: z.infer<typeof MessageSchema>) => {
+      seenMessage(newMessage)
+    })
+  }, [messages, socket, user.profile_id, seenMessage, updateMessage])
 
   return (
     <div>

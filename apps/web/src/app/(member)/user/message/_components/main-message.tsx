@@ -91,7 +91,7 @@ const MainMessage: React.FC<MainMessageProps> = ({
         messageEndRef.current.scrollIntoView({ block: "end" })
       }
     }, 100)
-  }, [senderId, socket, user.profile_id])
+  }, [senderId, socket, user.profile_id, messages])
 
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
