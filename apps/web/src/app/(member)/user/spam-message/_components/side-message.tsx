@@ -113,7 +113,9 @@ const SideMessage: React.FC<SideMessageProps> = ({ messages, user }) => {
               {message.message} <Dot />{" "}
               {formatDistanceToNow(new Date(message.createdAt), {
                 addSuffix: false,
-              }).replace(/^about\s+/, "")}
+              })
+                .replace(/^about\s+/, "")
+                .replace("less than a minute", "1 min")}
             </p>
           </div>
         </Link>
