@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
 import {
@@ -7,9 +8,10 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@web/src/components/ui/avatar"
-import { cn, getShortName } from "@web/src/lib/utils"
+import { cn, formatDistance, getShortName } from "@web/src/lib/utils"
 import { SideMessageSchema } from "api-contract/types"
-import { formatDistanceToNow } from "date-fns"
+import { formatDistanceToNowStrict } from "date-fns"
+import locale from "date-fns/locale/en-US"
 import { Dot } from "lucide-react"
 import { Session } from "next-auth"
 import { z } from "zod"
@@ -21,6 +23,11 @@ interface SideMessageProps {
 
 const SideMessage: React.FC<SideMessageProps> = ({ messages, user }) => {
   const segment = useSelectedLayoutSegment()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <div>
@@ -94,7 +101,7 @@ const SideMessage: React.FC<SideMessageProps> = ({ messages, user }) => {
                   ? `${message.senderProfile.firstName} ${message.senderProfile.middleName} ${message.senderProfile.lastName}`
                   : `${message.senderProfile.firstName} ${message.senderProfile.lastName}`}
             </p>
-            <p
+            <div
               className={cn(
                 "text-muted-foreground flex items-center text-sm",
                 segment ===
@@ -110,13 +117,37 @@ const SideMessage: React.FC<SideMessageProps> = ({ messages, user }) => {
                   "text-foreground font-semibold"
               )}
             >
-              {message.message} <Dot />{" "}
-              {formatDistanceToNow(new Date(message.createdAt), {
-                addSuffix: false,
-              })
-                .replace(/^about\s+/, "")
-                .replace("less than a minute", "1 min")}
-            </p>
+              <div
+                className={cn(
+                  "text-muted-foreground flex items-center text-sm",
+                  segment ===
+                    (message.senderProfile.id === user.profile_id
+                      ? message.recieverProfile.id
+                      : message.senderProfile.id) && "text-background/80",
+                  !message.isRead &&
+                    user.profile_id !== message.senderProfile.id &&
+                    segment !==
+                      (message.senderProfile.id === user.profile_id
+                        ? message.recieverProfile.id
+                        : message.senderProfile.id) &&
+                    "text-foreground font-semibold"
+                )}
+              >
+                <p className="max-w-48 truncate">{message.message}</p>
+                {mounted ? (
+                  <p className="flex items-center justify-center">
+                    <Dot />{" "}
+                    {formatDistanceToNowStrict(new Date(message.createdAt), {
+                      addSuffix: false,
+                      locale: {
+                        ...locale,
+                        formatDistance,
+                      },
+                    })}
+                  </p>
+                ) : null}
+              </div>
+            </div>
           </div>
         </Link>
       ))}

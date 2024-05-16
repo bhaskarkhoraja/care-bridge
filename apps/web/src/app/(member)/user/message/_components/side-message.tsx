@@ -10,9 +10,10 @@ import {
   AvatarImage,
 } from "@web/src/components/ui/avatar"
 import { webEnv } from "@web/src/lib/env"
-import { cn, getShortName } from "@web/src/lib/utils"
+import { cn, formatDistance, getShortName } from "@web/src/lib/utils"
 import { MessageSchema, SideMessageSchema } from "api-contract/types"
-import { formatDistanceToNow } from "date-fns"
+import { formatDistanceToNowStrict } from "date-fns"
+import locale from "date-fns/locale/en-US"
 import { Dot } from "lucide-react"
 import { Session } from "next-auth"
 import { io } from "socket.io-client"
@@ -27,6 +28,8 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
   const segment = useSelectedLayoutSegment()
   const [messages, setMessages] =
     useState<z.infer<typeof SideMessageSchema>[]>(data)
+  const [mounted, setMounted] = useState(false)
+
   const socket = useMemo(
     () =>
       io(`${webEnv.NEXT_PUBLIC_SERVER_URL}`, {
@@ -36,6 +39,10 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
       }),
     [user.id]
   )
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     socket.on("recieveMessage", (newMessage: z.infer<typeof MessageSchema>) => {
@@ -203,7 +210,7 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
                   ? `${message.senderProfile.firstName} ${message.senderProfile.middleName} ${message.senderProfile.lastName}`
                   : `${message.senderProfile.firstName} ${message.senderProfile.lastName}`}
             </p>
-            <p
+            <div
               className={cn(
                 "text-muted-foreground flex items-center text-sm",
                 segment ===
@@ -219,13 +226,20 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
                   "text-foreground font-semibold"
               )}
             >
-              {message.message} <Dot />{" "}
-              {formatDistanceToNow(new Date(message.createdAt), {
-                addSuffix: false,
-              })
-                .replace(/^about\s+/, "")
-                .replace("less than a minute", "1 min")}
-            </p>
+              <p className="max-w-48 truncate">{message.message}</p>
+              {mounted ? (
+                <p className="flex items-center justify-center">
+                  <Dot />{" "}
+                  {formatDistanceToNowStrict(new Date(message.createdAt), {
+                    addSuffix: false,
+                    locale: {
+                      ...locale,
+                      formatDistance,
+                    },
+                  })}
+                </p>
+              ) : null}
+            </div>
           </div>
         </Link>
       ))}
