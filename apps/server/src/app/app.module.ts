@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module'
 import { FamilyMemberModule } from './family-member/family-member.module'
 import { AdminModule } from './admin/admin.module'
 import { RequestModule } from './request/request.module'
+import { MessageSocketModule } from './message-socket/message-socket.module'
 import { MessageModule } from './message/message.module'
 
 @Module({
@@ -27,6 +28,7 @@ import { MessageModule } from './message/message.module'
     FamilyMemberModule,
     AdminModule,
     RequestModule,
+    MessageSocketModule,
     MessageModule,
   ],
   controllers: [],
