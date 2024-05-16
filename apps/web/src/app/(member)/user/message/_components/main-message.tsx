@@ -77,9 +77,12 @@ const MainMessage: React.FC<MainMessageProps> = ({
       }
     })
     if (messages && messages.length > 0) {
-      const allRead = messages.every((message) => message.isRead)
+      const anyUnRead = messages.some(
+        (message) =>
+          !message.isRead && message.senderProfileId !== user.profile_id
+      )
 
-      if (!allRead) {
+      if (anyUnRead) {
         socket.emit("sawMessage", messages[0])
       }
     }
