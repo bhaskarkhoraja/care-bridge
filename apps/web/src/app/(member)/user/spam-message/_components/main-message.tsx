@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { markMessages } from "@web/src/actions/user/message"
 import {
   Avatar,
@@ -16,6 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@web/src/components/ui/dropdown-menu"
+import { ScrollArea } from "@web/src/components/ui/scroll-area"
 import { cn, getShortName } from "@web/src/lib/utils"
 import { MessageSchema, SenderDetailsSchema } from "api-contract/types"
 import { Ellipsis } from "lucide-react"

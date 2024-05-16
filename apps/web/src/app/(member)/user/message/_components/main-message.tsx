@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { markMessages } from "@web/src/actions/user/message"
 import {
   Avatar,
@@ -17,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@web/src/components/ui/dropdown-menu"
 import { Input } from "@web/src/components/ui/input"
+import { ScrollArea } from "@web/src/components/ui/scroll-area"
 import { webEnv } from "@web/src/lib/env"
 import { cn, getShortName } from "@web/src/lib/utils"
 import { MessageSchema, SenderDetailsSchema } from "api-contract/types"
