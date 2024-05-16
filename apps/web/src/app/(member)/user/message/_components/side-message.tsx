@@ -260,7 +260,10 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
                   "text-foreground font-semibold"
               )}
             >
-              <p className="max-w-48 truncate">{message.message}</p>
+              <p className="max-w-48 truncate">
+                {message.senderProfile.id === user.profile_id ? "You: " : ""}
+                {message.message}
+              </p>
               {mounted ? (
                 <p className="flex items-center justify-center">
                   <Dot />{" "}
