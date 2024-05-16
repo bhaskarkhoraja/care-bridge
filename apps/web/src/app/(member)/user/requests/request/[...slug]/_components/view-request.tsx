@@ -24,7 +24,7 @@ import {
   ExtendedRequestSchema,
 } from "api-contract/types"
 import { format } from "date-fns"
-import { Check } from "lucide-react"
+import { Check, MailPlus } from "lucide-react"
 import { z } from "zod"
 
 import ApplyRequest from "./apply-request"
@@ -170,7 +170,18 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
                   {applicants ? (
                     applicants.map((applicant) => (
                       <Card className={cn("w-full")} key={applicant.id}>
-                        <CardContent className="flex items-center gap-4 pt-6">
+                        <CardContent className="relative flex items-center gap-4 pt-6">
+                          <div className="absolute right-4 top-0 flex h-full w-fit items-center justify-center">
+                            <Link
+                              href={`/user/message/${applicant.id}`}
+                              className={buttonVariants({
+                                variant: "default",
+                                size: "icon",
+                              })}
+                            >
+                              <MailPlus className="size-4" />
+                            </Link>
+                          </div>
                           <Avatar className={"size-14"}>
                             <AvatarImage
                               src={applicant.profileUrl}
