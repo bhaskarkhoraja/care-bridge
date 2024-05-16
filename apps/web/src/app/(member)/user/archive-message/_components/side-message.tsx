@@ -74,10 +74,11 @@ const SideMessage: React.FC<SideMessageProps> = ({ messages, user }) => {
             <AvatarFallback
               className={cn(
                 "text-md",
-                segment === user.profile_id
-                  ? message.recieverProfile.profileUrl
-                  : message.senderProfile.profileUrl &&
-                      "bg-background text-foreground"
+                segment ===
+                  (user.profile_id === message.senderProfile.id
+                    ? message.recieverProfile.id
+                    : message.senderProfile.id) &&
+                  "bg-background text-foreground"
               )}
             >
               {getShortName(
