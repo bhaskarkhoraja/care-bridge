@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module'
 import { FamilyMemberModule } from './family-member/family-member.module'
 import { AdminModule } from './admin/admin.module'
 import { RequestModule } from './request/request.module'
+import { MessageModule } from './message/message.module'
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RequestModule } from './request/request.module'
     FamilyMemberModule,
     AdminModule,
     RequestModule,
+    MessageModule,
   ],
   controllers: [],
   providers: [],
