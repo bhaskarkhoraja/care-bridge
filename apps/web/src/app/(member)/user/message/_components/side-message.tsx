@@ -48,6 +48,9 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
     socket.on("recieveMessage", (newMessage: z.infer<typeof MessageSchema>) => {
       updateMessage(newMessage)
     })
+    socket.on("seenMessage", (newMessage: z.infer<typeof MessageSchema>) => {
+      seenMessage(newMessage)
+    })
   }, [messages, socket, user.profile_id])
 
   const updateMessage = async (newMessage: z.infer<typeof MessageSchema>) => {
@@ -131,6 +134,27 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
       }
 
       updatedMessages.unshift(newUserMessage)
+      setMessages(updatedMessages)
+    }
+  }
+
+  const seenMessage = (newMessage: z.infer<typeof MessageSchema>) => {
+    const matchingMessage = messages.find(
+      (message) =>
+        (message.senderProfile.id === newMessage.senderProfileId &&
+          message.recieverProfile.id === newMessage.recieverProfileId) ||
+        (message.senderProfile.id === newMessage.recieverProfileId &&
+          message.recieverProfile.id === newMessage.senderProfileId)
+    )
+
+    if (!matchingMessage) {
+      return
+    }
+
+    if (!matchingMessage.isRead) {
+      const updatedMessages = messages.map((message) =>
+        message === matchingMessage ? { ...message, isRead: true } : message
+      )
       setMessages(updatedMessages)
     }
   }
