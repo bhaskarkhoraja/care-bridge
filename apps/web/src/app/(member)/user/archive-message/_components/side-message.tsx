@@ -12,7 +12,7 @@ import { cn, formatDistance, getShortName } from "@web/src/lib/utils"
 import { SideMessageSchema } from "api-contract/types"
 import { formatDistanceToNowStrict } from "date-fns"
 import locale from "date-fns/locale/en-US"
-import { Dot } from "lucide-react"
+import { Check, CheckCheck, Dot } from "lucide-react"
 import { Session } from "next-auth"
 import { z } from "zod"
 
@@ -45,15 +45,27 @@ const SideMessage: React.FC<SideMessageProps> = ({ messages, user }) => {
           )}
         >
           {!message.isRead &&
-            user.profile_id !== message.senderProfile.id &&
-            segment !==
-              (message.senderProfile.id === user.profile_id
-                ? message.recieverProfile.id
-                : message.senderProfile.id) && (
+          user.profile_id !== message.senderProfile.id &&
+          segment !==
+            (message.senderProfile.id === user.profile_id
+              ? message.recieverProfile.id
+              : message.senderProfile.id) ? (
+            <div className="absolute right-3 top-0 flex h-full items-center justify-center">
+              <div className="bg-foreground size-3 rounded-full" />
+            </div>
+          ) : !message.isRead &&
+            user.profile_id === message.senderProfile.id ? (
+            <div className="absolute right-3 top-0 flex h-full items-center justify-center">
+              <Check className="size-4" />
+            </div>
+          ) : (
+            message.isRead &&
+            user.profile_id === message.senderProfile.id && (
               <div className="absolute right-3 top-0 flex h-full items-center justify-center">
-                <div className="bg-foreground size-3 rounded-full" />
+                <CheckCheck className="size-4" />
               </div>
-            )}
+            )
+          )}
           <Avatar className="size-10">
             <AvatarImage
               src={
