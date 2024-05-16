@@ -107,19 +107,19 @@ export const navConfig: NavItem = [
     items: [
       {
         name: "Inbox",
-        href: "/user/message/inbox",
+        href: "/user/message",
         icon: <Mail />,
         description: "All your messages in one place.",
       },
       {
         name: "archive",
-        href: "/user/message/archive",
+        href: "/user/archive-message",
         icon: <MailCheck />,
         description: "Messages that you have archived.",
       },
       {
         name: "Spam",
-        href: "/user/message/spam",
+        href: "/user/spam-message",
         icon: <MailWarning />,
         description: "Messages marked as spam.",
       },
