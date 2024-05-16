@@ -8,7 +8,9 @@ import z from 'zod'
 export class MessageSocketService {
   constructor(@InjectClient() private readonly pg: Client) {}
 
-  async create(message: z.infer<typeof MessageSchema>): Promise<boolean> {
+  async createMessage(
+    message: z.infer<typeof MessageSchema>,
+  ): Promise<boolean> {
     const result = await this.pg.query(
       `
         INSERT INTO message

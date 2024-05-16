@@ -18,8 +18,8 @@ export class MessageSocketGateway {
   io: Server
 
   @SubscribeMessage('sendMessage')
-  create(@MessageBody() message: z.infer<typeof MessageSchema>) {
+  createMessage(@MessageBody() message: z.infer<typeof MessageSchema>) {
     this.io.emit('recieveMessage', message)
-    return this.messageService.create(message)
+    return this.messageService.createMessage(message)
   }
 }
