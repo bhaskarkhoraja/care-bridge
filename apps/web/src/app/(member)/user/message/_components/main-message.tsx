@@ -197,7 +197,7 @@ const MainMessage: React.FC<MainMessageProps> = ({
           </DropdownMenu>
         </div>
       </div>
-      <div className="w-full border-t pt-4 md:sticky lg:z-30 lg:-ml-2 lg:mt-0 lg:h-[calc(100vh-14rem)] lg:shrink-0">
+      <div className="h-[calc(100vh-28rem)] w-full border-t pt-4 md:sticky lg:z-30 lg:-ml-2 lg:mt-0 lg:h-[calc(100vh-14rem)] lg:shrink-0">
         <ScrollArea className="h-full">
           {messages ? (
             messages.map((message, index) => (
