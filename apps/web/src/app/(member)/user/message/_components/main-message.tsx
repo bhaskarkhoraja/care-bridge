@@ -194,7 +194,7 @@ const MainMessage: React.FC<MainMessageProps> = ({
               <div
                 key={index}
                 className={cn(
-                  "mb-1 flex w-fit max-w-[75%] flex-col gap-2 text-wrap rounded-lg px-3 py-2 text-sm",
+                  "mb-1 flex w-fit max-w-[75vw] flex-col gap-2 break-words rounded-lg px-3 py-2 text-sm lg:max-w-[50vw]",
                   message.senderProfileId === senderId
                     ? "bg-muted"
                     : "bg-foreground text-background/95 ml-auto mr-4"
