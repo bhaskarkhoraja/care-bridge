@@ -20,6 +20,6 @@ export class MessageSocketGateway {
   @SubscribeMessage('sendMessage')
   create(@MessageBody() message: z.infer<typeof MessageSchema>) {
     this.io.emit('recieveMessage', message)
-    return this.messageService.create()
+    return this.messageService.create(message)
   }
 }

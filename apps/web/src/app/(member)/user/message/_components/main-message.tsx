@@ -53,7 +53,7 @@ const MainMessage: React.FC<MainMessageProps> = ({
         path: "/user/message/socket.io",
         auth: { username: user.id },
       }),
-    []
+    [user.id]
   )
   const router = useRouter()
 
@@ -81,7 +81,7 @@ const MainMessage: React.FC<MainMessageProps> = ({
         messageEndRef.current.scrollIntoView({ block: "end" })
       }
     }, 100)
-  }, [])
+  }, [senderId, socket, user.profile_id])
 
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()

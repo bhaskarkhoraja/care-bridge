@@ -34,7 +34,7 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
         path: "/user/message/socket.io",
         auth: { username: user.id },
       }),
-    []
+    [user.id]
   )
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const SideMessage: React.FC<SideMessageProps> = ({ data, user }) => {
         setMessages(updatedMessages)
       }
     }
-  }, [])
+  }, [messages, socket, user.profile_id])
 
   return (
     <div>
