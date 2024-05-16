@@ -184,7 +184,7 @@ const RequestForm: React.FC<RequestFormProps> = ({
                       </FormControl>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Gender</SelectLabel>
+                          <SelectLabel>Status</SelectLabel>
                           <SelectItem value="open">Open</SelectItem>
                           <SelectItem value="draft">Draft</SelectItem>
                         </SelectGroup>
