@@ -17,9 +17,11 @@ export const webEnv = createEnv({
   },
   client: {
     NEXT_PUBLIC_WEB_URL: z.string().url(),
+    NEXT_PUBLIC_SERVER_URL: z.string().url(),
   },
   runtimeEnv: {
     SERVER_URL: process.env.SERVER_URL,
+    NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     NEXT_PUBLIC_WEB_URL: process.env.NEXT_PUBLIC_WEB_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
