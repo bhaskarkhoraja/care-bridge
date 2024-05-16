@@ -76,6 +76,13 @@ const MainMessage: React.FC<MainMessageProps> = ({
         })
       }
     })
+    if (messages && messages.length > 0) {
+      const allRead = messages.every((message) => message.isRead)
+
+      if (!allRead) {
+        socket.emit("sawMessage", messages[0])
+      }
+    }
     setTimeout(() => {
       if (messageEndRef && messageEndRef.current) {
         messageEndRef.current.scrollIntoView({ block: "end" })
