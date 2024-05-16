@@ -32,4 +32,23 @@ export class MessageSocketService {
 
     return true
   }
+
+  async seenMessage(message: z.infer<typeof MessageSchema>): Promise<boolean> {
+    const result = await this.pg.query(
+      `
+      UPDATE message
+      SET is_read = true
+      WHERE
+        (sender_profile_id = $1 AND receiver_profile_id = $2) OR
+        (sender_profile_id = $2 AND receiver_profile_id = $1)
+      `,
+      [message.senderProfileId, message.recieverProfileId],
+    )
+
+    if (result.rowCount === 0) {
+      return false
+    }
+
+    return true
+  }
 }

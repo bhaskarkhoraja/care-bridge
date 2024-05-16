@@ -22,4 +22,10 @@ export class MessageSocketGateway {
     this.io.emit('recieveMessage', message)
     return this.messageService.createMessage(message)
   }
+
+  @SubscribeMessage('sawMessage')
+  seenMessage(@MessageBody() message: z.infer<typeof MessageSchema>) {
+    this.io.emit('seenMessage', message)
+    return this.messageService.seenMessage(message)
+  }
 }
