@@ -133,6 +133,22 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
               >
                 GitHub
               </Link>
+              <Link
+                href="/terms"
+                className={cn(
+                  "hover:bg-accent hover:text-accent-foreground block rounded-md p-2 transition-colors sm:hidden"
+                )}
+              >
+                Terms and Condition
+              </Link>
+              <Link
+                href="/privacy"
+                className={cn(
+                  "hover:bg-accent hover:text-accent-foreground block rounded-md p-2 transition-colors sm:hidden"
+                )}
+              >
+                Privacy Policy
+              </Link>
             </>
           )}
         </ScrollArea>

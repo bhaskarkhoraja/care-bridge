@@ -90,6 +90,22 @@ const MainNav: React.FC<MainNavProps> = ({ user }) => {
             >
               GitHub
             </Link>
+            <Link
+              href="/terms"
+              className={cn(
+                "text-foreground/60 hover:text-foreground/80 hidden transition-colors sm:block"
+              )}
+            >
+              Terms and Condition
+            </Link>
+            <Link
+              href="/privacy"
+              className={cn(
+                "text-foreground/60 hover:text-foreground/80 hidden transition-colors sm:block"
+              )}
+            >
+              Privacy Policy
+            </Link>
           </>
         )}
       </nav>
