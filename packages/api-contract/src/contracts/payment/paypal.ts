@@ -100,6 +100,24 @@ export const paypalContract = c.router({
         message: z.literal("Something went wrong"),
       }),
     },
-    summary: "Get action url for signup",
+    summary: "Get payment url",
+  },
+  /**
+   * verify payment
+   **/
+  verifyPayment: {
+    method: "GET",
+    path: "/user/payment/paypal/verify-payment/:id",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.object({ verifiedStatus: z.boolean() }),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "verify payment",
   },
 })
