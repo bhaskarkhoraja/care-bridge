@@ -273,8 +273,7 @@ export class RequestController {
           }
 
           return { status: 200, body: { status: true, data: requests } }
-        } catch (e) {
-          console.log(e)
+        } catch {
           return {
             status: 500,
             body: { status: false, message: 'Something went wrong' },

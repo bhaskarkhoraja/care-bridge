@@ -144,6 +144,46 @@ export class PaypalController {
           }
         }
       },
+      /**
+       * Get payment url
+       **/
+      getPaymentURL: async ({ params }) => {
+        try {
+          const getPaypalToken = await this.paypalService.generatePaypalToken()
+          if (!getPaypalToken.status) {
+            return {
+              status: 500,
+              body: { status: false, message: 'Something went wrong' },
+            }
+          }
+
+          const paymentUrl = await this.paypalService.getPaymentURL(
+            params.id,
+            getPaypalToken.accessToken,
+            user,
+          )
+
+          if (!paymentUrl) {
+            return {
+              status: 422,
+              body: {
+                status: false,
+                message: "Couldn't find payment url",
+              },
+            }
+          }
+
+          return {
+            status: 200,
+            body: { status: true, data: { paymentUrl: paymentUrl } },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

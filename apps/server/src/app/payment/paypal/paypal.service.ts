@@ -5,12 +5,13 @@ import { Client } from 'pg'
 import { UserService } from '@server/src/app/user/user.service'
 import z from 'zod'
 import {
-  partnerReferalByPaypalResponseSchema,
+  paypalRefralAndOrderResponseSchema,
   partnerMerchantIntegrationResponseSchema,
 } from '@server/src/types/payment/paypal'
 import { AdapterUser } from 'next-auth/adapters'
 import { format } from 'date-fns'
 import { generatePaypalTokenResponseSchema } from '@server/src/types/payment/paypal'
+import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class PaypalService {
@@ -162,7 +163,7 @@ export class PaypalService {
         throw Error()
       }
 
-      const data: z.infer<typeof partnerReferalByPaypalResponseSchema> =
+      const data: z.infer<typeof paypalRefralAndOrderResponseSchema> =
         await response.json()
       const actionUrl = data.links.find(
         (link) => link.rel === 'action_url',
@@ -256,5 +257,86 @@ export class PaypalService {
     }
 
     return true
+  }
+  /**
+   * Get the paymetn url
+   **/
+  async getPaymentURL(
+    serviceRequestId: string,
+    paypalAccessToken: string,
+    user: AdapterUser,
+  ): Promise<string | undefined> {
+    try {
+      const result = await this.pg.query(
+        'SELECT price FROM service_request WHERE id = $1',
+        [serviceRequestId],
+      )
+
+      if (result.rows.length === 0) {
+        return undefined
+      }
+
+      const payload = {
+        intent: 'CAPTURE',
+        purchase_units: [
+          {
+            reference_id: uuidv4(),
+            payee: {
+              email_address: user.email,
+            },
+            amount: {
+              currency_code: 'USD',
+              value: result.rows[0].price,
+            },
+            payment_instruction: {
+              disbursement_mode: 'INSTANT',
+              platform_fees: [
+                {
+                  amount: {
+                    currency_code: 'USD',
+                    value: '2.00',
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        payment_source: {
+          paypal: {
+            experience_context: {
+              payment_method_preference: 'IMMEDIATE_PAYMENT_REQUIRED',
+              user_action: 'PAY_NOW',
+              return_url: `${serverEnv.NEXT_PUBLIC_WEB_URL}/payment/success`,
+              cancel_url: `${serverEnv.NEXT_PUBLIC_WEB_URL}/payment/failure`,
+            },
+          },
+        },
+      }
+
+      const response = await fetch(
+        `${serverEnv.PAYPAL_URL}/v2/checkout/orders`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${paypalAccessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        },
+      )
+
+      if (!response.ok) {
+        throw Error()
+      }
+
+      const data: z.infer<typeof paypalRefralAndOrderResponseSchema> =
+        await response.json()
+      const paymentUrl = data.links.find(
+        (link) => link.rel === 'payer-action',
+      )?.href
+      return paymentUrl as string
+    } catch {
+      return undefined
+    }
   }
 }
