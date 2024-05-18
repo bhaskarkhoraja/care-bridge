@@ -218,7 +218,7 @@ export class PaypalService {
     }
 
     const response1 = await fetch(
-      `${serverEnv.PAYPAL_URL}/v1/customer/partners/${result.rows[0].paypal_merchant_id}/merchant-integrations?tracking_id=${profileId}`,
+      `${serverEnv.PAYPAL_URL}/v1/customer/partners/${serverEnv.PAYPAL_PARTNER_ID}/merchant-integrations?tracking_id=${profileId}`,
       {
         method: 'GET',
         headers: {

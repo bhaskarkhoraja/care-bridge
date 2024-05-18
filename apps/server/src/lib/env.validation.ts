@@ -8,6 +8,7 @@ export const serverEnvSchema = z.object({
   PAYPAL_CLIENT_ID: z.string(),
   PAYPAL_CLIENT_SECRET: z.string(),
   PAYPAL_URL: z.string().url(),
+  PAYPAL_PARTNER_ID: z.string(),
 })
 
 export let serverEnv: z.infer<typeof serverEnvSchema> = {
@@ -18,6 +19,7 @@ export let serverEnv: z.infer<typeof serverEnvSchema> = {
   PAYPAL_CLIENT_ID: '',
   PAYPAL_CLIENT_SECRET: '',
   PAYPAL_URL: '',
+  PAYPAL_PARTNER_ID: '',
 }
 
 export function createEnv(config: Record<string, any>) {
@@ -29,6 +31,7 @@ export function createEnv(config: Record<string, any>) {
     PAYPAL_CLIENT_ID: config.PAYPAL_CLIENT_ID,
     PAYPAL_CLIENT_SECRET: config.PAYPAL_CLIENT_SECRET,
     PAYPAL_URL: config.PAYPAL_URL,
+    PAYPAL_PARTNER_ID: config.PAYPAL_PARTNER_ID,
   }
 
   const validatedConfig = serverEnvSchema.safeParse(env)
