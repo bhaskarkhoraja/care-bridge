@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectClient } from 'nest-postgres'
-import { MessageSchema } from 'packages/api-contract/dist/types'
+import { MessageSchema } from 'api-contract/types'
 import { Client } from 'pg'
 import z from 'zod'
 

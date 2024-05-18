@@ -7,7 +7,7 @@ import {
 import { MessageSocketService } from './message-socket.service'
 import { Server } from 'socket.io'
 import z from 'zod'
-import { MessageSchema } from 'packages/api-contract/dist/types'
+import { MessageSchema } from 'api-contract/types'
 
 @WebSocketGateway()
 export class MessageSocketGateway {
