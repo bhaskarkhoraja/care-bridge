@@ -2,7 +2,11 @@ import { initContract } from "@ts-rest/core"
 import { z } from "zod"
 
 import { ExtendedPersonalInfoFormSchema } from "../types"
-import { ExtendedRequestSchema, RequestSchema } from "../types/request"
+import {
+  ExtendedRequestSchema,
+  RequestSchema,
+  RequestWithPaidStatus,
+} from "../types/request"
 
 const c = initContract()
 
@@ -167,5 +171,53 @@ export const requestContract = c.router({
       }),
     },
     summary: "Get request that seller applied to",
+  },
+  /**
+   * assign request to user
+   **/
+  assignRequest: {
+    method: "POST",
+    path: "/user/assign-request",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        message: z.literal("Successfully assigned request"),
+      }),
+      422: z.object({
+        status: z.literal(false),
+        message: z.literal("Failed to assign."),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    body: z.object({
+      requestId: z.string(),
+      sellerProfileId: z.string(),
+    }),
+    summary: "Assign request to specific person",
+  },
+  /**
+   * get accepted request
+   **/
+  getAcceptedRequest: {
+    method: "GET",
+    path: "/user/assigned-request",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.array(RequestWithPaidStatus),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No accepted request found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get request accepted by buyer",
   },
 })

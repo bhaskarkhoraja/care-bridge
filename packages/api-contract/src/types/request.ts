@@ -34,3 +34,10 @@ export const RequestSchema = z.object({
 export const ExtendedRequestSchema = RequestSchema.extend({
   familyMembers: z.array(ExtendedFamilyInfoFormSchema),
 })
+
+/**
+ * Request schema with paid status
+ **/
+export const RequestWithPaidStatus = RequestSchema.extend({
+  paid: z.boolean(),
+})
