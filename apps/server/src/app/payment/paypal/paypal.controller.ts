@@ -184,6 +184,34 @@ export class PaypalController {
           }
         }
       },
+      /**
+       * verify payment
+       **/
+      verifyPayment: async ({ params }) => {
+        try {
+          const getPaypalToken = await this.paypalService.generatePaypalToken()
+          if (!getPaypalToken.status) {
+            return {
+              status: 500,
+              body: { status: false, message: 'Something went wrong' },
+            }
+          }
+          const status = await this.paypalService.verifyPayment(
+            params.id,
+            getPaypalToken.accessToken,
+          )
+
+          return {
+            status: 200,
+            body: { status: true, data: { verifiedStatus: status } },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

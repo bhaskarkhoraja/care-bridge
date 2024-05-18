@@ -7,6 +7,7 @@ import z from 'zod'
 import {
   paypalRefralAndOrderResponseSchema,
   partnerMerchantIntegrationResponseSchema,
+  paymentVerificationPartialSchema,
 } from '@server/src/types/payment/paypal'
 import { AdapterUser } from 'next-auth/adapters'
 import { format } from 'date-fns'
@@ -338,5 +339,56 @@ export class PaypalService {
     } catch {
       return undefined
     }
+  }
+  /**
+   * verify payment
+   **/
+  async verifyPayment(
+    paymentId: string,
+    paypalAccessToken: string,
+  ): Promise<boolean> {
+    const response = await fetch(
+      `${serverEnv.PAYPAL_URL}/v2/checkout/orders/${paymentId}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${paypalAccessToken}`,
+        },
+      },
+    )
+
+    if (!response.ok) {
+      return false
+    }
+
+    const data: z.infer<typeof paymentVerificationPartialSchema> =
+      await response.json()
+
+    if (data.status !== 'APPROVED') {
+      return false
+    }
+
+    const result1 = await this.pg.query(
+      `SELECT sra.id
+        FROM service_request_accepted sra
+        JOIN service_request sr ON sra.service_request_id = sr.id
+        WHERE sr.id = $1`,
+      [data.purchase_units[0].reference_id],
+    )
+
+    if (result1.rowCount === 0) {
+      return false
+    }
+
+    const result2 = await this.pg.query(
+      `INSERT INTO payments (service_request_accepted_id) VALUES ($1)`,
+      [result1.rows[0].id],
+    )
+
+    if (result2.rowCount === 0) {
+      return false
+    }
+
+    return true
   }
 }
