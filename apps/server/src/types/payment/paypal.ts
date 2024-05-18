@@ -8,11 +8,15 @@ export const generatePaypalTokenResponseSchema = z.discriminatedUnion(
   ],
 )
 
-export const partnerReferalByPaypalResponseSchema = z.object({
+export const paypalRefralAndOrderResponseSchema = z.object({
   links: z.array(
     z.object({
       href: z.string().url(),
-      rel: z.union([z.literal('self'), z.literal('action_url')]),
+      rel: z.union([
+        z.literal('self'),
+        z.literal('action_url'),
+        z.literal('payer-action'),
+      ]),
       method: z.literal('GET'),
       description: z.string(),
     }),
