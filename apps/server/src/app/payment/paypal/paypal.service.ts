@@ -12,7 +12,6 @@ import {
 import { AdapterUser } from 'next-auth/adapters'
 import { format } from 'date-fns'
 import { generatePaypalTokenResponseSchema } from '@server/src/types/payment/paypal'
-import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class PaypalService {
@@ -281,7 +280,7 @@ export class PaypalService {
         intent: 'CAPTURE',
         purchase_units: [
           {
-            reference_id: uuidv4(),
+            reference_id: serviceRequestId,
             payee: {
               email_address: user.email,
             },
@@ -307,8 +306,8 @@ export class PaypalService {
             experience_context: {
               payment_method_preference: 'IMMEDIATE_PAYMENT_REQUIRED',
               user_action: 'PAY_NOW',
-              return_url: `${serverEnv.NEXT_PUBLIC_WEB_URL}/payment/success`,
-              cancel_url: `${serverEnv.NEXT_PUBLIC_WEB_URL}/payment/failure`,
+              return_url: `${serverEnv.NEXT_PUBLIC_WEB_URL}/user/payment/success`,
+              cancel_url: `${serverEnv.NEXT_PUBLIC_WEB_URL}/user/payment/failure`,
             },
           },
         },
