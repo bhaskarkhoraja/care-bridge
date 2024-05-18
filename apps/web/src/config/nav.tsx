@@ -92,7 +92,7 @@ export const navConfig: NavItem = [
       },
       {
         name: "Accepted",
-        href: "/user/request/accepted",
+        href: "/user/requests/seller/accepted",
         icon: <PackageCheck />,
         description: "Requests that was accepted.",
       },

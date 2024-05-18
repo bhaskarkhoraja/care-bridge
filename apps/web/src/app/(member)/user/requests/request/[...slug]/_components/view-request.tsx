@@ -27,6 +27,7 @@ import { format } from "date-fns"
 import { Check, MailPlus } from "lucide-react"
 import { z } from "zod"
 
+import AcceptApplicantButton from "./accept-applicant-button"
 import ApplyRequest from "./apply-request"
 
 interface ViewRequestProps {
@@ -171,7 +172,11 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
                     applicants.map((applicant) => (
                       <Card className={cn("w-full")} key={applicant.id}>
                         <CardContent className="relative flex items-center gap-4 pt-6">
-                          <div className="absolute right-4 top-0 flex h-full w-fit items-center justify-center">
+                          <div className="absolute right-4 top-0 flex h-full w-fit items-center justify-center gap-4">
+                            <AcceptApplicantButton
+                              requestId={requestDetails.id}
+                              sellerProfileId={applicant.id}
+                            />
                             <Link
                               href={`/user/message/${applicant.id}`}
                               className={buttonVariants({
