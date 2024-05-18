@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import Link from "next/link"
 import { Icons } from "@web/src/components/icons"
 import { Button } from "@web/src/components/ui/button"
@@ -17,6 +18,8 @@ import { RequestSchema } from "api-contract/types"
 import { format } from "date-fns"
 import { CircleCheck, CircleDot } from "lucide-react"
 import { z } from "zod"
+
+import PayPalButton from "./paypal-pay-button"
 
 interface RequestCardProps {
   request: z.infer<typeof RequestSchema>
@@ -88,10 +91,17 @@ const RequestCard: React.FC<RequestCardProps> = ({
           <p className="text-md line-clamp-3">{request.description}</p>
           {showPayButton && paid === false && (
             <div className="absolute -bottom-5 right-6">
-              <Button>
-                <Icons.paypal className="mr-4 size-4" />
-                Pay with PayPal
-              </Button>
+              <Suspense
+                fallback={
+                  <>
+                    <Button size="icon">
+                      <Icons.spinner className="size-4 animate-spin" />
+                    </Button>
+                  </>
+                }
+              >
+                <PayPalButton requestId={request.id} />
+              </Suspense>
             </div>
           )}
         </CardContent>

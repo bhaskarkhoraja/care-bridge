@@ -37,3 +37,13 @@ export async function checkSellerPaypalAndStatus() {
   })
   return client.payment.paypal.checkSellerPaypalAndStatus()
 }
+
+export async function getPaymentURL(requestId: string) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.payment.paypal.getPaymentURL({ params: { id: requestId } })
+}
