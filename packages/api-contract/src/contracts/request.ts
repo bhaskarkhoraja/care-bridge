@@ -220,4 +220,26 @@ export const requestContract = c.router({
     },
     summary: "Get request accepted by buyer",
   },
+  /**
+   * get accepted request
+   **/
+  getArchivedRequest: {
+    method: "GET",
+    path: "/user/archived-request",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.array(RequestWithPaidStatus),
+      }),
+      204: z.object({
+        status: z.literal(true),
+        message: z.literal("No archived request found"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get my archived request",
+  },
 })
