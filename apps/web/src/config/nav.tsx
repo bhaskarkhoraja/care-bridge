@@ -3,8 +3,6 @@ import {
   Activity,
   Archive,
   CalendarPlus,
-  DollarSign,
-  HandCoins,
   Mail,
   MailCheck,
   MailWarning,
@@ -16,9 +14,10 @@ import {
   UserRoundCog,
   UserRoundPlus,
   UsersRound,
-  Wallet,
 } from "lucide-react"
 import { v4 as uuidv4 } from "uuid"
+
+import { Icons } from "../components/icons"
 
 export const navConfig: NavItem = [
   {
@@ -132,22 +131,16 @@ export const navConfig: NavItem = [
     sellerOnly: false,
     items: [
       {
+        name: "Payment setting",
+        href: "/user/billing/setting",
+        icon: <Icons.paypal className="size-6" />,
+        description: "Setting up your payment method.",
+      },
+      {
         name: "Dashboard",
-        href: "/billing/dashboard",
-        icon: <Wallet />,
+        href: "/user/billing/dashboard",
+        icon: <TrendingUp />,
         description: "View your billing dashboard.",
-      },
-      {
-        name: "Paid",
-        href: "/billing/paid",
-        icon: <DollarSign />,
-        description: "View all paid invoices.",
-      },
-      {
-        name: "Recieved",
-        href: "/billing/recieved",
-        icon: <HandCoins />,
-        description: "View all recieved invoices.",
       },
     ],
   },
