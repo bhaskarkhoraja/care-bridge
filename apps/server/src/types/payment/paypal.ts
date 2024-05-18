@@ -34,3 +34,12 @@ export const partnerMerchantIntegrationResponseSchema = z.object({
     }),
   ),
 })
+
+export const paymentVerificationPartialSchema = z.object({
+  status: z.string(),
+  purchase_units: z.array(
+    z.object({
+      reference_id: z.string(),
+    }),
+  ),
+})

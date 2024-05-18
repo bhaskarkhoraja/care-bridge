@@ -47,3 +47,13 @@ export async function getPaymentURL(requestId: string) {
   })
   return client.payment.paypal.getPaymentURL({ params: { id: requestId } })
 }
+
+export async function verifyPayment(paymentId: string) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.payment.paypal.verifyPayment({ params: { id: paymentId } })
+}
