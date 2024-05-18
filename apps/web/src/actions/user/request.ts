@@ -98,3 +98,37 @@ export async function getAppliedRequest() {
   })
   return client.request.getAppliedRequest()
 }
+
+/**
+ * Assign task to user
+ **/
+export async function assignRequest(
+  requestId: string,
+  sellerProfileId: string
+) {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.assignRequest({
+    body: {
+      requestId: requestId,
+      sellerProfileId: sellerProfileId,
+    },
+  })
+}
+
+/**
+ * Get all accepted request
+ **/
+export async function getAcceptedRequest() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.getAcceptedRequest()
+}

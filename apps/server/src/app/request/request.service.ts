@@ -5,6 +5,7 @@ import {
   ExtendedPersonalInfoFormSchema,
   ExtendedRequestSchema,
   RequestSchema,
+  RequestWithPaidStatus,
 } from 'api-contract/types'
 import { Client } from 'pg'
 import z from 'zod'
@@ -430,6 +431,111 @@ export class RequestService {
       familyMemberIds: Array(row.family_member_ids.length).fill(''),
     }))
 
+    return data
+  }
+  /**
+   * assign request to user
+   **/
+  async assignRequest(
+    sellerProfileId: string,
+    requestId: string,
+  ): Promise<boolean> {
+    try {
+      await this.pg.query('BEGIN')
+
+      const result1 = await this.pg.query(
+        `UPDATE service_request SET status = 'close' WHERE id = $1`,
+        [requestId],
+      )
+
+      if (result1.rowCount === 0) {
+        return false
+      }
+
+      const result2 = await this.pg.query(
+        'SELECT id FROM service_request_application WHERE service_request_id = $1 AND applicant_profile_id = $2',
+        [requestId, sellerProfileId],
+      )
+
+      if (result2.rowCount === 0) {
+        return false
+      }
+
+      const result3 = await this.pg.query(
+        `INSERT INTO service_request_accepted (accepted_profile_id, service_request_id, service_request_application_id)
+       VALUES ($1, $2, $3)`,
+        [sellerProfileId, requestId, result2.rows[0].id],
+      )
+
+      if (result3.rowCount === 0) {
+        await this.pg.query('ROLLBACK')
+        return false
+      }
+
+      await this.pg.query('COMMIT')
+      return true
+    } catch {
+      await this.pg.query('ROLLBACK')
+      return false
+    }
+  }
+  /**
+   * get accepted request
+   **/
+  async getAcceptedRequest(
+    profileId: string,
+  ): Promise<z.infer<typeof RequestWithPaidStatus>[] | undefined> {
+    const result = await this.pg.query(
+      `
+      SELECT
+        sr.id,
+        sr.status,
+        sr.start_time,
+        sr.end_time,
+        sr.price,
+        sr.location,
+        sr.description,
+        sr.prefered_age,
+        sr.mandatory_age,
+        sr.prefered_gender,
+        sr.mandatory_gender,
+        sr.prefered_nationality_id AS prefered_nationality,
+        sr.mandatory_nationality,
+        ARRAY_AGG(srm.family_member_id) AS family_member_ids,
+        CASE WHEN p.service_request_accepted_id IS NOT NULL THEN true ELSE false END AS paid
+      FROM service_request sr
+      LEFT JOIN service_request_accepted sra ON sr.id = sra.service_request_id
+      LEFT JOIN service_request_member srm ON sr.id = srm.service_request_id
+      LEFT JOIN payments p ON sra.id = p.service_request_accepted_id
+      WHERE sra.accepted_profile_id = $1
+      GROUP BY sr.id, p.service_request_accepted_id
+      `,
+      [profileId],
+    )
+
+    if (result.rowCount === 0) {
+      return undefined
+    }
+
+    const data: z.infer<typeof RequestWithPaidStatus>[] = result.rows.map(
+      (row) => ({
+        id: row.id,
+        status: row.status,
+        startTime: row.start_time,
+        endTime: row.end_time,
+        price: row.price,
+        location: row.location,
+        description: row.description,
+        preferedAge: row.prefered_age,
+        mandatoryAge: row.mandatory_age,
+        preferedGender: row.prefered_gender,
+        mandatoryGender: row.mandatory_gender,
+        preferedNationality: row.prefered_nationality,
+        mandatoryNationality: row.mandatory_nationality,
+        familyMemberIds: Array(row.family_member_ids.length).fill(''),
+        paid: row.paid,
+      }),
+    )
     return data
   }
 }

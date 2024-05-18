@@ -204,6 +204,59 @@ export class RequestController {
           }
         }
       },
+      /**
+       * assign request to user
+       **/
+      assignRequest: async ({ body }) => {
+        try {
+          const success = await this.requestService.assignRequest(
+            body.sellerProfileId,
+            body.requestId,
+          )
+
+          if (!success) {
+            return {
+              status: 422,
+              body: { status: false, message: 'Failed to assign.' },
+            }
+          }
+
+          return {
+            status: 200,
+            body: { status: true, message: 'Successfully assigned request' },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
+      /**
+       * get accepted request
+       **/
+      getAcceptedRequest: async () => {
+        try {
+          const requests = await this.requestService.getAcceptedRequest(
+            user.profile_id as string,
+          )
+
+          if (requests === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No accepted request found' },
+            }
+          }
+
+          return { status: 200, body: { status: true, data: requests } }
+        } catch (error) {
+          console.log(error)
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
