@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { Icons } from "@web/src/components/icons"
+import { Button } from "@web/src/components/ui/button"
 import {
   Card,
   CardContent,
@@ -20,9 +22,15 @@ interface RequestCardProps {
   request: z.infer<typeof RequestSchema>
   index: number
   paid?: boolean
+  showPayButton?: boolean
 }
 
-const RequestCard: React.FC<RequestCardProps> = ({ request, index, paid }) => {
+const RequestCard: React.FC<RequestCardProps> = ({
+  request,
+  index,
+  paid,
+  showPayButton,
+}) => {
   return (
     <Link href={`/user/requests/request/${request.id}`} className="w-full">
       <Card className="w-full">
@@ -76,8 +84,16 @@ const RequestCard: React.FC<RequestCardProps> = ({ request, index, paid }) => {
             </dl>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <p className="text-md line-clamp-3">{request.description}</p>
+          {showPayButton && paid === false && (
+            <div className="absolute -bottom-5 right-6">
+              <Button>
+                <Icons.paypal className="mr-4 size-4" />
+                Pay with PayPal
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
     </Link>
