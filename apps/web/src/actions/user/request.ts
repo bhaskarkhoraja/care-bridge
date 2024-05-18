@@ -132,3 +132,16 @@ export async function getAcceptedRequest() {
   })
   return client.request.getAcceptedRequest()
 }
+
+/**
+ * Get all accepted request
+ **/
+export async function getArchivedRequest() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.request.getArchivedRequest()
+}
