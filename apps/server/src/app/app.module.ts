@@ -13,6 +13,7 @@ import { AdminModule } from './admin/admin.module'
 import { RequestModule } from './request/request.module'
 import { MessageSocketModule } from './message-socket/message-socket.module'
 import { MessageModule } from './message/message.module'
+import { PaypalModule } from './payment/paypal/paypal.module'
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { MessageModule } from './message/message.module'
     RequestModule,
     MessageSocketModule,
     MessageModule,
+    PaypalModule,
   ],
   controllers: [],
   providers: [],
