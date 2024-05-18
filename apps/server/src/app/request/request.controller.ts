@@ -256,6 +256,31 @@ export class RequestController {
           }
         }
       },
+      /**
+       * get accepted request
+       **/
+      getArchivedRequest: async () => {
+        try {
+          const requests = await this.requestService.getArchivedRequest(
+            user.profile_id as string,
+          )
+
+          if (requests === undefined) {
+            return {
+              status: 204,
+              body: { status: true, message: 'No archived request found' },
+            }
+          }
+
+          return { status: 200, body: { status: true, data: requests } }
+        } catch (e) {
+          console.log(e)
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
