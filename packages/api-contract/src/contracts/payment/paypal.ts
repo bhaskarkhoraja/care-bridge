@@ -80,4 +80,26 @@ export const paypalContract = c.router({
     },
     summary: "Set paypal merchant account",
   },
+  /**
+   * Get the paymetn url
+   **/
+  getPaymentURL: {
+    method: "GET",
+    path: "/user/payment/paypal/payment-url/:id",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: z.object({ paymentUrl: z.string().url() }),
+      }),
+      422: z.object({
+        status: z.literal(false),
+        message: z.literal("Couldn't find payment url"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get action url for signup",
+  },
 })
