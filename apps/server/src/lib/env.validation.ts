@@ -5,6 +5,9 @@ export const serverEnvSchema = z.object({
   NEXT_PUBLIC_WEB_URL: z.string().url(),
   SERVER_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string(),
+  PAYPAL_CLIENT_ID: z.string(),
+  PAYPAL_CLIENT_SECRET: z.string(),
+  PAYPAL_URL: z.string().url(),
 })
 
 export let serverEnv: z.infer<typeof serverEnvSchema> = {
@@ -12,6 +15,9 @@ export let serverEnv: z.infer<typeof serverEnvSchema> = {
   NEXT_PUBLIC_WEB_URL: '',
   SERVER_URL: '',
   NEXTAUTH_SECRET: '',
+  PAYPAL_CLIENT_ID: '',
+  PAYPAL_CLIENT_SECRET: '',
+  PAYPAL_URL: '',
 }
 
 export function createEnv(config: Record<string, any>) {
@@ -20,6 +26,9 @@ export function createEnv(config: Record<string, any>) {
     NEXT_PUBLIC_WEB_URL: config.NEXT_PUBLIC_WEB_URL,
     SERVER_URL: config.SERVER_URL,
     NEXTAUTH_SECRET: config.NEXTAUTH_SECRET,
+    PAYPAL_CLIENT_ID: config.PAYPAL_CLIENT_ID,
+    PAYPAL_CLIENT_SECRET: config.PAYPAL_CLIENT_SECRET,
+    PAYPAL_URL: config.PAYPAL_URL,
   }
 
   const validatedConfig = serverEnvSchema.safeParse(env)
