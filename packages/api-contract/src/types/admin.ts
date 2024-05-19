@@ -34,7 +34,7 @@ export const PendingMembersSchema = z.array(
 )
 
 /**
- * Array of PendingUSers
+ * Adimn dashboard
  **/
 export const AdminDashBoardSchema = z.object({
   totalUser: z.string(),
