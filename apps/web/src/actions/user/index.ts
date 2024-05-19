@@ -118,3 +118,16 @@ export async function setUserType(data: z.infer<typeof UserTypeSchema>) {
     body: data,
   })
 }
+
+/**
+ * get user dashboard
+ **/
+export async function getUserDashboard() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.users.getDashboard()
+}
