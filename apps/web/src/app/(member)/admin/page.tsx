@@ -16,9 +16,7 @@ export default async function AdminDashboard() {
   if (dashboardData.status !== 200) {
     return (
       <main className="w-full">
-        <h1 className="mb-4 text-2xl font-bold leading-none">
-          All your accepted requests
-        </h1>
+        <h1 className="mb-4 text-2xl font-bold leading-none">Dashboard</h1>
 
         <p className="text-muted-foreground text-sm">
           {dashboardData.body.message || "Nothing to show"}
