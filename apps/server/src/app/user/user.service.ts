@@ -220,4 +220,81 @@ export class UserService {
 
     return true
   }
+  /**
+   * Set User Type
+   **/
+  async getDashBoard(userId: string) {
+    const query = `
+    WITH user_payments AS (
+      SELECT
+        p.id,
+        p.created_at,
+        p.service_request_accepted_id,
+        sra.service_request_id,
+        sr.profile_id,
+        sr.price
+      FROM payments p
+      JOIN service_request_accepted sra ON p.service_request_accepted_id = sra.id
+      JOIN service_request sr ON sra.service_request_id = sr.id
+    )
+    SELECT
+      SUM(CASE WHEN sra.applicant_profile_id = $1 THEN sr.price ELSE 0 END) AS total_received,
+      SUM(CASE WHEN up.profile_id = $1 THEN sr.price ELSE 0 END) AS total_paid,
+      COUNT(CASE WHEN sra.applicant_profile_id = $1 THEN 1 END) AS total_bought,
+      COUNT(CASE WHEN up.profile_id = $1 THEN 1 END) AS total_sales,
+      EXTRACT(MONTH FROM up.created_at) AS month,
+      SUM(CASE WHEN sra.applicant_profile_id = $1 THEN sr.price ELSE 0 END) AS received_per_month,
+      SUM(CASE WHEN up.profile_id = $1 THEN sr.price ELSE 0 END) AS paid_per_month
+    FROM service_request_application sra
+    JOIN service_request sr ON sra.service_request_id = sr.id
+    JOIN service_request_accepted srac ON sra.id = srac.service_request_application_id
+    JOIN payments py ON srac.id = py.service_request_accepted_id
+    LEFT JOIN user_payments up ON sra.service_request_id = up.service_request_id
+    GROUP BY EXTRACT(MONTH FROM up.created_at)
+  `
+
+    const result = await this.pg.query(query, [userId])
+
+    if (result.rowCount === 0) {
+      // No transactions, return empty overview
+      return {
+        totalPaid: '0',
+        totalRecieved: '0',
+        totalSales: '0',
+        totalBought: '0',
+        overView: [],
+      }
+    }
+
+    const { total_received, total_paid, total_bought, total_sales } =
+      result.rows[0]
+
+    const monthlyData = result.rows.map((row) => ({
+      month: new Date(2023, row.month - 1, 1).toLocaleString('en-US', {
+        month: 'short',
+      }),
+      recieved: Number(row.received_per_month),
+      paid: Number(row.paid_per_month),
+    }))
+
+    const completeMonthlyData = Array.from({ length: 12 }, (_, i) => {
+      const monthName = new Date(2023, i, 1).toLocaleString('en-US', {
+        month: 'short',
+      })
+      const existingData = monthlyData.find((data) => data.month === monthName)
+      return {
+        month: monthName,
+        recieved: existingData ? existingData.recieved : 0,
+        paid: existingData ? existingData.paid : 0,
+      }
+    })
+
+    return {
+      totalPaid: Number(total_paid).toLocaleString(),
+      totalRecieved: Number(total_received).toLocaleString(),
+      totalSales: Number(total_sales).toLocaleString(),
+      totalBought: Number(total_bought).toLocaleString(),
+      overView: completeMonthlyData,
+    }
+  }
 }

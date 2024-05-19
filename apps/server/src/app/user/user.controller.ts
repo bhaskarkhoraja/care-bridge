@@ -241,6 +241,39 @@ export class UserController {
           }
         }
       },
+      /**
+       * Get dashboards
+       **/
+      getDashboard: async () => {
+        try {
+          const result = await this.userService.getDashBoard(
+            user.profile_id as string,
+          )
+
+          if (!result) {
+            return {
+              status: 204,
+              body: {
+                status: false,
+                message: 'Nothing to show',
+              },
+            }
+          }
+
+          return {
+            status: 200,
+            body: {
+              status: true,
+              data: result,
+            },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }
