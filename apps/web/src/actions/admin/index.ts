@@ -69,3 +69,16 @@ export async function pendingMemberActions({
     body: { action: action, ids: ids },
   })
 }
+
+/**
+ * Get dashboard
+ **/
+export async function getAdminDashboard() {
+  const client = initClient(contract, {
+    baseUrl: webEnv.SERVER_URL,
+    baseHeaders: {
+      cookie: `${cookieName}=${cookies().get(cookieName)?.value}`,
+    },
+  })
+  return client.admin.getDashboard()
+}
