@@ -163,6 +163,47 @@ export class AdminController {
           }
         }
       },
+      /**
+       * Get dashboards
+       **/
+      getDashboard: async () => {
+        try {
+          if (user.role !== 'admin') {
+            return {
+              status: 401,
+              body: {
+                status: false,
+                message: 'User not authorized to perform this action',
+              },
+            }
+          }
+
+          const result = await this.adminService.getDashBoard()
+
+          if (!result) {
+            return {
+              status: 204,
+              body: {
+                status: false,
+                message: 'Nothing to show',
+              },
+            }
+          }
+
+          return {
+            status: 200,
+            body: {
+              status: true,
+              data: result,
+            },
+          }
+        } catch {
+          return {
+            status: 500,
+            body: { status: false, message: 'Something went wrong' },
+          }
+        }
+      },
     })
   }
 }

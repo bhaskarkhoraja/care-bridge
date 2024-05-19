@@ -4,6 +4,7 @@ import {
   PendingActionsSchema,
   PendingMembersSchema,
   PendingUsersSchema,
+  AdminDashBoardSchema,
 } from 'api-contract/types'
 import { Client } from 'pg'
 import z from 'zod'
@@ -197,6 +198,100 @@ export class AdminService {
     } catch {
       await this.pg.query('ROLLBACK')
       return false
+    }
+  }
+  /**
+   * Pending member actions
+   **/
+  async getDashBoard(): Promise<
+    z.infer<typeof AdminDashBoardSchema> | undefined
+  > {
+    const result = await this.pg.query(`
+      SELECT
+        (SELECT COUNT(*) FROM users) AS totalUser,
+        (SELECT COUNT(*) FROM payments) AS requestCompleted,
+        (SELECT COUNT(*) FROM service_request WHERE status = 'open') AS activeRequest,
+				(SELECT COUNT(*) FROM payments) AS totalRevenue
+    `)
+
+    if (result.rowCount === 0) {
+      return undefined
+    }
+
+    const currentYear = new Date().getFullYear()
+    const monthlyRevenue = []
+    for (let i = 1; i <= 12; i++) {
+      const monthCount = await this.pg.query(
+        `
+        SELECT COUNT(*) FROM payments
+        WHERE EXTRACT(YEAR FROM created_at) = $1
+        AND EXTRACT(MONTH FROM created_at) = $2
+      `,
+        [currentYear, i],
+      )
+
+      const totalMonthlyRevenue = Number(monthCount.rows[0].count) * 2
+      monthlyRevenue.push({
+        month: new Date(currentYear, i - 1, 1).toLocaleString('en-US', {
+          month: 'short',
+        }),
+        totalMonthlyRevenue: totalMonthlyRevenue,
+      })
+    }
+
+    const recentCompleteRequestQuery = await this.pg.query(
+      `
+      SELECT
+        json_agg(json_build_object(
+          'buyerProfile', json_build_object(
+            'id', p_buyer.id,
+            'firstName', p_buyer.first_name,
+            'middleName', p_buyer.middle_name,
+            'lastName', p_buyer.last_name,
+            'userName', p_buyer.user_name,
+            'dob', p_buyer.date_of_birth,
+            'gender', p_buyer.gender,
+            'profileUrl', p_buyer.profile_url,
+            'email', u_buyer.email
+          ),
+          'sellerProfile', json_build_object(
+            'id', p_seller.id,
+            'firstName', p_seller.first_name,
+            'middleName', p_seller.middle_name,
+            'lastName', p_seller.last_name,
+            'userName', p_seller.user_name,
+            'dob', p_seller.date_of_birth,
+            'gender', p_seller.gender,
+            'profileUrl', p_seller.profile_url,
+            'email', u_seller.email
+          ),
+          'price', sr.price::text
+        )) AS recent_completed_request
+      FROM payments pm
+      JOIN service_request_accepted sra ON pm.service_request_accepted_id = sra.id
+      JOIN service_request sr ON sra.service_request_id = sr.id
+      JOIN profile p_buyer ON sr.profile_id = p_buyer.id
+      JOIN profile p_seller ON sra.accepted_profile_id = p_seller.id
+      JOIN users u_buyer ON p_buyer.user_id = u_buyer.id
+      JOIN users u_seller ON p_seller.user_id = u_seller.id
+      WHERE DATE_TRUNC('month', pm.created_at) = DATE_TRUNC('month', CURRENT_DATE)
+      `,
+    )
+
+    if (recentCompleteRequestQuery.rowCount === 0) {
+      return undefined
+    }
+
+    return {
+      totalUser: Number(result.rows[0].totaluser).toLocaleString(),
+      totalRequestCompleted: Number(
+        result.rows[0].requestcompleted,
+      ).toLocaleString(),
+      totalActiveRequest: Number(result.rows[0].activerequest).toLocaleString(),
+      totalRevenue: (Number(result.rows[0].totalrevenue) * 2).toLocaleString(),
+      overView: monthlyRevenue,
+      recentCompletedRequest:
+        recentCompleteRequestQuery.rows[0].recent_completed_request,
     }
   }
 }
