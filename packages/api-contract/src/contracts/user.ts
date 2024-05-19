@@ -5,6 +5,7 @@ import {
   AddressContactFormSchema,
   DocumentFormSchema,
   PersonalInfoFormSchema,
+  UserDashBoardSchema,
   UserTypeSchema,
 } from "../types/user"
 
@@ -179,5 +180,27 @@ export const userContract = c.router({
     },
     body: UserTypeSchema,
     summary: "Set user type(buyer | seller)",
+  },
+  /**
+   * get user dashboard
+   **/
+  getDashboard: {
+    method: "GET",
+    path: "/user/dashboard",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: UserDashBoardSchema,
+      }),
+      204: z.object({
+        status: z.literal(false),
+        message: z.literal("Nothing to show"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get dashborad details",
   },
 })

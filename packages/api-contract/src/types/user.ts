@@ -82,3 +82,20 @@ export const UserTypeSchema = z.object({
     required_error: "User Type is required.",
   }),
 })
+
+/**
+ * User dashboard
+ **/
+export const UserDashBoardSchema = z.object({
+  totalPaid: z.string(),
+  totalRecieved: z.string(),
+  totalSales: z.string(),
+  totalBought: z.string(),
+  overView: z.array(
+    z.object({
+      month: z.string(),
+      paid: z.number(),
+      recieved: z.number(),
+    })
+  ),
+})
