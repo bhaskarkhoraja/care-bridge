@@ -2,6 +2,7 @@ import { initContract } from "@ts-rest/core"
 import { z } from "zod"
 
 import {
+  AdminDashBoardSchema,
   PendingActionsSchema,
   PendingMembersSchema,
   PendingUsersSchema,
@@ -124,5 +125,31 @@ export const adminContract = c.router({
     },
     body: PendingActionsSchema,
     summary: "Accept or reject pending members",
+  },
+  /**
+   * get admin dashboard
+   **/
+  getDashboard: {
+    method: "GET",
+    path: "/admin/dashboard",
+    responses: {
+      200: z.object({
+        status: z.literal(true),
+        data: AdminDashBoardSchema,
+      }),
+      204: z.object({
+        status: z.literal(false),
+        message: z.literal("Nothing to show"),
+      }),
+      401: z.object({
+        status: z.literal(false),
+        message: z.literal("User not authorized to perform this action"),
+      }),
+      500: z.object({
+        status: z.literal(false),
+        message: z.literal("Something went wrong"),
+      }),
+    },
+    summary: "Get dashborad details",
   },
 })

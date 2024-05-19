@@ -32,3 +32,26 @@ export const PendingMembersSchema = z.array(
     userPersonalInfo: ExtendedPersonalInfoFormSchema,
   })
 )
+
+/**
+ * Array of PendingUSers
+ **/
+export const AdminDashBoardSchema = z.object({
+  totalUser: z.string(),
+  totalRequestCompleted: z.string(),
+  totalActiveRequest: z.string(),
+  totalRevenue: z.string(),
+  overView: z.array(
+    z.object({
+      month: z.string(),
+      totalMonthlyRevenue: z.number(),
+    })
+  ),
+  recentCompletedRequest: z.array(
+    z.object({
+      buyerProfile: ExtendedPersonalInfoFormSchema,
+      sellerProfile: ExtendedPersonalInfoFormSchema,
+      price: z.string(),
+    })
+  ),
+})
