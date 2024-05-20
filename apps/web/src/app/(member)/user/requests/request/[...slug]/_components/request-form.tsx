@@ -528,7 +528,7 @@ const RequestForm: React.FC<RequestFormProps> = ({
                 )}
               />
 
-              <Input label="Currency" value="NRs" readOnly aria-readonly />
+              <Input label="Currency" value="USD" readOnly aria-readonly />
 
               <FormField
                 control={form.control}

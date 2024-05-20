@@ -127,7 +127,7 @@ const ViewRequest: React.FC<ViewRequestProps> = ({
                 </div>
                 <Switch checked={requestDetails.mandatoryNationality} />
               </div>
-              <Input label="Currency" readOnly aria-readonly value={"NRs"} />
+              <Input label="Currency" readOnly aria-readonly value={"USD"} />
               <Input
                 label="Price"
                 readOnly

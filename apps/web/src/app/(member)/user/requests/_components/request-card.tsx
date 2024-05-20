@@ -57,7 +57,7 @@ const RequestCard: React.FC<RequestCardProps> = ({
                   </Tooltip>
                 </TooltipProvider>
               )}
-              <div>NRs {request.price}</div>
+              <div>USD {request.price}</div>
             </div>
           </CardTitle>
           <div>
