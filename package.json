@@ -7,9 +7,7 @@
     "dev": "pnpm run --filter server start:dev & pnpm run --filter web dev",
     "prepare": "husky install && pnpm --filter api-contract build",
     "build:web": "pnpm run --filter web build",
-    "build:server": "pnpm run --filter api-contract build && pnpm run --filter server build",
-    "start:web": "pnpm run --filter web start",
-    "start:server": "pnpm run --filter server start:prod"
+    "build:server": "pnpm run --filter server build"
   },
   "keywords": [
     "Trusted babysitters",
