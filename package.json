@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm run --filter server start:dev & pnpm run --filter web dev",
+    "build:web": "pnpm run --filter api-contract build  & pnpm run --filter web build",
+    "build:server": "pnpm run --filter api-contract build  & pnpm run --filter server build",
+    "start:web": "pnpm run --filter web start",
+    "start:server": "pnpm run --filter server start:prod",
     "prepare": "husky install"
   },
   "keywords": [
