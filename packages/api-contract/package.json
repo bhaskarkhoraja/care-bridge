@@ -4,7 +4,7 @@
   "description": "Api contract for web and server",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "build": "tsup src/* --format cjs,esm --dts",
     "start:dev": "tsup src/* --format cjs,esm --dts --watch"
   },
   "keywords": [],
