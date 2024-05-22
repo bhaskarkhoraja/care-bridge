@@ -26,7 +26,6 @@ const RecentSales: React.FC<RecentSalesProps> = ({ data }) => {
     <div className="max-h-full space-y-8">
       <ScrollArea className="h-80">
         <Table>
-          <TableCaption>Recent Completed task</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Buyer&apos;s info</TableHead>
