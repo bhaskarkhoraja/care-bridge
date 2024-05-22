@@ -230,10 +230,11 @@ const PersonalFormInfo: React.FC<PersonalInfoFormProps> = ({
                       onSelect={field.onChange}
                       captionLayout="dropdown-buttons"
                       disabled={(date) =>
-                        date > new Date() || date < subYears(new Date(), 35)
+                        date > subYears(new Date(), 18) ||
+                        date < subYears(new Date(), 80)
                       }
-                      fromYear={new Date().getFullYear() - 35}
-                      toYear={new Date().getFullYear()}
+                      fromYear={new Date().getFullYear() - 80}
+                      toYear={new Date().getFullYear() - 19}
                       initialFocus
                     />
                   </PopoverContent>
