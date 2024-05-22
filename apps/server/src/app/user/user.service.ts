@@ -266,8 +266,23 @@ export class UserService {
       }
     }
 
-    const { total_received, total_paid, total_bought, total_sales } =
-      result.rows[0]
+    const { total_received, total_paid } = result.rows[0]
+
+    const result1 = await this.pg.query(
+      `
+    SELECT
+      (SELECT COUNT(*)
+       FROM payments p
+       JOIN service_request_accepted sra ON p.service_request_accepted_id = sra.id
+       WHERE sra.accepted_profile_id = $1) AS total_bought,
+      (SELECT COUNT(*)
+       FROM payments p
+       JOIN service_request_accepted sra ON p.service_request_accepted_id = sra.id
+       JOIN service_request sr ON sra.service_request_id = sr.id
+       WHERE sr.profile_id = $1) AS total_sales
+    `,
+      [userId],
+    )
 
     const monthlyData = result.rows.map((row) => ({
       month: new Date(2023, row.month - 1, 1).toLocaleString('en-US', {
@@ -292,8 +307,8 @@ export class UserService {
     return {
       totalPaid: Number(total_paid).toLocaleString(),
       totalRecieved: Number(total_received).toLocaleString(),
-      totalSales: Number(total_sales).toLocaleString(),
-      totalBought: Number(total_bought).toLocaleString(),
+      totalSales: Number(result1.rows[0].total_sales).toLocaleString(),
+      totalBought: Number(result1.rows[0].total_bought).toLocaleString(),
       overView: completeMonthlyData,
     }
   }
