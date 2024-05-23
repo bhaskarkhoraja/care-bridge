@@ -30,11 +30,11 @@ Install Dependency
 
 ## Account neededs
 
-**Github auth app**: For github login  
-**Google project app**: For google login  
-**Nodemailer**: For email login  
-**UploadThing**: For storing images in cloud  
-**Paypal developer account**: For payment 
+**Github auth app**: For github login
+**Google project app**: For google login
+**Nodemailer**: For email login
+**UploadThing**: For storing images in cloud
+**Paypal developer account**: For payment
 
 
 
@@ -90,3 +90,7 @@ Server (from root)
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
+
+## Database
+You might have got the database with 2 users, you can register and alter the database to get admin access (user table, role column).
+Import the database and run the project
