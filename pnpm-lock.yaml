@@ -23,7 +23,7 @@ importers:
         specifier: workspace:*
         version: link:packages/api-contract
       axios:
-        specifier: ^1.7.2
+        specifier: ^1.6.8
         version: 1.7.2
       concurrently:
         specifier: ^8.2.2
@@ -75,13 +75,13 @@ importers:
         specifier: ^7.34.1
         version: 7.34.1(eslint@8.57.0)
       eslint-plugin-tailwindcss:
-        specifier: ^3.17.0
+        specifier: ^3.15.1
         version: 3.17.0(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5)))
       husky:
         specifier: ^9.0.11
         version: 9.0.11
       lint-staged:
-        specifier: ^15.2.4
+        specifier: ^15.2.2
         version: 15.2.4
       prettier:
         specifier: ^3.2.5
@@ -7472,11 +7472,6 @@ packages:
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-  yaml@2.4.1:
-    resolution: {integrity: sha512-pIXzoImaqmfOrL7teGUBt/T7ZDnyeGBWyXQBvOVhLkWLN37GXv8NMLK406UY6dS51JfcQHsmcW5cJ441bHg6Lg==}
-    engines: {node: '>= 14'}
-    hasBin: true
-
   yaml@2.4.2:
     resolution: {integrity: sha512-B3VqDZ+JAg1nZpaEmWtTXUlBneoGx6CPM9b0TENK6aoSu5t73dItudwdgmi6tHlIZZId4dZ9skcAQ2UbcyAeVA==}
     engines: {node: '>= 14'}
@@ -7930,7 +7925,7 @@ snapshots:
       fast-glob: 3.3.2
       gray-matter: 4.0.3
       imagescript: 1.3.0
-      micromatch: 4.0.5
+      micromatch: 4.0.6
       ts-pattern: 4.3.0
       unified: 10.1.2
       yaml: 2.4.2
@@ -8309,7 +8304,7 @@ snapshots:
       jest-util: 29.7.0
       jest-validate: 29.7.0
       jest-watcher: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.6
       pretty-format: 29.7.0
       slash: 3.0.0
       strip-ansi: 6.0.1
@@ -8420,7 +8415,7 @@ snapshots:
       jest-haste-map: 29.7.0
       jest-regex-util: 29.6.3
       jest-util: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.6
       pirates: 4.0.6
       slash: 3.0.0
       write-file-atomic: 4.0.2
@@ -12639,7 +12634,7 @@ snapshots:
       jest-runner: 29.7.0
       jest-util: 29.7.0
       jest-validate: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.6
       parse-json: 5.2.0
       pretty-format: 29.7.0
       slash: 3.0.0
@@ -12692,7 +12687,7 @@ snapshots:
       jest-regex-util: 29.6.3
       jest-util: 29.7.0
       jest-worker: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.6
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
@@ -12716,7 +12711,7 @@ snapshots:
       '@types/stack-utils': 2.0.3
       chalk: 4.1.2
       graceful-fs: 4.2.11
-      micromatch: 4.0.5
+      micromatch: 4.0.6
       pretty-format: 29.7.0
       slash: 3.0.0
       stack-utils: 2.0.6
@@ -14355,7 +14350,7 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.12.12)(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.1.1
-      yaml: 2.4.1
+      yaml: 2.4.2
     optionalDependencies:
       postcss: 8.4.38
       ts-node: 10.9.2(@swc/core@1.4.15)(@types/node@20.12.12)(typescript@5.4.5)
@@ -16114,8 +16109,6 @@ snapshots:
   yallist@3.1.1: {}
 
   yallist@4.0.0: {}
-
-  yaml@2.4.1: {}
 
   yaml@2.4.2: {}
 
