@@ -114,10 +114,7 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
               <Link href={`/user/profile/${user.profile_id}`}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/dashboard/billing">Billing</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/settings">Settings</Link>
+              <Link href="/user/billing/dashboard">Billing</Link>
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={switchUserType}>
               Switch to {user.type === "buyer" ? "seller" : "buyer"}
