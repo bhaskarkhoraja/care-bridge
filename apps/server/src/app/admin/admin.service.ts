@@ -291,7 +291,7 @@ export class AdminService {
       totalRevenue: (Number(result.rows[0].totalrevenue) * 2).toLocaleString(),
       overView: monthlyRevenue,
       recentCompletedRequest:
-        recentCompleteRequestQuery.rows[0].recent_completed_request,
+        recentCompleteRequestQuery.rows[0].recent_completed_request ?? [],
     }
   }
 }
