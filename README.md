@@ -1,4 +1,3 @@
-
 # Care Bridge
 
 A place where hire trusted Baby Sitters for your children and Family Care services
@@ -31,9 +30,13 @@ Install Dependency
 ## Account neededs
 
 **Github auth app**: For github login
+
 **Google project app**: For google login
+
 **Nodemailer**: For email login
+
 **UploadThing**: For storing images in cloud
+
 **Paypal developer account**: For payment
 
 
@@ -46,17 +49,25 @@ Failing to setup database will cause the build process to fail.
 
 ## Setup
 
-Create database
+Create database (require postgres) (from root)
 
 ```bash
   CREATE DATABASE care_bridge;
 ```
 
-Seed data
+Migration (require sqlx) (from root)
 
 ```bash
-  TODO
+  cd apps/server
+  sqlx database setup
 ```
+
+Seeding database (require ts-node) (from root)
+```bash
+  cd apps/server/src/utils
+  node --env-file=../../../../.env -r ts-node/register ./countrySeeder.ts
+```
+
 ### Buildiing appliction
 (If you face any build issue related to missing environment variable, please setup environment variable properly first.)
 Web (from root)

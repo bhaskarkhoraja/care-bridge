@@ -1,10 +1,10 @@
 -- table to store list of countries and nationalities
 CREATE TABLE IF NOT EXISTS country (
   id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
-  name VARCHAR(255) NOT NULL,
-  nationality VARCHAR(255) NOT NULL,
-  short_name VARCHAR(2) NOT NULL,
-  country_code VARCHAR(5) NOT NULL,
+  name VARCHAR(255) NOT NULL UNIQUE,
+  nationality VARCHAR(255) NOT NULL UNIQUE,
+  short_name VARCHAR(2) NOT NULL UNIQUE,
+  country_code VARCHAR(5) NOT NULL UNIQUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
